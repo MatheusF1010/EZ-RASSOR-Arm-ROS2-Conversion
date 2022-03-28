@@ -42,9 +42,28 @@ colcon build
 
 5) Run ROS2 script. Repeat 1-5 in seperate terminals.
 
-ex: To launch a rover on Gazebo run:
 
+
+Example: To launch a rover on Gazebo run:
+
+TERMINAL 1:
 ```
+source /opt/ros/foxy/setup.bash
+. /usr/share/gazebo/setup.sh
+cd /dev_ws/
+rosdep install -i --from-path src --rosdistro foxy -y
+colcon build
+. install/local_setup.bash
 ros2 launch ezrassor_sim_gazebo gazebo_launch.py
+```
+
+TERMINAL 2:
+```
+source /opt/ros/foxy/setup.bash
+. /usr/share/gazebo/setup.sh
+cd /dev_ws/
+rosdep install -i --from-path src --rosdistro foxy -y
+colcon build
+. install/local_setup.bash
 ros2 launch ezrassor_sim_description spawn_ezrassor.py
 ```
