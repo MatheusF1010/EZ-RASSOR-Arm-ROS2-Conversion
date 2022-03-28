@@ -1,0 +1,73 @@
+<?xml version='1.0'?>
+
+<robot name="ezrassor"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+    <xacro:macro name="drum_mesh">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/drum.dae" scale="0.35 0.35 0.35"></mesh>
+    </xacro:macro>
+
+    <!--This xacro block sets a new drum for the robot. 
+    
+        Inputs:
+            drum_prefix: the name that will be used to reference this drum
+            front_facing: [true/false] represent whether or not the drum is front facing
+            link_origin: an origin tag representing the xyz,rpy for the drum link
+    -->
+    <xacro:macro name="drum" params="drum_prefix arm_prefix front_facing *link_origin">
+
+    	<link name="${drum_prefix}">
+    		<collision name="collision">
+                <xacro:insert_block name="link_origin"/>
+    			<geometry>
+    				<xacro:drum_mesh />
+    			</geometry>
+    		</collision>
+    		<visual name="visual">
+                <xacro:insert_block name="link_origin"/>
+    			<geometry>
+    				<xacro:drum_mesh />
+    			</geometry>
+    		</visual>
+    		<inertial>
+                <xacro:insert_block name="link_origin"/>
+    			<mass value="5"/>
+    			<xacro:cylinder_inertia m="5" r="0.1839" h="1.0"/>
+    		</inertial>
+    	</link>
+    
+        <gazebo reference="${drum_prefix}">
+            <selfCollide>1</selfCollide>
+        </gazebo>
+	
+        <joint name="${drum_prefix}_joint" type="continuous">
+            <xacro:if value="${front_facing}">
+        		<origin xyz="0.388245 0 0" rpy="3.1415 0 0"/>
+            </xacro:if>
+            <xacro:unless value="${front_facing}">
+        		<origin xyz="-0.388245 0 0" rpy="3.1415 0 0"/>
+            </xacro:unless>
+    		<child link="${drum_prefix}"/>
+    		<parent link="${arm_prefix}"/>
+    		<axis xyz="0 1 0" rpy="0 0 0"/>
+            <dynamics damping="0.2"/>
+    	</joint>
+
+        <!-- Force torque feedback sensor for the drum --> 
+        <gazebo reference="${drum_prefix}_joint">
+            <provideFeedback>true</provideFeedback>
+        </gazebo>
+        <gazebo>
+            <plugin name="gazebo_sensor_${drum_prefix}_sensor" filename="libgazebo_ros_ft_sensor.so">
+                <ros>
+                    <remapping>wrench:=ft_sensor_${drum_prefix}</remapping>
+                </ros>
+                <joint_name>${drum_prefix}_joint</joint_name>
+                <update_rate>1</update_rate>
+                <gaussian_noise>0.01</gaussian_noise>
+            </plugin>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>

@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "android": {
+      "adaptiveIcon": {
+        "backgroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#708090"
+      },
+      "package": "com.FlaSpaceInst.EZRASSORController",
+      "permissions": [],
+      "versionCode": 2
+    },
+    "name": "EZ-RASSOR Controller",
+    "description": "This controller application has been made for the EZ-RASSOR, an excavation robot that runs on ROS.",
+    "slug": "EZRASSORController",
+    "privacy": "public",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.1.1",
+    "orientation": "landscape",
+    "icon": "./assets/color-icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#5D6061"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}

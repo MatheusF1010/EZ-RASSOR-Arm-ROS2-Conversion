@@ -1,0 +1,21 @@
+{
+  "name": "ezrassor-app",
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "expo": "^44.0.0",
+    "expo-font": "~10.0.4",
+    "react": "17.0.1",
+    "react-native": "0.64.3",
+    "react-native-modal": "^7.0.2"
+  },
+  "devDependencies": {
+    "babel-preset-expo": "9.0.2"
+  }
+}

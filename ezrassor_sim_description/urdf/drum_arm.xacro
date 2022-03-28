@@ -1,0 +1,60 @@
+<?xml version='1.0'?>
+
+<robot name="ezrassor"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="drum_arm_mesh">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/drum_arm.dae" scale="0.35 0.35 0.35"></mesh>
+    </xacro:macro>
+	 
+    <!--This xacro block sets a new drum arm for the robot. 
+    
+        Inputs:
+            arm_prefix: the name that will be used to reference this arm
+            front_facing: [true/false] represent whether or not the arm is front facing
+            link_origin: an origin tag representing the xyz,rpy for the arm link
+    -->
+    <xacro:macro name="drum_arm" params="arm_prefix front_facing *link_origin">
+
+        <link name="${arm_prefix}">
+    		<collision name="collision">
+                <xacro:insert_block name="link_origin"/>
+    			<origin xyz="0 0 0" rpy="0 0 0"/>
+    			<geometry>
+    				<xacro:drum_arm_mesh />
+    			</geometry>
+    		</collision>
+    		<visual name="visual">
+                <xacro:insert_block name="link_origin"/>
+    			<geometry>
+    				<xacro:drum_arm_mesh />
+    			</geometry>
+    		</visual>
+    		<inertial>
+                <xacro:insert_block name="link_origin"/>
+    			<mass value="5"/>
+    			<xacro:cylinder_inertia m="5" r="0.05" h="0.3"/>
+    		</inertial>
+    	</link>
+    
+        <gazebo reference="${arm_prefix}">
+            <material>Gazebo/Black</material>
+            <selfCollide>1</selfCollide>
+        </gazebo>
+
+    	<joint name="${arm_prefix}_joint" type="continuous">
+            <xacro:if value="${front_facing}">
+        		<origin xyz="0.20 0 0" rpy="3.1415 0 0"/>
+            </xacro:if>
+            <xacro:unless value="${front_facing}">
+        		<origin xyz="-0.20 0 0" rpy="0 0 0"/>
+            </xacro:unless>
+    		<child link="${arm_prefix}"/>
+    		<parent link="base_link"/>
+    		<axis xyz="0 1 0" rpy="0 0 0"/>
+            <dynamics damping="0.2"/>
+    	</joint>
+
+    </xacro:macro>
+
+</robot> 
