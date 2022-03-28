@@ -42,7 +42,7 @@ colcon build
 
 5) Run ROS2 script. Repeat 1-5 in seperate terminals.
 
-
+-------------------------------------------------------
 
 Example: To launch a rover on Gazebo run:
 
