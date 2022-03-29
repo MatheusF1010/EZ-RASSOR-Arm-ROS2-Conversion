@@ -30,17 +30,17 @@ cd /dev_ws/
 rosdep install -i --from-path src --rosdistro foxy -y
 ```
 
-3) Build workspace
+4) Build workspace
 ```
 colcon build
 ```
 
-4) Source overlay
+5) Source overlay
 ```
 . install/local_setup.bash
 ```
 
-5) Run ROS2 script. Repeat 1-5 in seperate terminals.
+6) Run ROS2 script. Repeat 1-5 in seperate terminals.
 
 -------------------------------------------------------
 
