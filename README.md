@@ -26,7 +26,7 @@ source /opt/ros/foxy/setup.bash
 
 3)  Resolve dependencies
 ```
-cd /dev_ws/
+cd dev_ws/
 rosdep install -i --from-path src --rosdistro foxy -y
 ```
 
