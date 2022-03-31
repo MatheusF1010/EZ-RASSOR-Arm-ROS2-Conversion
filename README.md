@@ -26,7 +26,7 @@ source /opt/ros/foxy/setup.bash
 
 3)  Resolve dependencies
 ```
-cd /dev_ws/
+cd dev_ws/
 rosdep install -i --from-path src --rosdistro foxy -y
 ```
 
@@ -50,7 +50,7 @@ TERMINAL 1:
 ```
 source /opt/ros/foxy/setup.bash
 . /usr/share/gazebo/setup.sh
-cd /dev_ws/
+cd dev_ws/
 rosdep install -i --from-path src --rosdistro foxy -y
 colcon build
 . install/local_setup.bash
@@ -61,7 +61,7 @@ TERMINAL 2:
 ```
 source /opt/ros/foxy/setup.bash
 . /usr/share/gazebo/setup.sh
-cd /dev_ws/
+cd dev_ws/
 rosdep install -i --from-path src --rosdistro foxy -y
 colcon build
 . install/local_setup.bash
