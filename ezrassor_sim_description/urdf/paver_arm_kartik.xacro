@@ -1,0 +1,39 @@
+<?xml version='1.0'?>
+
+<robot name="ezrassor"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Arm Parts -->
+    <xacro:macro name="LINK1">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/link1.dae" scale="0.35 0.35 0.35"></mesh>
+    </xacro:macro>
+    <xacro:macro name="LINK2">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/link2.dae" scale="0.35 0.35 0.35"></mesh>
+    </xacro:macro>
+    <xacro:macro name="LINK3">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/link3.dae" scale="0.35 0.35 0.35"></mesh>
+    </xacro:macro>
+    <xacro:macro name="LINK4">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/link4.dae" scale="0.35 0.35 0.35"></mesh>
+    </xacro:macro>
+    <xacro:macro name="LINK5">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/link5.dae" scale="0.35 0.35 0.35"></mesh>
+    </xacro:macro>
+    <xacro:macro name="LINK6">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/link6.dae" scale="0.35 0.35 0.45"></mesh>
+    </xacro:macro>
+    <xacro:macro name="GRABBER1">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/grabber1.dae" scale="0.35 0.35 0.35"></mesh>
+    </xacro:macro>
+    <xacro:macro name="CAMERA">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/arm_camera.dae" scale="0.35 0.35 0.35"></mesh>
+    </xacro:macro>
+    <xacro:macro name="GRABBER2">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/grabber2.dae" scale="0.35 0.35 0.35"></mesh>
+    </xacro:macro>
+    <xacro:macro name="PLATFORM">
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/platform.dae" scale="2 2 2"></mesh>
+    </xacro:macro>
+    
+
+</robot>
