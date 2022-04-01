@@ -4,7 +4,7 @@
     xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <!-- Including separate components of the robot -->
-    <xacro:include filename="$(find ezrassor_sim_description)/urdf/paver_arm_kartik.xacro"/>
+    <xacro:include filename="$(find ezrassor_sim_description)/urdf/paver_arm.xacro"/>
 
     <!-- Defining Main Body -->
     <!-- LINK 1-->
