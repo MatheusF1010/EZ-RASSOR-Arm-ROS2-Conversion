@@ -32,7 +32,7 @@ def __spawn_robot(context, *args, **kwargs):
         robot_name = robot_name[1:]
 
     xacro_file = os.path.join(
-        pkg_ezrassor_sim_description, "urdf", "ezrassor_paver_arm.xacro.urdf" #ezrassor.xacro.urdf
+        pkg_ezrassor_sim_description, "urdf", "ezrassor_paver_arm_rover_test.xacro.urdf" #ezrassor.xacro.urdf
     )
 
     robot_description_content = Command(
