@@ -23,9 +23,9 @@ def create_command(request):
         )
 
     # Set the front arm action, if available in the request.
-    front_arm_action = None
-    if server.FRONT_ARM_ACTION_KEY in request:
-        front_arm_action = ArmAction[request[server.FRONT_ARM_ACTION_KEY]]
+    # front_arm_action = None
+    # if server.FRONT_ARM_ACTION_KEY in request:
+    #     front_arm_action = ArmAction[request[server.FRONT_ARM_ACTION_KEY]]
 
     # Set the back arm action, if available in the request.
     back_arm_action = None
@@ -33,21 +33,52 @@ def create_command(request):
         back_arm_action = ArmAction[request[server.BACK_ARM_ACTION_KEY]]
 
     # Set the front drum action, if available in the request.
-    front_drum_action = None
-    if server.FRONT_DRUM_ACTION_KEY in request:
-        front_drum_action = DrumAction[request[server.FRONT_DRUM_ACTION_KEY]]
+    # front_drum_action = None
+    # if server.FRONT_DRUM_ACTION_KEY in request:
+    #     front_drum_action = DrumAction[request[server.FRONT_DRUM_ACTION_KEY]]
 
     # Set the back drum action, if available in the request.
     back_drum_action = None
     if server.BACK_DRUM_ACTION_KEY in request:
         back_drum_action = DrumAction[request[server.BACK_DRUM_ACTION_KEY]]
 
+    paver_arm_joint_1_action = None
+    if server.PAVER_ARM_JOINT_1_ACTION_KEY in request:
+        paver_arm_joint_1_action = PaverArmAction[request[server.PAVER_ARM_JOINT_1_ACTION_KEY]]
+
+    paver_arm_joint_2_action = None
+    if server.PAVER_ARM_JOINT_2_ACTION_KEY in request:
+        paver_arm_joint_2_action = PaverArmAction[request[server.PAVER_ARM_JOINT_2_ACTION_KEY]]
+
+    paver_arm_joint_3_action = None
+    if server.PAVER_ARM_JOINT_3_ACTION_KEY in request:
+        paver_arm_joint_3_action = PaverArmAction[request[server.PAVER_ARM_JOINT_3_ACTION_KEY]]
+
+    paver_arm_joint_4_action = None
+    if server.PAVER_ARM_JOINT_4_ACTION_KEY in request:
+        paver_arm_joint_4_action = PaverArmAction[request[server.PAVER_ARM_JOINT_4_ACTION_KEY]]
+
+    paver_arm_joint_5_action = None
+    if server.PAVER_ARM_JOINT_5_ACTION_KEY in request:
+        paver_arm_joint_5_action = PaverArmAction[request[server.PAVER_ARM_JOINT_5_ACTION_KEY]]
+
+    paver_arm_claw_action = None
+    if server.PAVER_ARM_CLAW_ACTION_KEY in request:
+        paver_arm_claw_action = PaverClawAction[request[server.PAVER_ARM_CLAW_ACTION_KEY]]
+    
+
     return Command(
         wheel_action,
-        front_arm_action,
+        #front_arm_action,
         back_arm_action,
-        front_drum_action,
+        #front_drum_action,
         back_drum_action,
+        paver_arm_joint_1_action,
+        paver_arm_joint_2_action,
+        paver_arm_joint_3_action,
+        paver_arm_joint_4_action,
+        paver_arm_joint_5_action,
+        paver_arm_claw_action,
         routine_action,
     )
 
@@ -58,20 +89,31 @@ class Command:
     def __init__(
         self,
         wheel_action,
-        front_arm_action,
+        #front_arm_action,
         back_arm_action,
-        front_drum_action,
+        #front_drum_action,
         back_drum_action,
+        paver_arm_joint_1_action,
+        paver_arm_joint_2_action,
+        paver_arm_joint_3_action,
+        paver_arm_joint_4_action,
+        paver_arm_joint_5_action,
+        paver_arm_claw_action,
         routine_action,
     ):
         """Initialize this command with actions."""
         self.wheel_action = wheel_action
-        self.front_arm_action = front_arm_action
+        #self.front_arm_action = front_arm_action
         self.back_arm_action = back_arm_action
-        self.front_drum_action = front_drum_action
+        #self.front_drum_action = front_drum_action
         self.back_drum_action = back_drum_action
         self.routine_action = routine_action
-
+        self.paver_arm_joint_1_action = paver_arm_joint_1_action
+        self.paver_arm_joint_2_action = paver_arm_joint_2_action
+        self.paver_arm_joint_3_action = paver_arm_joint_3_action
+        self.paver_arm_joint_4_action = paver_arm_joint_4_action
+        self.paver_arm_joint_5_action = paver_arm_joint_5_action
+        self.paver_arm_claw_action = paver_arm_claw_action
 
 class MetaActionEnum(enum.EnumMeta):
     """Metaclass which modifies the enum creation procedure.
@@ -131,3 +173,27 @@ class RoutineAction(enum.Enum, metaclass=MetaActionEnum):
     AUTO_DOCK = 0b001000
     FULL_AUTONOMY = 0b010000
     STOP = 0b100000
+
+
+
+
+class PaverArmAction(enum.Enum, metaclass=MetaActionEnum):
+    """This action describes how to move the paver arm of an EZRASSOR."""
+
+    JOINT_UP = 1
+    JOINT_DOWN = -1.0
+    JOINT_RIGHT = 2.0
+    JOINT_LEFT = -2.0
+    JOINT_FORWARD = 3.0
+    JOINT_BACKWARD = -3.0
+
+
+class PaverClawAction(enum.Enum, metaclass=MetaActionEnum):
+    """This action describes how to move the paver claw of an EZRASSOR."""
+
+    GRABBER_UP = 1.0
+    GRABBER_DOWN = -1.0
+    GRABBER_RIGHT = 2.0
+    GRABBER_LEFT = -2.0
+    GRABBER_FORWARD = 3.0
+    GRABBER_BACKWARD = -3.0

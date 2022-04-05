@@ -13,11 +13,19 @@ import std_msgs.msg
 
 NODE = "controller_server"
 WHEEL_ACTIONS_TOPIC = "wheel_actions"
-FRONT_ARM_ACTIONS_TOPIC = "front_arm_actions"
+#FRONT_ARM_ACTIONS_TOPIC = "front_arm_actions"
 BACK_ARM_ACTIONS_TOPIC = "back_arm_actions"
-FRONT_DRUM_ACTIONS_TOPIC = "front_drum_actions"
+#FRONT_DRUM_ACTIONS_TOPIC = "front_drum_actions"
 BACK_DRUM_ACTIONS_TOPIC = "back_drum_actions"
 ROUTINE_ACTIONS_TOPIC = "routine_actions"
+
+PAVER_ARM_JOINT_1_ACTIONS_TOPIC = "paver_arm_joint_1_actions"
+PAVER_ARM_JOINT_2_ACTIONS_TOPIC = "paver_arm_joint_2_actions"
+PAVER_ARM_JOINT_3_ACTIONS_TOPIC = "paver_arm_joint_3_actions"
+PAVER_ARM_JOINT_4_ACTIONS_TOPIC = "paver_arm_joint_4_actions"
+PAVER_ARM_JOINT_5_ACTIONS_TOPIC = "paver_arm_joint_5_actions"
+PAVER_ARM_CLAW_ACTIONS_TOPIC = "paver_arm_claw_actions"
+
 QUEUE_SIZE = 10
 
 
@@ -33,21 +41,21 @@ def main(passed_args=None):
             WHEEL_ACTIONS_TOPIC,
             QUEUE_SIZE,
         )
-        front_arm_actions_publisher = node.create_publisher(
-            std_msgs.msg.Float32,
-            FRONT_ARM_ACTIONS_TOPIC,
-            QUEUE_SIZE,
-        )
+        # front_arm_actions_publisher = node.create_publisher(
+        #     std_msgs.msg.Float32,
+        #     FRONT_ARM_ACTIONS_TOPIC,
+        #     QUEUE_SIZE,
+        # )
         back_arm_actions_publisher = node.create_publisher(
             std_msgs.msg.Float32,
             BACK_ARM_ACTIONS_TOPIC,
             QUEUE_SIZE,
         )
-        back_front_actions_publisher = node.create_publisher(
-            std_msgs.msg.Float32,
-            FRONT_DRUM_ACTIONS_TOPIC,
-            QUEUE_SIZE,
-        )
+        # back_front_actions_publisher = node.create_publisher(
+        #     std_msgs.msg.Float32,
+        #     FRONT_DRUM_ACTIONS_TOPIC,
+        #     QUEUE_SIZE,
+        # )
         back_drum_actions_publisher = node.create_publisher(
             std_msgs.msg.Float32,
             BACK_DRUM_ACTIONS_TOPIC,
@@ -56,6 +64,36 @@ def main(passed_args=None):
         routine_actions_publisher = node.create_publisher(
             std_msgs.msg.Int8,
             ROUTINE_ACTIONS_TOPIC,
+            QUEUE_SIZE,
+        )
+        paver_arm_joint_1_publisher = node.create_publisher(
+            std_msgs.msg.Int8,
+            PAVER_ARM_JOINT_1_ACTIONS_TOPIC,
+            QUEUE_SIZE,
+        )
+        paver_arm_joint_2_publisher = node.create_publisher(
+            std_msgs.msg.Int8,
+            PAVER_ARM_JOINT_2_ACTIONS_TOPIC,
+            QUEUE_SIZE,
+        )
+        paver_arm_joint_3_publisher = node.create_publisher(
+            std_msgs.msg.Int8,
+            PAVER_ARM_JOINT_3_ACTIONS_TOPIC,
+            QUEUE_SIZE,
+        )
+        paver_arm_joint_4_publisher = node.create_publisher(
+            std_msgs.msg.Int8,
+            PAVER_ARM_JOINT_4_ACTIONS_TOPIC,
+            QUEUE_SIZE,
+        )
+        paver_arm_joint_5_publisher = node.create_publisher(
+            std_msgs.msg.Int8,
+            PAVER_ARM_JOINT_5_ACTIONS_TOPIC,
+            QUEUE_SIZE,
+        )
+        paver_arm_claw_publisher = node.create_publisher(
+            std_msgs.msg.Int8,
+            PAVER_ARM_CLAW_ACTIONS_TOPIC,
             QUEUE_SIZE,
         )
 
@@ -70,20 +108,20 @@ def main(passed_args=None):
                 wheel_action.angular.z = command.wheel_action.angular_z
                 wheel_actions_publisher.publish(wheel_action)
 
-            if command.front_arm_action is not None:
-                front_arm_action = std_msgs.msg.Float32()
-                front_arm_action.data = command.front_arm_action.value
-                front_arm_actions_publisher.publish(front_arm_action)
+            # if command.front_arm_action is not None:
+            #     front_arm_action = std_msgs.msg.Float32()
+            #     front_arm_action.data = command.front_arm_action.value
+            #     front_arm_actions_publisher.publish(front_arm_action)
 
             if command.back_arm_action is not None:
                 back_arm_action = std_msgs.msg.Float32()
                 back_arm_action.data = command.back_arm_action.value
                 back_arm_actions_publisher.publish(back_arm_action)
 
-            if command.front_drum_action is not None:
-                front_drum_action = std_msgs.msg.Float32()
-                front_drum_action.data = command.front_drum_action.value
-                back_front_actions_publisher.publish(front_drum_action)
+            # if command.front_drum_action is not None:
+            #     front_drum_action = std_msgs.msg.Float32()
+            #     front_drum_action.data = command.front_drum_action.value
+            #     back_front_actions_publisher.publish(front_drum_action)
 
             if command.back_drum_action is not None:
                 back_drum_action = std_msgs.msg.Float32()
@@ -94,6 +132,37 @@ def main(passed_args=None):
                 routine_action = std_msgs.msg.Int8()
                 routine_action.data = command.routine_action.value
                 routine_actions_publisher.publish(routine_action)
+
+            if command.paver_arm_joint_1_action is not None:
+                paver_arm_joint_1_action = std_msgs.msg.Int8()
+                paver_arm_joint_1_action.data = command.paver_arm_joint_1_action.value
+                paver_arm_joint_1_publisher.publish(paver_arm_joint_1_action)
+            
+            if command.paver_arm_joint_2_action is not None:
+                paver_arm_joint_2_action = std_msgs.msg.Int8()
+                paver_arm_joint_2_action.data = command.paver_arm_joint_2_action.value
+                paver_arm_joint_2_publisher.publish(paver_arm_joint_2_action)
+
+            if command.paver_arm_joint_3_action is not None:
+                paver_arm_joint_3_action = std_msgs.msg.Int8()
+                paver_arm_joint_3_action.data = command.paver_arm_joint_3_action.value
+                paver_arm_joint_3_publisher.publish(paver_arm_joint_3_action)
+
+            if command.paver_arm_joint_4_action is not None:
+                paver_arm_joint_4_action = std_msgs.msg.Int8()
+                paver_arm_joint_4_action.data = command.paver_arm_joint_4_action.value
+                paver_arm_joint_4_publisher.publish(paver_arm_joint_4_action)
+
+            if command.paver_arm_joint_5_action is not None:
+                paver_arm_joint_5_action = std_msgs.msg.Int8()
+                paver_arm_joint_5_action.data = command.paver_arm_joint_5_action.value
+                paver_arm_joint_5_publisher.publish(paver_arm_joint_5_action)
+
+            if command.paver_arm_claw_action is not None:
+                paver_arm_claw_action = std_msgs.msg.Int8()
+                paver_arm_claw_action.data = command.paver_arm_claw_action.value
+                paver_arm_claw_publisher.publish(paver_arm_claw_action)
+
 
         # Create a Flask app to serve HTTP requests.
         app = flask.Flask(__name__)
