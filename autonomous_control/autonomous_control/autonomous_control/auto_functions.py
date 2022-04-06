@@ -78,9 +78,7 @@ def auto_drive_location(world_state, ros_util, node, waypoint_server=None):
     node.get_logger().info("Our direction is: {}".format(direction))
     turn(new_heading_degrees, direction, world_state, ros_util)
     world_state.node.get_logger().info("Finished Turning To face goal.")
-    world_state.node.get_logger().info("Going to sleep for 2secs before zooming there...")
     ros_util.publish_actions("stop", 0, 0, 0, 0)
-    time.sleep(2)
 
     # Main loop until location is reached
     while not at_target(
@@ -167,8 +165,8 @@ def auto_dig(world_state, ros_util, duration, node, waypoint_server=None):
         node.get_logger().info("Auto-digging for {} seconds...".format(duration))
 
     # @TODO: Set arms down for digging 
-    set_front_arm_angle(world_state, ros_util, -0.04)
-    set_back_arm_angle(world_state, ros_util, -0.04)
+    # set_front_arm_angle(world_state, ros_util, -0.04)
+    # set_back_arm_angle(world_state, ros_util, -0.04)
 
     # Dig for the desired duration
     t = 0
@@ -177,8 +175,9 @@ def auto_dig(world_state, ros_util, duration, node, waypoint_server=None):
         # Swap between digging forward or backward every few seconds
         if t % 100 == 0:
             direction = "reverse" if direction == "forward" else "forward"
-
+        node.get_logger().info("Publishing d, 0, 0, 1, 1 with i={}".format(t))
         ros_util.publish_actions(direction, 0, 0, 1, 1)
+
         t += 1
         ros_util.node.rate.sleep()
 
@@ -215,8 +214,8 @@ def auto_dock(world_state, ros_util, node):
 
     ros_util.threshold = 3
 
-    world_state.target_location.x = 0
-    world_state.target_location.y = 0
+    world_state.target_location.x = float(0)
+    world_state.target_location.y = float(0)
 
     auto_drive_location(world_state, ros_util, node)
     ros_util.threshold = 0.5

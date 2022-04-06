@@ -117,8 +117,8 @@ export default class ControllerScreen extends React.Component {
         <Modal
           style={ControllerStyle.modalViewContainer}
           isVisible={this.state.infoModalVisible}
-          onSwipe={() => this.setInfoModalVisible(false)}
-          swipeDirection='down'
+          onSwipeComplete={() => this.setInfoModalVisible(false)}
+          swipeDirection={['down', 'up', 'left', 'right']}
           onRequestClose={() => this.setInfoModalVisible(false)}>
           <View style={{flexDirection: 'row'}}>
             <View style={ControllerStyle.columnHeader}>
@@ -147,7 +147,7 @@ export default class ControllerScreen extends React.Component {
             <View style={ControllerStyle.columnHeader}>
               <Text style={ControllerStyle.textSmall}>Our Mission</Text>
               <View style={{marginVertical: 10}}/>
-              <Text style={ControllerStyle.columnText}>The EZ-RASSOR (EZ Regolith Advanced Surface Systems Operations Robot) is an inexpensive, autonomous, regolith-mining robot designed to mimic the look and abilities of NASA’s RASSOR on a smaller scale. The primary goal of the EZ-RASSOR is to provide a functioning demonstration robot for visitors at the Kennedy Space Center.</Text>
+              <Text style={ControllerStyle.columnText}>The EZ-RASSOR (EZ Regolith Advanced Surface Systems Operations Robot) is an inexpensive, autonomous, regolith-mining robot designed to mimic the look and abilities of NASA's RASSOR on a smaller scale. The primary goal of the EZ-RASSOR is to provide a functioning demonstration robot for visitors at the Kennedy Space Center.</Text>
               <View style={{marginVertical: 10}}/>
               <Text style={[ControllerStyle.textTiny, ControllerStyle.columnText]}>Visit
                   <Text style={[ControllerStyle.textTiny, ControllerStyle.columnHyperlink]} onPress={() => Linking.openURL('https://github.com/FlaSpaceInst/EZ-RASSOR')}> our GitHub repository </Text>

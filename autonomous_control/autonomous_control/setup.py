@@ -22,7 +22,8 @@ setup(
         'console_scripts': [
             'obstacle_detection = autonomous_control.obstacle_detection:main',
             'autonomous_control = autonomous_control.autonomous_control:on_start_up',
-            'interactor = autonomous_control.simulation_interact:main'
+            'interactor = autonomous_control.simulation_interact:main',
+            'camera_demo = autonomous_control.camera_image:main'
         ],
     },
 )

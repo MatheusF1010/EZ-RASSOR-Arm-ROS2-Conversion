@@ -9,14 +9,6 @@ FRONT_ARM_ACTION_KEY = "front_arm_action"
 BACK_ARM_ACTION_KEY = "back_arm_action"
 FRONT_DRUM_ACTION_KEY = "front_drum_action"
 BACK_DRUM_ACTION_KEY = "back_drum_action"
-
-PAVER_ARM_JOINT_1_ACTION_KEY = "paver_arm_joint_1_action"
-PAVER_ARM_JOINT_2_ACTION_KEY = "paver_arm_joint_2_action"
-PAVER_ARM_JOINT_3_ACTION_KEY = "paver_arm_joint_3_action"
-PAVER_ARM_JOINT_4_ACTION_KEY = "paver_arm_joint_4_action"
-PAVER_ARM_JOINT_5_ACTION_KEY = "paver_arm_joint_5_action"
-PAVER_ARM_CLAW_ACTION_KEY = "paver_arm_claw_action"
-
 ROUTINE_ACTION_KEY = "routine_action"
 
 
@@ -45,36 +37,6 @@ def verify(request):
             if request[key] not in server.DrumAction:
                 raise VerificationError(
                     f"{key} value must be one of [{str(server.DrumAction)})",
-                )
-        elif key == PAVER_ARM_JOINT_1_ACTION_KEY:
-            if request[key] not in server.PaverArmAction:
-                raise VerificationError(
-                    f"{key} value must be one of [{str(server.PaverArmAction)})",
-                )
-        elif key == PAVER_ARM_JOINT_2_ACTION_KEY:
-            if request[key] not in server.PaverArmAction:
-                raise VerificationError(
-                    f"{key} value must be one of [{str(server.PaverArmAction)})",
-                )
-        elif key == PAVER_ARM_JOINT_3_ACTION_KEY:
-            if request[key] not in server.PaverArmAction:
-                raise VerificationError(
-                    f"{key} value must be one of [{str(server.PaverArmAction)})",
-                )
-        elif key == PAVER_ARM_JOINT_4_ACTION_KEY:
-            if request[key] not in server.PaverArmAction:
-                raise VerificationError(
-                    f"{key} value must be one of [{str(server.PaverArmAction)})",
-                )
-        elif key == PAVER_ARM_JOINT_5_ACTION_KEY:
-            if request[key] not in server.PaverArmAction:
-                raise VerificationError(
-                    f"{key} value must be one of [{str(server.PaverArmAction)})",
-                )
-        elif key == PAVER_ARM_CLAW_ACTION_KEY:
-            if request[key] not in server.PaverArmAction:
-                raise VerificationError(
-                    f"{key} value must be one of [{str(server.PaverClawAction)})",
                 )
         elif key == ROUTINE_ACTION_KEY:
             if request[key] not in server.RoutineAction:

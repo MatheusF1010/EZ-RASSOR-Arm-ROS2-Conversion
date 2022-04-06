@@ -32,7 +32,7 @@ def __spawn_robot(context, *args, **kwargs):
         robot_name = robot_name[1:]
 
     xacro_file = os.path.join(
-        pkg_ezrassor_sim_description, "urdf", "ezrassor_paver_arm_rover_test.xacro.urdf" #ezrassor.xacro.urdf
+        pkg_ezrassor_sim_description, "urdf", "ezrassor.xacro.urdf"
     )
 
     robot_description_content = Command(
@@ -119,6 +119,20 @@ def __spawn_robot(context, *args, **kwargs):
         output="screen",
     )
 
+    load_arm_front_velocity_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "arm_front_velocity_controller",
+        ],
+        output="screen",
+    )
+
     load_arm_back_velocity_controller = ExecuteProcess(
         cmd=[
             "ros2",
@@ -129,6 +143,20 @@ def __spawn_robot(context, *args, **kwargs):
             "--set-state",
             "start",
             "arm_back_velocity_controller",
+        ],
+        output="screen",
+    )
+
+    load_drum_front_velocity_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "drum_front_velocity_controller",
         ],
         output="screen",
     )
@@ -147,106 +175,6 @@ def __spawn_robot(context, *args, **kwargs):
         output="screen",
     )
 
-    # load_paver_arm_trajectory_controller = ExecuteProcess(
-    #     cmd=[
-    #         "ros2",
-    #         "control",
-    #         "load_controller",
-    #         "-c",
-    #         f"/{robot_name}/controller_manager",
-    #         "--set-state",
-    #         "start",
-    #         "paver_arm_trajectory_controller",
-    #     ],
-    #     output="screen",
-    # )
-
-    load_paver_arm_joint_1_trajectory_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "paver_arm_joint_1_trajectory_controller",
-        ],
-        output="screen",
-    )
-
-    load_paver_arm_joint_2_trajectory_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "paver_arm_joint_2_trajectory_controller",
-        ],
-        output="screen",
-    )
-
-    load_paver_arm_joint_3_trajectory_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "paver_arm_joint_3_trajectory_controller",
-        ],
-        output="screen",
-    )
-
-    load_paver_arm_joint_4_trajectory_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "paver_arm_joint_4_trajectory_controller",
-        ],
-        output="screen",
-    )
-
-    load_paver_arm_joint_5_trajectory_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "paver_arm_joint_5_trajectory_controller",
-        ],
-        output="screen",
-    )
-
-    load_paver_arm_claw_effort_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "paver_arm_claw_effort_controller",
-        ],
-        output="screen",
-    )
-
-    
-
     return [
         RegisterEventHandler(
             event_handler=OnProcessExit(
@@ -263,57 +191,25 @@ def __spawn_robot(context, *args, **kwargs):
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
+                on_exit=[load_arm_front_velocity_controller],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
                 on_exit=[load_arm_back_velocity_controller],
             )
         ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
+                on_exit=[load_drum_front_velocity_controller],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
                 on_exit=[load_drum_back_velocity_controller],
-            )
-        ),
-        
-        # RegisterEventHandler(
-        #     event_handler=OnProcessExit(
-        #         target_action=load_joint_state_controller,
-        #         on_exit=[load_paver_arm_trajectory_controller],
-        #     )
-        # ),
-
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_paver_arm_joint_1_trajectory_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_paver_arm_joint_2_trajectory_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_paver_arm_joint_3_trajectory_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_paver_arm_joint_4_trajectory_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_paver_arm_joint_5_trajectory_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_paver_arm_claw_effort_controller],
             )
         ),
         robot_state_publisher,
@@ -381,13 +277,6 @@ def generate_launch_description():
         namespace=LaunchConfiguration("robot_name"),
         output={"both": "screen"},
     )
-    paver_arm_driver_node = Node(
-        package="ezrassor_sim_description",
-        executable="paver_arm_driver",
-        namespace=LaunchConfiguration("robot_name"),
-        output={"both": "screen"},
-    )
-
 
     #param_config = os.path.join(get_package_share_directory('depthimage_to_laserscan'), 'cfg', 'param.yaml')
     depth_img_to_ls = Node(
@@ -444,7 +333,6 @@ def generate_launch_description():
             wheels_driver_node,
             arms_driver_node,
             drums_driver_node,
-            paver_arm_driver_node,
             depth_img_to_ls
             #pc_to_ls
         ]

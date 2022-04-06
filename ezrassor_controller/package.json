@@ -13,7 +13,7 @@
     "expo-font": "~10.0.4",
     "react": "17.0.1",
     "react-native": "0.64.3",
-    "react-native-modal": "^7.0.2"
+    "react-native-modal": "^10.0.0"
   },
   "devDependencies": {
     "babel-preset-expo": "9.0.2"
