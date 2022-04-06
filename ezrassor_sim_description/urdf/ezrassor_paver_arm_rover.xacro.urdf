@@ -69,9 +69,6 @@
 		<origin xyz="-0.20 -0.285 0" rpy="0 0 0"/>
 	</xacro:ezrassor_wheel>
 
-	<xacro:drum_arm arm_prefix="arm_front" front_facing="true">
-		<origin xyz="0 0 0" rpy="0 0 0"/>
-	</xacro:drum_arm>
 	
     <xacro:drum_arm arm_prefix="arm_back" front_facing="false">
 		<origin xyz="0 0 0" rpy="3.1415 0 3.1415"/>
@@ -79,9 +76,7 @@
 
     <!-- Since the drum intertias are perpendicular to the rest of the robot, 
         the rp values need to be rotated by pi/2 -->
-    <xacro:drum drum_prefix="drum_front" arm_prefix="arm_front" front_facing="true">
-		<origin xyz="0 0 0" rpy="1.57 1.57 0"/>
-    </xacro:drum>
+    
     
     <xacro:drum drum_prefix="drum_back" arm_prefix="arm_back" front_facing="false">
 		<origin xyz="0 0 0" rpy="4.71 1.57 3.14159"/>
@@ -133,23 +128,7 @@
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
-        <joint name="arm_front_joint">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
         <joint name="arm_back_joint">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-        <joint name="drum_front_joint">
             <command_interface name="velocity">
                 <param name="min">-10</param>
                 <param name="max">10</param>
@@ -202,7 +181,7 @@
     <!-- base_link to arm_front -->
         <parent link="base_link"/> 
         <child link="camera_link"/>
-        <!-- <origin xyz="0.215 0 0.05" rpy="0 0 0"/> -->
+        <origin xyz="0.215 0 0.05" rpy="0 0 0"/>
         <origin xyz=".3 0 -.1" rpy="0 0 0"/>
         <axis xyz="0 1 0" />
     </joint>
@@ -542,12 +521,7 @@
         <parent link="base_link"/>
         <axis xyz="0 0 0" rpy="0 0 0"/>
     </joint>
-    <joint type="fixed" name="jointRoverArmFront">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <child link="arm_front"/>
-        <parent link="base_link"/>
-        <axis xyz="0 0 0" rpy="0 0 0"/>
-    </joint>
+    
 
     <joint type="continuous" name="joint12">
         <origin xyz="0 -0.12 0.09" rpy="0 0 0"/>

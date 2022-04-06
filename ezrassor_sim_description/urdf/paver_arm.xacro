@@ -20,7 +20,7 @@
         <mesh filename="file://$(find ezrassor_sim_description)/meshes/link5.dae" scale="0.35 0.35 0.35"></mesh>
     </xacro:macro>
     <xacro:macro name="LINK6">
-        <mesh filename="file://$(find ezrassor_sim_description)/meshes/link6.dae" scale="0.35 0.35 0.45"></mesh>
+        <mesh filename="file://$(find ezrassor_sim_description)/meshes/link6.1.dae" scale="0.35 0.35 0.45"></mesh>
     </xacro:macro>
     <xacro:macro name="GRABBER1">
         <mesh filename="file://$(find ezrassor_sim_description)/meshes/grabber1.dae" scale="0.35 0.35 0.35"></mesh>
