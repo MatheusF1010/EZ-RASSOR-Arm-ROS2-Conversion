@@ -16,8 +16,6 @@ import rclpy
 from rclpy.node import Node
 
 NODE = "drums_driver"
-FRONT_DRUMS_EXTERNAL_TOPIC = "front_drum_instructions"
-FRONT_DRUMS_INTERNAL_TOPIC = "drum_front_velocity_controller/commands"
 BACK_DRUMS_EXTERNAL_TOPIC = "back_drum_instructions"
 BACK_DRUMS_INTERNAL_TOPIC = "drum_back_velocity_controller/commands"
 
@@ -34,13 +32,6 @@ class DrumsSubscriber(Node):
         """
         super().__init__("drums_driver")
 
-        self.front_drums_subscription = self.create_subscription(
-            Float64,
-            FRONT_DRUMS_EXTERNAL_TOPIC,
-            self.handle_front_drum_movements,
-            QUEUE_SIZE,
-        )
-
         self.back_drums_subscription = self.create_subscription(
             Float64,
             BACK_DRUMS_EXTERNAL_TOPIC,
@@ -48,25 +39,11 @@ class DrumsSubscriber(Node):
             QUEUE_SIZE,
         )
 
-        self.front_drums_publisher = self.create_publisher(
-            Float64MultiArray, FRONT_DRUMS_INTERNAL_TOPIC, QUEUE_SIZE
-        )
-
         self.back_drums_publisher = self.create_publisher(
             Float64MultiArray, BACK_DRUMS_INTERNAL_TOPIC, QUEUE_SIZE
         )
 
         self.get_logger().info("drums_driver node created successfully")
-
-    def handle_front_drum_movements(self, data):
-        """Move the front drum of the robot per
-        the commands encoded in the instruction
-        """
-
-        front_drum_msg = Float64MultiArray()
-        front_drum_msg.data = [data.data * MAX_DRUM_SPEED]
-
-        self.front_drums_publisher.publish(front_drum_msg)
 
     def handle_back_drum_movements(self, data):
         """Move the back drum of the robot per
@@ -76,7 +53,7 @@ class DrumsSubscriber(Node):
         back_drum_msg = Float64MultiArray()
         back_drum_msg.data = [data.data * MAX_DRUM_SPEED]
 
-        self.front_drums_publisher.publish(back_drum_msg)
+        self.back_drums_publisher.publish(back_drum_msg)
 
 
 def main(passed_args=None):

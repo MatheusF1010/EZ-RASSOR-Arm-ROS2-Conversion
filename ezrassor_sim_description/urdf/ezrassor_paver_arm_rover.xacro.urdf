@@ -4,8 +4,9 @@
     xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <!-- Including separate components of the robot -->
+    <!-- ARM -->
     <xacro:include filename="$(find ezrassor_sim_description)/urdf/paver_arm.xacro"/>
-
+    <!-- CART -->
     <xacro:property name="cameraSize" value="0.01"/>
 	<xacro:property name="cameraMass" value="0.1"/>
 	<xacro:include filename="$(find ezrassor_sim_description)/urdf/materials.xacro" />
@@ -15,11 +16,10 @@
 	<xacro:include filename="$(find ezrassor_sim_description)/urdf/drum.xacro" />
 	<xacro:include filename="$(find ezrassor_sim_description)/urdf/imu.xacro" />
 
-
+    <!-- CART PARTS -->
     <link name='base_link'>
 		<pose>0 0 0 0 0 0</pose>
 	</link>
-
 	<link name='body'>
 		<pose>0 0 0 0 0 0</pose>
 		<inertial>
@@ -40,120 +40,40 @@
 			</geometry>
 		</visual>
 	</link>
-    
     <gazebo reference="base_link">
         <selfCollide>0</selfCollide>
     </gazebo>
-	
     <joint name="body_joint" type="fixed">
 		<axis xyz="0 0 0"/>
 		<origin xyz="0 0 0" rpy="0 0 0"/>
 		<parent link="base_link"/>
 		<child link="body"/>
 	</joint>
-
     <!--Macros representing different parts of the ezrassor.-->
 	<xacro:ezrassor_wheel wheel_prefix="left_wheel_front" yaw="0">
 		<origin xyz="0.20 0.285 0" rpy="0 0 0"/>
 	</xacro:ezrassor_wheel>
-
 	<xacro:ezrassor_wheel wheel_prefix="right_wheel_front" yaw="${pi}">
 		<origin xyz="0.20 -0.285 0" rpy="0 0 0"/>
 	</xacro:ezrassor_wheel>
-
 	<xacro:ezrassor_wheel wheel_prefix="left_wheel_back" yaw="0">
 		<origin xyz="-0.20 0.285 0" rpy="0 0 0"/>
 	</xacro:ezrassor_wheel>
-
 	<xacro:ezrassor_wheel wheel_prefix="right_wheel_back" yaw="${pi}">
 		<origin xyz="-0.20 -0.285 0" rpy="0 0 0"/>
 	</xacro:ezrassor_wheel>
-
-	
     <xacro:drum_arm arm_prefix="arm_back" front_facing="false">
 		<origin xyz="0 0 0" rpy="3.1415 0 3.1415"/>
 	</xacro:drum_arm>
 
     <!-- Since the drum intertias are perpendicular to the rest of the robot, 
         the rp values need to be rotated by pi/2 -->
-    
-    
     <xacro:drum drum_prefix="drum_back" arm_prefix="arm_back" front_facing="false">
 		<origin xyz="0 0 0" rpy="4.71 1.57 3.14159"/>
-    </xacro:drum>
-    			
+    </xacro:drum>	
     <xacro:imu imu_prefix="imu" camera_size="${cameraSize}" camera_mass="${cameraMass}">
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </xacro:imu>
-
-    <!-- Add the camera xacro using the camera.xacro with camera_prefix of camera -->
-    <!-- <xacro:camera camera_prefix="natecam">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-    </xacro:camera> -->
-
-
-    <ros2_control name="GazeboSystem" type="system">
-        <hardware>
-            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-        </hardware>
-        <joint name="left_wheel_front_joint">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-        <joint name="left_wheel_back_joint">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-        <joint name="right_wheel_front_joint">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-        <joint name="right_wheel_back_joint">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-        <joint name="arm_back_joint">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-        <joint name="drum_back_joint">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-    </ros2_control>
-    
-    <gazebo>
-        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-            <parameters>$(find ezrassor_sim_description)/config/controllers.yaml</parameters>
-        </plugin>
-    </gazebo>
-
-    	
-
     <link name="camera_link">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -176,24 +96,19 @@
             <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
         </inertial>
     </link>
-
     <joint name="camera_joint" type="fixed">
-    <!-- base_link to arm_front -->
         <parent link="base_link"/> 
         <child link="camera_link"/>
         <origin xyz="0.215 0 0.05" rpy="0 0 0"/>
         <origin xyz=".3 0 -.1" rpy="0 0 0"/>
         <axis xyz="0 1 0" />
     </joint>
-
     <link name="camera_depth_frame"/>
-
     <joint name="camera_depth_joint" type="fixed">
         <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
         <parent link="camera_link"/>
         <child link="camera_depth_frame"/>
     </joint>
-
     <gazebo reference="camera_link">
         <sensor name="depth_camera" type="depth">
             <visualize>true</visualize>
@@ -231,7 +146,7 @@
         </sensor>
     </gazebo>
 
-    <!-- Defining Main Body -->
+    <!-- Defining ARM Body -->
     <!-- LINK 1-->
     <link name='link1'>
         <pose>0 0 0 0 0 0</pose>
@@ -514,15 +429,13 @@
         </visual>
     </link>
 
-    <!-- Linking all the robot parts -->
+    <!-- Linking all the robot parts ARM -->
     <joint type="fixed" name="jointRoverLink1">
         <origin xyz="0.55 -0.1 0.27" rpy="0 0 0"/>
         <child link="link1"/>
         <parent link="base_link"/>
         <axis xyz="0 0 0" rpy="0 0 0"/>
     </joint>
-    
-
     <joint type="continuous" name="joint12">
         <origin xyz="0 -0.12 0.09" rpy="0 0 0"/>
         <child link="link2"/>
@@ -530,7 +443,6 @@
         <axis xyz="0 0 1" rpy="0 0 0"/>
         <joint_properties damping="0.0" friction="0.0"/>
     </joint>
-
     <joint type="continuous" name="joint23">
         <origin xyz="0 0.037 0.13" rpy="0 0 0"/>
         <child link="link3"/>
@@ -538,7 +450,6 @@
         <axis xyz="0 1 0" rpy="0 0 0"/>
         <joint_properties damping="0.0" friction="0.0"/>
     </joint>
-
     <joint type="continuous" name="joint34">
         <origin xyz="0.44 -0.037 0" rpy="0 0 0"/>
         <child link="link4"/>
@@ -546,7 +457,6 @@
         <axis xyz="0 1 0" rpy="0 0 0"/>
         <joint_properties damping="0.0" friction="0.0"/>
     </joint>
-
     <joint type="continuous" name="joint45">
         <origin xyz="0.42 0.0 0" rpy="0 0 0"/>
         <child link="link5"/>
@@ -554,7 +464,6 @@
         <axis xyz="0 1 0" rpy="0 0 0"/>
         <joint_properties damping="0.0" friction="0.0"/>
     </joint>
-
     <joint type="continuous" name="joint56">
         <origin xyz="0 0.12 0" rpy="0 0 0"/>
         <child link="link6"/>
@@ -562,23 +471,18 @@
         <axis xyz="0 0 1" rpy="0 0 0"/>
         <joint_properties damping="0.0" friction="0.0"/>
     </joint>
-
-  
     <joint name="arm_camera_joint" type="fixed">
         <axis xyz="0 0 0" />
         <origin xyz="0 0.4 0" rpy="0 0.4 0"/>
         <parent link="link1"/>
         <child link="arm_camera"/>
     </joint>
-
     <joint name="platform_joint" type="fixed">
         <axis xyz="0 0 0" />
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <parent link="link1"/>
         <child link="platform"/>
     </joint>
-
-
     <joint type="prismatic" name="grabber_joint1">
         <origin xyz="0.1 -0.31 -0.24" rpy="0 0 0"/>
         <child link="grabber1"/>
@@ -587,7 +491,6 @@
         <dynamics damping="1.0" friction="0.5"/>
         <limit lower="-0.02" upper="0.0224" effort="10" velocity="0.005"/>
     </joint>
-
     <joint type="prismatic" name="grabber_joint2">
         <origin xyz="0.1 0.31 -0.24" rpy="0 0 0"/>
         <child link="grabber2"/>
@@ -597,8 +500,69 @@
         <limit lower="-0.02" upper="0.0225" effort="10" velocity="0.005"/>
     </joint>
 
-
     <!-- ROS2 Control Gazebo System -->
 
+    <!-- CART CONTROLS -->
+    <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+        <joint name="left_wheel_front_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="left_wheel_back_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="right_wheel_front_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="right_wheel_back_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="arm_back_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="drum_back_joint">
+            <command_interface name="velocity">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+    </ros2_control>
+    <gazebo>
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+            <parameters>$(find ezrassor_sim_description)/config/controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
+
+    <!-- ARM CONTROLS -->
+    
     
 </robot>

@@ -8,18 +8,18 @@ ezrassor:
 
       joint_state_broadcaster:
         type: joint_state_broadcaster/JointStateBroadcaster
-  
-      arm_front_velocity_controller:
-        type: velocity_controllers/JointGroupVelocityController
 
       arm_back_velocity_controller:
-        type: velocity_controllers/JointGroupVelocityController
-      
-      drum_front_velocity_controller:
         type: velocity_controllers/JointGroupVelocityController
 
       drum_back_velocity_controller:
         type: velocity_controllers/JointGroupVelocityController
+      
+      paver_arm_controller:
+        type: velocity_controllers/JointTrajectoryController
+      
+      paver_arm_claw_controller:
+        type: effort_controllers/JointGroupEffortController
 
   diff_drive_controller:
     ros__parameters:
@@ -75,23 +75,11 @@ ezrassor:
       angular.z.min_acceleration: -2.0
       angular.z.max_jerk: 0.0
       angular.z.min_jerk: 0.0
-
-  arm_front_velocity_controller:
-    ros__parameters:
-        joints: 
-          - arm_front_joint
-        pid: {p: 100.0, i: 0.01, d: 10.0}
   
   arm_back_velocity_controller:
     ros__parameters:
         joints: 
           - arm_back_joint
-        pid: {p: 100.0, i: 0.01, d: 10.0}
-
-  drum_front_velocity_controller:
-    ros__parameters:
-        joints: 
-          - drum_front_joint
         pid: {p: 100.0, i: 0.01, d: 10.0}
   
   drum_back_velocity_controller:
@@ -99,3 +87,48 @@ ezrassor:
         joints: 
           - drum_back_joint
         pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  # Paver arm controller using the joint trajectory controller
+  paver_arm_controller:
+    ros__parameters:
+      joints:
+      - joint12
+      - joint23
+      - joint34
+      - joint45
+      - joint56
+
+      constraints:
+        goal_time: 0.5
+        stopped_velocity_tolerance: 0.02
+        joint12:
+          trajectory: 0.05
+          goal: 0.02
+        joint23:
+          trajectory: 0.05
+          goal: 0.02
+        joint34:
+          trajectory: 0.05
+          goal: 0.02
+        joint45:
+          trajectory: 0.05
+          goal: 0.02
+        joint56:
+          goal: 0.01
+      gains:
+        joint1: {p: 100, d: 1, i: 1, i_clamp: 1}
+        joint2: {p: 100, d: 1, i: 1, i_clamp: 1}
+        joint3: {p: 100, d: 1, i: 1, i_clamp: 1}
+        joint4: {p: 100, d: 1, i: 1, i_clamp: 1}
+        joint5: {p: 100, d: 1, i: 1, i_clamp: 1}
+      stop_trajectory_duration: 0.5
+      state_publish_rate: 25
+      action_monitor_rate: 10
+  
+  paver_arm_claw_controller:
+    ros__parameters:
+      joints: 
+        - grabber_joint1
+        - grabber_joint2
+      grabber_joint1: {p: 10.0, i: 0.00, d: 0.0}
+      grabber_joint2: {p: 10.0, i: 0.00, d: 0.0}

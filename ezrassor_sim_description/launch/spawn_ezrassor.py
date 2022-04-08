@@ -91,6 +91,7 @@ def __spawn_robot(context, *args, **kwargs):
 
     # controllers must be loaded here as part of the spawn or else the
     # gazebo_ros controls won't know what to make controllers for
+    # CART
     load_joint_state_controller = ExecuteProcess(
         cmd=[
             "ros2",
@@ -119,20 +120,6 @@ def __spawn_robot(context, *args, **kwargs):
         output="screen",
     )
 
-    load_arm_front_velocity_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "arm_front_velocity_controller",
-        ],
-        output="screen",
-    )
-
     load_arm_back_velocity_controller = ExecuteProcess(
         cmd=[
             "ros2",
@@ -147,20 +134,6 @@ def __spawn_robot(context, *args, **kwargs):
         output="screen",
     )
 
-    load_drum_front_velocity_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "drum_front_velocity_controller",
-        ],
-        output="screen",
-    )
-
     load_drum_back_velocity_controller = ExecuteProcess(
         cmd=[
             "ros2",
@@ -171,6 +144,35 @@ def __spawn_robot(context, *args, **kwargs):
             "--set-state",
             "start",
             "drum_back_velocity_controller",
+        ],
+        output="screen",
+    )
+
+    # ARM
+    load_paver_arm_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "paver_arm_controller"
+        ],
+        output="screen",
+    )
+
+    load_paver_arm_claw_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "paver_arm_claw_controller"
         ],
         output="screen",
     )
@@ -191,7 +193,7 @@ def __spawn_robot(context, *args, **kwargs):
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_arm_front_velocity_controller],
+                on_exit=[load_paver_arm_controller],
             )
         ),
         RegisterEventHandler(
@@ -203,7 +205,7 @@ def __spawn_robot(context, *args, **kwargs):
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_drum_front_velocity_controller],
+                on_exit=[load_paver_arm_claw_controller],
             )
         ),
         RegisterEventHandler(
@@ -277,12 +279,16 @@ def generate_launch_description():
         namespace=LaunchConfiguration("robot_name"),
         output={"both": "screen"},
     )
-
-    #param_config = os.path.join(get_package_share_directory('depthimage_to_laserscan'), 'cfg', 'param.yaml')
+    paver_arm_driver_node = Node(
+        package="ezrassor_sim_description",
+        executable="paver_arm_driver",
+        namespace=LaunchConfiguration("robot_name"),
+        output={"both": "screen"},
+    )
     depth_img_to_ls = Node(
             package='depthimage_to_laserscan',
-            node_executable='depthimage_to_laserscan_node',
-            node_name='depthimage_to_laserscan_node',
+            executable='depthimage_to_laserscan_node',
+            name='depthimage_to_laserscan_node',
             remappings=[('depth','/ezrassor/depth_camera/depth/image_raw'),
                         ('depth_camera_info', '/ezrassor/depth_camera/depth/camera_info'),
                         ('scan', '/obstacle_detection/combined')],
@@ -294,27 +300,6 @@ def generate_launch_description():
                     "scan_height": 1
             }]
     )
-
-
-    # pc_to_ls = Node(
-    #         package='pointcloud_to_laserscan', executable='pointcloud_to_laserscan_node',
-    #         remappings=[('cloud_in', ['ezrassor/depth_camera/points']),
-    #                     ('scan', ['/obstacle_detection/combined'])],
-    #         parameters=[{
-    #             'transform_tolerance': 0.01,
-    #             'min_height': 0.0,
-    #             'max_height': 1.0,
-    #             'angle_min': -1.5708,  # -M_PI/2
-    #             'angle_max': 1.5708,  # M_PI/2
-    #             'angle_increment': 0.0087,  # M_PI/360.0
-    #             'scan_time': 0.3333,
-    #             'range_min': 0.45,
-    #             'range_max': 4.0,
-    #             'use_inf': False,
-    #             'inf_epsilon': 1.0
-    #         }],
-    #         name='pointcloud_to_laserscan'
-    # )
 
     # Note that this package WILL NOT start Gazebo
     # instead, when this launch file is executed it will wait for /spawn_entity
@@ -333,7 +318,7 @@ def generate_launch_description():
             wheels_driver_node,
             arms_driver_node,
             drums_driver_node,
+            paver_arm_driver_node,
             depth_img_to_ls
-            #pc_to_ls
         ]
     )
