@@ -3,10 +3,10 @@
 <robot name="ezrassor_arm"
     xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <!-- Including separate components of the robot -->
+    <!-- Including separate components of the paver arm -->
     <xacro:include filename="$(find ezrassor_sim_description)/urdf/paver_arm.xacro"/>
 
-    <!-- Defining Main Body -->
+    <!-- Defining Paver Arm -->
     <!-- LINK 1-->
     <link name='link1'>
         <pose>0 0 0 0 0 0</pose>
@@ -289,7 +289,7 @@
         </visual>
     </link>
 
-    <!-- Linking all the robot parts -->
+    <!-- Linking all the paver arm parts -->
     <joint type="continuous" name="joint12">
         <origin xyz="0 -0.12 0.09" rpy="0 0 0"/>
         <child link="link2"/>
@@ -297,7 +297,6 @@
         <axis xyz="0 0 1" rpy="0 0 0"/>
         <joint_properties damping="0.0" friction="0.0"/>
     </joint>
-
     <joint type="continuous" name="joint23">
         <origin xyz="0 0.037 0.13" rpy="0 0 0"/>
         <child link="link3"/>
@@ -305,7 +304,6 @@
         <axis xyz="0 1 0" rpy="0 0 0"/>
         <joint_properties damping="0.0" friction="0.0"/>
     </joint>
-
     <joint type="continuous" name="joint34">
         <origin xyz="0.44 -0.037 0" rpy="0 0 0"/>
         <child link="link4"/>
@@ -313,7 +311,6 @@
         <axis xyz="0 1 0" rpy="0 0 0"/>
         <joint_properties damping="0.0" friction="0.0"/>
     </joint>
-
     <joint type="continuous" name="joint45">
         <origin xyz="0.42 0.0 0" rpy="0 0 0"/>
         <child link="link5"/>
@@ -321,7 +318,6 @@
         <axis xyz="0 1 0" rpy="0 0 0"/>
         <joint_properties damping="0.0" friction="0.0"/>
     </joint>
-
     <joint type="continuous" name="joint56">
         <origin xyz="0 0.12 0" rpy="0 0 0"/>
         <child link="link6"/>
@@ -329,23 +325,18 @@
         <axis xyz="0 0 1" rpy="0 0 0"/>
         <joint_properties damping="0.0" friction="0.0"/>
     </joint>
-
-  
     <joint name="arm_camera_joint" type="fixed">
         <axis xyz="0 0 0" />
         <origin xyz="0 0.4 0" rpy="0 0.4 0"/>
         <parent link="link1"/>
         <child link="arm_camera"/>
     </joint>
-
     <joint name="platform_joint" type="fixed">
         <axis xyz="0 0 0" />
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <parent link="link1"/>
         <child link="platform"/>
     </joint>
-
-
     <joint type="prismatic" name="grabber_joint1">
         <origin xyz="0.1 -0.31 -0.24" rpy="0 0 0"/>
         <child link="grabber1"/>
@@ -354,7 +345,6 @@
         <dynamics damping="1.0" friction="0.5"/>
         <limit lower="-0.02" upper="0.0224" effort="10" velocity="0.005"/>
     </joint>
-
     <joint type="prismatic" name="grabber_joint2">
         <origin xyz="0.1 0.31 -0.24" rpy="0 0 0"/>
         <child link="grabber2"/>
