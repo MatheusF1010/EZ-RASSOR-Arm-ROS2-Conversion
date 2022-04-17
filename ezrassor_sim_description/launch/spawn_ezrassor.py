@@ -199,13 +199,13 @@ def __spawn_robot(context, *args, **kwargs):
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_arm_back_velocity_controller],
+                on_exit=[load_paver_arm_claw_controller],
             )
         ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_paver_arm_claw_controller],
+                on_exit=[load_arm_back_velocity_controller],
             )
         ),
         RegisterEventHandler(

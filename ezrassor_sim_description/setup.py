@@ -43,7 +43,7 @@ setup(
             "arms_driver = arms_driver.__main__:main",
             "wheels_driver = wheels_driver.__main__:main",
             "drums_driver = drums_driver.__main__:main",
-            "paver_arm_driver = parver_arm_driver.__main__:main",
+            "paver_arm_driver = paver_arm_driver.__main__:main",
         ],
     },
 )

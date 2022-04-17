@@ -16,7 +16,7 @@ ezrassor:
         type: velocity_controllers/JointGroupVelocityController
       
       paver_arm_controller:
-        type: velocity_controllers/JointTrajectoryController
+        type: joint_trajectory_controller/JointTrajectoryController
       
       paver_arm_claw_controller:
         type: effort_controllers/JointGroupEffortController
@@ -116,11 +116,11 @@ ezrassor:
         joint56:
           goal: 0.01
       gains:
-        joint1: {p: 100, d: 1, i: 1, i_clamp: 1}
-        joint2: {p: 100, d: 1, i: 1, i_clamp: 1}
-        joint3: {p: 100, d: 1, i: 1, i_clamp: 1}
-        joint4: {p: 100, d: 1, i: 1, i_clamp: 1}
-        joint5: {p: 100, d: 1, i: 1, i_clamp: 1}
+        joint12: {p: 100, d: 1, i: 1, i_clamp: 1}
+        joint23: {p: 100, d: 1, i: 1, i_clamp: 1}
+        joint34: {p: 100, d: 1, i: 1, i_clamp: 1}
+        joint45: {p: 100, d: 1, i: 1, i_clamp: 1}
+        joint56: {p: 100, d: 1, i: 1, i_clamp: 1}
       stop_trajectory_duration: 0.5
       state_publish_rate: 25
       action_monitor_rate: 10

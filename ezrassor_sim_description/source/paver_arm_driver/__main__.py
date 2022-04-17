@@ -73,7 +73,6 @@ def handle_fifth_joint_movements(data):
 
     publishers[FIFTH_JOINT_INTERNAL_TOPIC].publish(fifth_joint_msg)
 
-
 def handle_claw_movements(data):
     claw_msg = Float64MultiArray()
     claw_msg.layout.dim.append(MultiArrayDimension())
@@ -87,24 +86,27 @@ def handle_claw_movements(data):
 def main(passed_args=None):
     """Main entry point for ROS node."""
     try:
-        rclpy.init_node(NODE)
+        rclpy.init(args=passed_args)
         node = rclpy.create_node(NODE)
 
         # Create publishers to Gazebo velocity managers.
         publishers[FIRST_JOINT_INTERNAL_TOPIC] = node.create_publisher(
-            Float64MultiArray, FIRST_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
+            Float64, FIRST_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
         )
         publishers[SECOND_JOINT_INTERNAL_TOPIC] = node.create_publisher(
-            Float64MultiArray, SECOND_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
+            Float64, SECOND_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
         )
         publishers[THIRD_JOINT_INTERNAL_TOPIC] = node.create_publisher(
-            Float64MultiArray, THIRD_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
+            Float64, THIRD_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
         )
         publishers[FOURTH_JOINT_INTERNAL_TOPIC] = node.create_publisher(
-            Float64MultiArray, FOURTH_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
+            Float64, FOURTH_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
         )
         publishers[FIFTH_JOINT_INTERNAL_TOPIC] = node.create_publisher(
-            Float64MultiArray, FIFTH_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
+            Float64, FIFTH_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
+        )
+        publishers[CLAW_INTERNAL_TOPIC] = node.create_publisher(
+            Float64MultiArray, CLAW_INTERNAL_TOPIC, QUEUE_SIZE
         )
 
         # Create subscriptions to listen for specific robot actions from users.
