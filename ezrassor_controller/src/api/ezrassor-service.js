@@ -16,6 +16,7 @@ export default class EZRASSOR {
     }
 
     set host(value) {
+        console.log(value);
         this._host = value;
     }
 
@@ -86,11 +87,11 @@ export default class EZRASSOR {
         this._twistMsg = { 
             autonomous_toggles:0,
             target_coordinate:this.coordinate,
-            wheel_instruction: "none",
-            front_arm_instruction:0,
-            back_arm_instruction:0,
-            front_drum_instruction:0,
-            back_drum_instruction:0 
+            wheel_action: "none",
+            front_arm_action:0,
+            back_arm_action:0,
+            front_drum_action:0,
+            back_drum_action:0 
         }
 
         HTTP.doPost(this.apiPath, this.twistMsg);
@@ -106,19 +107,19 @@ export default class EZRASSOR {
 
         switch(part) {
             case Robot.FRONTARM:
-                this.updateTwistMsg({front_arm_instruction:operation});
+                this.updateTwistMsg({front_arm_action:operation});
                 break;
             case Robot.BACKARM:
-                this.updateTwistMsg({back_arm_instruction:operation});
+                this.updateTwistMsg({back_arm_action:operation});
                 break;
             case Robot.FRONTDRUM:
-                this.updateTwistMsg({front_drum_instruction:operation});
+                this.updateTwistMsg({front_drum_action:operation});
                 break;
             case Robot.BACKDRUM:
-                this.updateTwistMsg({back_drum_instruction:operation});
+                this.updateTwistMsg({back_drum_action:operation});
                 break;
             case Robot.WHEELS:
-                this.updateTwistMsg({wheel_instruction:operation});
+                this.updateTwistMsg({wheel_action:operation});
                 break;
             case Robot.AUTONOMY:
                 this.updateAutonomyTwistMsg(operation);

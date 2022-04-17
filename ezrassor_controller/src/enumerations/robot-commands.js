@@ -14,11 +14,11 @@ const Operation = Object.freeze({
     DRIVEBACKWARD: 'backward',
     TURNLEFT: 'left',
     TURNRIGHT: 'right',
-    UP: 1,
-    DOWN: -1,
+    UP: "RAISE",
+    DOWN: "LOWER",
+    STOP: "STOP",
     ROTATEOUTWARD: 1,
     ROTATEINWARD: -1,
-    STOP: 0,
 
     // Autonomous Functions
     DRIVE: 1,
@@ -26,6 +26,8 @@ const Operation = Object.freeze({
     DUMP: 4,
     SELFRIGHT: 8,
     FULLAUTONOMY: 16
+
+    // Paver Arm
 });
 
 export {

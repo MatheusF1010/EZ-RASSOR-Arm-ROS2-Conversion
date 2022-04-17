@@ -5,15 +5,17 @@ export default class HTTP {
         return fetch(
             host,
             {
-                headers: {"Content-Type":"text/plain; charset=utf-8"},
+                //headers: {"Content-Type":"text/plain; charset=utf-8"},
                 method: 'POST',
                 headers:{
-                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: message
             }
         )
         .catch((error) => {
+            console.log("Host: " + host + "\n");
+            console.log("Message: " + message + "\n");
             console.log(error);
         });
     }
