@@ -1,5 +1,5 @@
-import {Robot, Operation} from 'ezrassor-app/src/enumerations/robot-commands';
-import HTTP from 'ezrassor-app/src/api/web-commands';
+import {Robot, Operation} from 'ezrassor-app/src/enumerations/robot-commands-paver-arm';
+import HTTP from 'ezrassor-app/src/api/web-commands-paver-arm';
 
 export default class EZRASSOR { 
 
