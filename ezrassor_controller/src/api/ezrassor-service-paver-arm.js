@@ -85,13 +85,9 @@ export default class EZRASSOR {
     // Stop all robot operations
     allStop = () => {
         this._twistMsg = { 
-            autonomous_toggles:0,
-            target_coordinate:this.coordinate,
-            wheel_action: "none",
-            front_arm_action:0,
-            back_arm_action:0,
-            front_drum_action:0,
-            back_drum_action:0 
+            paver_arm_action: "stop",
+            paver_claw_action: "stop",
+            autonomous_toggles:0
         }
 
         HTTP.doPost(this.apiPath, this.twistMsg);
@@ -106,20 +102,11 @@ export default class EZRASSOR {
         }
 
         switch(part) {
-            case Robot.FRONTARM:
-                this.updateTwistMsg({front_arm_action:operation});
+            case Robot.PAVERARM:
+                this.updateTwistMsg({paver_arm_action:operation});
                 break;
-            case Robot.BACKARM:
-                this.updateTwistMsg({back_arm_action:operation});
-                break;
-            case Robot.FRONTDRUM:
-                this.updateTwistMsg({front_drum_action:operation});
-                break;
-            case Robot.BACKDRUM:
-                this.updateTwistMsg({back_drum_action:operation});
-                break;
-            case Robot.WHEELS:
-                this.updateTwistMsg({wheel_action:operation});
+            case Robot.PAVERCLAW:
+                this.updateTwistMsg({paver_claw_action:operation});
                 break;
             case Robot.AUTONOMY:
                 this.updateAutonomyTwistMsg(operation);

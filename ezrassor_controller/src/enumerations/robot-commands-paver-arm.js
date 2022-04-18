@@ -1,44 +1,50 @@
 const Robot = Object.freeze({
-    WHEELS: Symbol('wheels'),
-    FRONTDRUM: Symbol('frontdrum'),
-    BACKDRUM: Symbol('backdrum'),
-    FRONTARM: Symbol('frontarm'),
-    BACKARM: Symbol('backarm'),
-    AUTONOMY: Symbol('autonomy'),
+    PAVERARM: Symbol('paverarm'),
+    PAVERCLAW: Symbol('paverclaw'),
+    // AUTONOMY: Symbol('autonomy'),
     ALL: Symbol('all')
 });
 
 const Operation = Object.freeze({
 
-    // Rover Wheels
-    STOPWHEELS: 'stop',
-    DRIVEFORWARD: 'forward',
-    DRIVEBACKWARD: 'backward',
-    TURNLEFT: 'left',
-    TURNRIGHT: 'right',
-    ROTATEOUTWARD: 1,
-    ROTATEINWARD: -1,
-    // LINEARX: "linear_x",
-    // ANGULARZ: "angular_z",
+    // Paver Arm
 
-    // Rover Drums
-    // DRUMDUMP: "DUMP",
-    // DRUMSTOP: "STOP",
-    // DRUMDIG: "DIG",
+    // Arm right left
+    ARMRIGHT: 'joint12R',
+    ARMLEFT: 'joint12L',
+    ARMSTOP1: 'joint12S',
 
-    // Rover Arms
-    UP: "RAISE",
-    DOWN: "LOWER",
-    STOP: "STOP",
+    // Arm up down
+    ARMUP: 'joint23U',
+    ARMDOWN: 'joint23D', 
+    ARMSTOP2: 'joint23S',
 
-    // Autonomous Functions
-    DRIVE: 1, // AUTO_DRIVE
-    DIG: 2, // AUTO_DIG
-    DUMP: 4, // AUTO_DUMP
-    SELFRIGHT: 8, // AUTO_DOCK  ??
-    FULLAUTONOMY: 16 // FULL_AUTONOMY
-    // STOP: "STOP",
+    // Claw up down
+    CLAWUP: 'joint34U',
+    CLAWDOWN: 'joint34D',
+    CLAWSTOP3: 'joint34S',
 
+    // Claw right left
+    CLAWRIGHT: 'joint45R',
+    CLAWLEFT: 'joint45L',
+    CLAWSTOP4: 'joint45S',
+    
+    // Grabber rotate 
+    GRABBERRIGHT: 'joint56R',
+    GRABBERLEFT: 'joint56L',
+    GRABBERSTOP: 'joint56S',
+
+    // Grabber open close
+    GRABBERCLOSE: 'close',
+    GRABBEROPEN: 'open',
+
+    // Stop all
+    STOP: 'stop', 
+
+    // Paver Arm Autonomy
+    PICKUP: '',
+    PLACE: '',
+    HOME: '',
 
 });
 
