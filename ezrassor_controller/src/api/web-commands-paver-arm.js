@@ -5,10 +5,9 @@ export default class HTTP {
         return fetch(
             host,
             {
-                headers: {"Content-Type":"text/plain; charset=utf-8"},
                 method: 'POST',
                 headers:{
-                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: message
             }
