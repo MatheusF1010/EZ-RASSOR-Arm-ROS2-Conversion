@@ -20,7 +20,7 @@ export default class ControllerScreen extends React.Component {
       isLoading: true,
       control: 0,
       xy: '0,0',
-      ip: '127.0.0.1:5000' 
+      ip: '192.168.1.2:8080' 
     }; 
 
     this.EZRASSOR = new EZRASSOR(this.state.ip);

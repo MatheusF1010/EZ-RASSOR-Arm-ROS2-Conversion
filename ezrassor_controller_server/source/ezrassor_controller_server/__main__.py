@@ -116,6 +116,6 @@ def main(passed_args=None):
 
         # Run the app! Note that we don't spin the ROS node here. Only nodes
         # containing subscribers must be spun.
-        app.run()
+        app.run(host='0.0.0.0')
     except KeyboardInterrupt:
         pass
