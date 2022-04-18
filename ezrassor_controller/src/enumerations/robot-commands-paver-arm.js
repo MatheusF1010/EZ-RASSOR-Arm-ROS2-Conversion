@@ -1,6 +1,10 @@
 const Robot = Object.freeze({
-    PAVERARM: Symbol('paverarm'),
-    PAVERCLAW: Symbol('paverclaw'),
+    JOINT1: Symbol('joint1'),
+    JOINT2: Symbol('joint2'),
+    JOINT3: Symbol('joint3'),
+    JOINT4: Symbol('joint4'),
+    JOINT5: Symbol('joint5'),
+    CLAW: Symbol('claw'),
     // AUTONOMY: Symbol('autonomy'),
     ALL: Symbol('all')
 });
@@ -10,36 +14,31 @@ const Operation = Object.freeze({
     // Paver Arm
 
     // Arm right left
-    ARMRIGHT: 'joint12R',
-    ARMLEFT: 'joint12L',
-    ARMSTOP1: 'joint12S',
+    ARMRIGHT: 'J12R',
+    ARMLEFT: 'J12L',
 
     // Arm up down
-    ARMUP: 'joint23U',
-    ARMDOWN: 'joint23D', 
-    ARMSTOP2: 'joint23S',
+    ARMUP: 'J23U',
+    ARMDOWN: 'J23D', 
 
     // Claw up down
-    CLAWUP: 'joint34U',
-    CLAWDOWN: 'joint34D',
-    CLAWSTOP3: 'joint34S',
+    CLAWUP: 'J34U',
+    CLAWDOWN: 'J34D',
 
     // Claw right left
-    CLAWRIGHT: 'joint45R',
-    CLAWLEFT: 'joint45L',
-    CLAWSTOP4: 'joint45S',
+    CLAWRIGHT: 'J45R',
+    CLAWLEFT: 'J45L',
     
     // Grabber rotate 
-    GRABBERRIGHT: 'joint56R',
-    GRABBERLEFT: 'joint56L',
-    GRABBERSTOP: 'joint56S',
+    GRABBERRIGHT: 'J56R',
+    GRABBERLEFT: 'J56L',
 
     // Grabber open close
-    GRABBERCLOSE: 'close',
-    GRABBEROPEN: 'open',
+    GRABBERCLOSE: 'CLOSE',
+    GRABBEROPEN: 'OPEN',
 
     // Stop all
-    STOP: 'stop', 
+    STOP: 'STOP', 
 
     // Paver Arm Autonomy
     PICKUP: '',

@@ -85,8 +85,12 @@ export default class EZRASSOR {
     // Stop all robot operations
     allStop = () => {
         this._twistMsg = { 
-            paver_arm_action: "stop",
-            paver_claw_action: "stop",
+            joint_1_action: "STOP",
+            joint_2_action: "STOP",
+            joint_3_action: "STOP",
+            joint_4_action: "STOP",
+            joint_5_action: "STOP",
+            paver_claw_action: "STOP",
             autonomous_toggles:0
         }
 
@@ -102,11 +106,23 @@ export default class EZRASSOR {
         }
 
         switch(part) {
-            case Robot.PAVERARM:
-                this.updateTwistMsg({paver_arm_action:operation});
+            case Robot.JOINT1:
+                this.updateTwistMsg({joint_1_action:operation});
                 break;
-            case Robot.PAVERCLAW:
-                this.updateTwistMsg({paver_claw_action:operation});
+            case Robot.JOINT2:
+                this.updateTwistMsg({joint_2_action:operation});
+                break;
+            case Robot.JOINT3:
+                this.updateTwistMsg({joint_3_action:operation});
+                break;
+            case Robot.JOINT4:
+                this.updateTwistMsg({joint_4_action:operation});
+                break;
+            case Robot.JOINT5:
+                this.updateTwistMsg({joint_5_action:operation});
+                break;
+            case Robot.CLAW:
+                this.updateTwistMsg({claw_action:operation});
                 break;
             case Robot.AUTONOMY:
                 this.updateAutonomyTwistMsg(operation);
