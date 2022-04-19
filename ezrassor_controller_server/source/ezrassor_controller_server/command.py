@@ -2,7 +2,6 @@
 import enum
 import ezrassor_controller_server as server
 
-
 def create_command(request):
     """Create a command from a remote request.
 
@@ -62,7 +61,7 @@ def create_command(request):
         joint_2_action,
         joint_3_action,
         joint_4_action,
-        joint_5_action,
+        joint_5_action
     )
 
 
@@ -79,18 +78,18 @@ class Command:
         joint_2_action,
         joint_3_action,
         joint_4_action,
-        joint_5_action,
+        joint_5_action
     ):
         """Initialize this command with actions."""
         self.wheel_action = wheel_action
         self.back_arm_action = back_arm_action
         self.back_drum_action = back_drum_action
         self.routine_action = routine_action
-        self.joint_1_action = joint_1_action,
-        self.joint_2_action = joint_2_action,
-        self.joint_3_action = joint_3_action,
-        self.joint_4_action = joint_4_action,
-        self.joint_5_action = joint_5_action,
+        self.joint_1_action = joint_1_action
+        self.joint_2_action = joint_2_action
+        self.joint_3_action = joint_3_action
+        self.joint_4_action = joint_4_action
+        self.joint_5_action = joint_5_action
 
 
 class MetaActionEnum(enum.EnumMeta):
@@ -152,31 +151,31 @@ class Joint1Action(enum.Enum, metaclass=MetaActionEnum):
     """This action describes which joint to execute for an EZRASSOR."""
     J12R = -0.2
     J12L = 0.2
-    STOP = 0
+    STOP = 0.0
 
 class Joint2Action(enum.Enum, metaclass=MetaActionEnum):
     """This action describes which joint to execute for an EZRASSOR."""
     J23U = -0.2
     J23D = 0.2
-    STOP = 0
+    STOP = 0.0
 
 class Joint3Action(enum.Enum, metaclass=MetaActionEnum):
     """This action describes which joint to execute for an EZRASSOR."""
     J34U = -0.2
     J34D = 0.2
-    STOP = 0
+    STOP = 0.0
 
 class Joint4Action(enum.Enum, metaclass=MetaActionEnum):
     """This action describes which joint to execute for an EZRASSOR."""
     J45R = -0.2
     J45L = 0.2
-    STOP = 0
+    STOP = 0.0
 
 class Joint5Action(enum.Enum, metaclass=MetaActionEnum):
     """This action describes which joint to execute for an EZRASSOR."""
     J56R = -0.2
     J56L = 0.2
-    STOP = 0
+    STOP = 0.0
 
 class ClawAction(enum.Enum, metaclass=MetaActionEnum):
     """This action describes which joint to execute for an EZRASSOR."""
