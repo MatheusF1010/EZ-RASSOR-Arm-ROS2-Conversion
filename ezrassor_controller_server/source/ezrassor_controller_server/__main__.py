@@ -54,27 +54,27 @@ def main(passed_args=None):
             QUEUE_SIZE,
         )
         joint_1_action_publisher = node.create_publisher(
-            std_msgs.msg.Float32,
+            std_msgs.msg.Float64,
             JOINT_1_ACTION_TOPIC,
             QUEUE_SIZE,
         )
         joint_2_action_publisher = node.create_publisher(
-            std_msgs.msg.Float32,
+            std_msgs.msg.Float64,
             JOINT_2_ACTION_TOPIC,
             QUEUE_SIZE,
         )
         joint_3_action_publisher = node.create_publisher(
-            std_msgs.msg.Float32,
+            std_msgs.msg.Float64,
             JOINT_3_ACTION_TOPIC,
             QUEUE_SIZE,
         )
         joint_4_action_publisher = node.create_publisher(
-            std_msgs.msg.Float32,
+            std_msgs.msg.Float64,
             JOINT_4_ACTION_TOPIC,
             QUEUE_SIZE,
         )
         joint_5_action_publisher = node.create_publisher(
-            std_msgs.msg.Float32,
+            std_msgs.msg.Float64,
             JOINT_5_ACTION_TOPIC,
             QUEUE_SIZE,
         )
@@ -106,27 +106,27 @@ def main(passed_args=None):
                 routine_action_publisher.publish(routine_action)
 
             if command.joint_1_action is not None:
-                joint_1_action = std_msgs.msg.Float32()
+                joint_1_action = std_msgs.msg.Float64()
                 joint_1_action.data = command.joint_1_action.value
                 joint_1_action_publisher.publish(joint_1_action)
 
             if command.joint_2_action is not None:
-                joint_2_action = std_msgs.msg.Float32()
+                joint_2_action = std_msgs.msg.Float64()
                 joint_2_action.data = command.joint_2_action.value
                 joint_2_action_publisher.publish(joint_2_action)
 
             if command.joint_3_action is not None:
-                joint_3_action = std_msgs.msg.Float32()
+                joint_3_action = std_msgs.msg.Float64()
                 joint_3_action.data = command.joint_3_action.value
                 joint_3_action_publisher.publish(joint_3_action)
 
             if command.joint_4_action is not None:
-                joint_4_action = std_msgs.msg.Float32()
+                joint_4_action = std_msgs.msg.Float64()
                 joint_4_action.data = command.joint_4_action.value
                 joint_4_action_publisher.publish(joint_4_action)
             
             if command.joint_5_action is not None:
-                joint_5_action = std_msgs.msg.Float32()
+                joint_5_action = std_msgs.msg.Float64()
                 joint_5_action.data = command.joint_5_action.value
                 joint_5_action_publisher.publish(joint_5_action)
                 

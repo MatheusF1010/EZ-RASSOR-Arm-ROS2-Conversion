@@ -20,17 +20,17 @@ from std_msgs.msg import (
 )
 
 NODE = "paver_arm_driver"
-FIRST_JOINT_EXTERNAL_TOPIC = "paver_arm_joint_1_instructions"
+FIRST_JOINT_EXTERNAL_TOPIC = "joint_1_action"
 FIRST_JOINT_INTERNAL_TOPIC = "first_joint_velocity_controller/commands"
-SECOND_JOINT_EXTERNAL_TOPIC = "paver_arm_joint_2_instructions"
+SECOND_JOINT_EXTERNAL_TOPIC = "joint_2_action"
 SECOND_JOINT_INTERNAL_TOPIC = "second_joint_velocity_controller/commands"
-THIRD_JOINT_EXTERNAL_TOPIC = "paver_arm_joint_3_instructions"
+THIRD_JOINT_EXTERNAL_TOPIC = "joint_3_action"
 THIRD_JOINT_INTERNAL_TOPIC = "third_joint_velocity_controller/commands"
-FOURTH_JOINT_EXTERNAL_TOPIC = "paver_arm_joint_4_instructions"
+FOURTH_JOINT_EXTERNAL_TOPIC = "joint_4_action"
 FOURTH_JOINT_INTERNAL_TOPIC = "fourth_joint_velocity_controller/commands"
-FIFTH_JOINT_EXTERNAL_TOPIC = "paver_arm_joint_5_instructions"
+FIFTH_JOINT_EXTERNAL_TOPIC = "joint_5_action"
 FIFTH_JOINT_INTERNAL_TOPIC = "fifth_joint_velocity_controller/commands"
-CLAW_EXTERNAL_TOPIC = "paver_arm_claw_instructions"
+CLAW_EXTERNAL_TOPIC = "claw_action"
 CLAW_INTERNAL_TOPIC = "claw_velocity_controller/commands"
 
 QUEUE_SIZE = 10

@@ -301,7 +301,7 @@
     <link name='arm_camera'>
         <pose>0 0 0 0 0 0</pose>
         <inertial>
-            <mass value="0.1"/>
+            <mass value="0.1"/> 
             <origin xyz="0.0 0.0 0.0" rpy=" 0 0 0"/>
             <inertia
                 ixx="0" ixy="0" ixz="0"
@@ -555,6 +555,67 @@
             <state_interface name="position" />
             <state_interface name="velocity" />
         </joint>
+
+        <!-- ARM CONTROLS -->
+
+        <joint name="joint12">
+            <command_interface name="position">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="joint23">
+            <command_interface name="position">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="joint34">
+            <command_interface name="position">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="joint45">
+            <command_interface name="position">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="joint56">
+            <command_interface name="position">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="grabber_joint1">
+            <command_interface name="effort">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="effort" />
+            <state_interface name="velocity" />
+        </joint>
+        <joint name="grabber_joint2">
+            <command_interface name="effort">
+                <param name="min">-10</param>
+                <param name="max">10</param>
+            </command_interface>
+            <state_interface name="effort" />
+            <state_interface name="velocity" />
+        </joint>
+
+
     </ros2_control>
     <gazebo>
         <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
@@ -562,7 +623,5 @@
         </plugin>
     </gazebo>
 
-    <!-- ARM CONTROLS -->
-    
     
 </robot>
