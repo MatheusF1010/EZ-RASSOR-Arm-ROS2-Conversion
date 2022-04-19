@@ -149,7 +149,20 @@ def __spawn_robot(context, *args, **kwargs):
     )
 
     # ARM
-    load_paver_arm_controller = ExecuteProcess(
+    # load_paver_arm_controller = ExecuteProcess(
+    #     cmd=[
+    #         "ros2",
+    #         "control",
+    #         "load_controller",
+    #         "-c",
+    #         f"/{robot_name}/controller_manager",
+    #         "--set-state",
+    #         "start",
+    #         "paver_arm_controller"
+    #     ],
+    #     output="screen",
+    # )
+    load_joint_1_trajectory_controller = ExecuteProcess(
         cmd=[
             "ros2",
             "control",
@@ -158,7 +171,59 @@ def __spawn_robot(context, *args, **kwargs):
             f"/{robot_name}/controller_manager",
             "--set-state",
             "start",
-            "paver_arm_controller"
+            "joint_1_trajectory_controller"
+        ],
+        output="screen",
+    )
+    load_joint_2_trajectory_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "joint_2_trajectory_controller"
+        ],
+        output="screen",
+    )
+    load_joint_3_trajectory_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "joint_3_trajectory_controller"
+        ],
+        output="screen",
+    )
+    load_joint_4_trajectory_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "joint_4_trajectory_controller"
+        ],
+        output="screen",
+    )
+    load_joint_5_trajectory_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "joint_5_trajectory_controller"
         ],
         output="screen",
     )
@@ -190,10 +255,40 @@ def __spawn_robot(context, *args, **kwargs):
                 on_exit=[load_diff_drive_controller],
             )
         ),
+        # RegisterEventHandler(
+        #     event_handler=OnProcessExit(
+        #         target_action=load_joint_state_controller,
+        #         on_exit=[load_paver_arm_controller],
+        #     )
+        # ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_paver_arm_controller],
+                on_exit=[load_joint_1_trajectory_controller],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[load_joint_2_trajectory_controller],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[load_joint_3_trajectory_controller],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[load_joint_4_trajectory_controller],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[load_joint_5_trajectory_controller],
             )
         ),
         RegisterEventHandler(
