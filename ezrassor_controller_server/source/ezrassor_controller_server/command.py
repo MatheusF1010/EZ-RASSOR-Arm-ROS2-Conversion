@@ -22,33 +22,47 @@ def create_command(request):
             angular_z=request[server.WHEEL_ACTION_KEY][server.ANGULAR_Z_KEY],
         )
 
-    # Set the front arm action, if available in the request.
-    front_arm_action = None
-    if server.FRONT_ARM_ACTION_KEY in request:
-        front_arm_action = ArmAction[request[server.FRONT_ARM_ACTION_KEY]]
-
     # Set the back arm action, if available in the request.
     back_arm_action = None
     if server.BACK_ARM_ACTION_KEY in request:
         back_arm_action = ArmAction[request[server.BACK_ARM_ACTION_KEY]]
-
-    # Set the front drum action, if available in the request.
-    front_drum_action = None
-    if server.FRONT_DRUM_ACTION_KEY in request:
-        front_drum_action = DrumAction[request[server.FRONT_DRUM_ACTION_KEY]]
 
     # Set the back drum action, if available in the request.
     back_drum_action = None
     if server.BACK_DRUM_ACTION_KEY in request:
         back_drum_action = DrumAction[request[server.BACK_DRUM_ACTION_KEY]]
 
+    #Set the Joints action, if available in the request.
+    joint_1_action = None
+    if server.JOINT_1_ACTION_KEY in request:
+        joint_1_action = Joint1Action[request[server.JOINT_1_ACTION_KEY]]
+
+    joint_2_action = None
+    if server.JOINT_2_ACTION_KEY in request:
+        joint_2_action = Joint2Action[request[server.JOINT_2_ACTION_KEY]]
+
+    joint_3_action = None
+    if server.JOINT_3_ACTION_KEY in request:
+        joint_3_action = Joint3Action[request[server.JOINT_3_ACTION_KEY]]
+    
+    joint_4_action = None
+    if server.JOINT_4_ACTION_KEY in request:
+        joint_4_action = Joint4Action[request[server.JOINT_4_ACTION_KEY]]
+        
+    joint_5_action = None
+    if server.JOINT_5_ACTION_KEY in request:
+        joint_5_action = Joint5Action[request[server.JOINT_5_ACTION_KEY]]
+
     return Command(
         wheel_action,
-        front_arm_action,
         back_arm_action,
-        front_drum_action,
         back_drum_action,
         routine_action,
+        joint_1_action,
+        joint_2_action,
+        joint_3_action,
+        joint_4_action,
+        joint_5_action,
     )
 
 
@@ -58,19 +72,25 @@ class Command:
     def __init__(
         self,
         wheel_action,
-        front_arm_action,
         back_arm_action,
-        front_drum_action,
         back_drum_action,
         routine_action,
+        joint_1_action,
+        joint_2_action,
+        joint_3_action,
+        joint_4_action,
+        joint_5_action,
     ):
         """Initialize this command with actions."""
         self.wheel_action = wheel_action
-        self.front_arm_action = front_arm_action
         self.back_arm_action = back_arm_action
-        self.front_drum_action = front_drum_action
         self.back_drum_action = back_drum_action
         self.routine_action = routine_action
+        self.joint_1_action = joint_1_action,
+        self.joint_2_action = joint_2_action,
+        self.joint_3_action = joint_3_action,
+        self.joint_4_action = joint_4_action,
+        self.joint_5_action = joint_5_action,
 
 
 class MetaActionEnum(enum.EnumMeta):
@@ -96,7 +116,6 @@ class MetaActionEnum(enum.EnumMeta):
         """Create a string containing all keys in the enum."""
         return ", ".join(self.__members__.keys())
 
-
 class WheelAction:
     """This action describes how to move the wheels of an EZRASSOR."""
 
@@ -105,7 +124,6 @@ class WheelAction:
         self.linear_x = linear_x
         self.angular_z = angular_z
 
-
 class ArmAction(enum.Enum, metaclass=MetaActionEnum):
     """This action describes how to move the arms of an EZRASSOR."""
 
@@ -113,14 +131,12 @@ class ArmAction(enum.Enum, metaclass=MetaActionEnum):
     STOP = 0.0
     RAISE = 1.0
 
-
 class DrumAction(enum.Enum, metaclass=MetaActionEnum):
     """This action describes how to move the drums of an EZRASSOR."""
 
     DUMP = -1.0
     STOP = 0.0
     DIG = 1.0
-
 
 class RoutineAction(enum.Enum, metaclass=MetaActionEnum):
     """This action describes which routine to execute for an EZRASSOR."""
@@ -131,3 +147,38 @@ class RoutineAction(enum.Enum, metaclass=MetaActionEnum):
     AUTO_DOCK = 0b001000
     FULL_AUTONOMY = 0b010000
     STOP = 0b100000
+
+class Joint1Action(enum.Enum, metaclass=MetaActionEnum):
+    """This action describes which joint to execute for an EZRASSOR."""
+    J12R = -0.2
+    J12L = 0.2
+    STOP = 0
+
+class Joint2Action(enum.Enum, metaclass=MetaActionEnum):
+    """This action describes which joint to execute for an EZRASSOR."""
+    J23U = -0.2
+    J23D = 0.2
+    STOP = 0
+
+class Joint3Action(enum.Enum, metaclass=MetaActionEnum):
+    """This action describes which joint to execute for an EZRASSOR."""
+    J34U = -0.2
+    J34D = 0.2
+    STOP = 0
+
+class Joint4Action(enum.Enum, metaclass=MetaActionEnum):
+    """This action describes which joint to execute for an EZRASSOR."""
+    J45R = -0.2
+    J45L = 0.2
+    STOP = 0
+
+class Joint5Action(enum.Enum, metaclass=MetaActionEnum):
+    """This action describes which joint to execute for an EZRASSOR."""
+    J56R = -0.2
+    J56L = 0.2
+    STOP = 0
+
+class ClawAction(enum.Enum, metaclass=MetaActionEnum):
+    """This action describes which joint to execute for an EZRASSOR."""
+    OPEN = 0.0
+    CLOSE = 1.0

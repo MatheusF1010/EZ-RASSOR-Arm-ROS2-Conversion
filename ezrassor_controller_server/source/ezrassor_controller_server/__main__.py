@@ -13,11 +13,16 @@ import std_msgs.msg
 
 NODE = "controller_server"
 WHEEL_ACTION_TOPIC = "wheel_action"
-FRONT_ARM_ACTION_TOPIC = "front_arm_action"
 BACK_ARM_ACTION_TOPIC = "back_arm_action"
-FRONT_DRUM_ACTION_TOPIC = "front_drum_action"
 BACK_DRUM_ACTION_TOPIC = "back_drum_action"
 ROUTINE_ACTION_TOPIC = "routine_action"
+
+JOINT_1_ACTION_TOPIC = "joint_1_action"
+JOINT_2_ACTION_TOPIC = "joint_2_action"
+JOINT_3_ACTION_TOPIC = "joint_3_action"
+JOINT_4_ACTION_TOPIC = "joint_4_action"
+JOINT_5_ACTION_TOPIC = "joint_5_action"
+
 QUEUE_SIZE = 10
 
 
@@ -33,19 +38,9 @@ def main(passed_args=None):
             WHEEL_ACTION_TOPIC,
             QUEUE_SIZE,
         )
-        front_arm_action_publisher = node.create_publisher(
-            std_msgs.msg.Float32,
-            FRONT_ARM_ACTION_TOPIC,
-            QUEUE_SIZE,
-        )
         back_arm_action_publisher = node.create_publisher(
             std_msgs.msg.Float32,
             BACK_ARM_ACTION_TOPIC,
-            QUEUE_SIZE,
-        )
-        back_front_action_publisher = node.create_publisher(
-            std_msgs.msg.Float32,
-            FRONT_DRUM_ACTION_TOPIC,
             QUEUE_SIZE,
         )
         back_drum_action_publisher = node.create_publisher(
@@ -56,6 +51,31 @@ def main(passed_args=None):
         routine_action_publisher = node.create_publisher(
             std_msgs.msg.Int8,
             ROUTINE_ACTION_TOPIC,
+            QUEUE_SIZE,
+        )
+        joint_1_action_publisher = node.create_publisher(
+            std_msgs.msg.Float64,
+            JOINT_1_ACTION_TOPIC,
+            QUEUE_SIZE,
+        )
+        joint_2_action_publisher = node.create_publisher(
+            std_msgs.msg.Float64,
+            JOINT_2_ACTION_TOPIC,
+            QUEUE_SIZE,
+        )
+        joint_3_action_publisher = node.create_publisher(
+            std_msgs.msg.Float64,
+            JOINT_3_ACTION_TOPIC,
+            QUEUE_SIZE,
+        )
+        joint_4_action_publisher = node.create_publisher(
+            std_msgs.msg.Float64,
+            JOINT_4_ACTION_TOPIC,
+            QUEUE_SIZE,
+        )
+        joint_5_action_publisher = node.create_publisher(
+            std_msgs.msg.Float64,
+            JOINT_5_ACTION_TOPIC,
             QUEUE_SIZE,
         )
 
@@ -70,20 +90,10 @@ def main(passed_args=None):
                 wheel_action.angular.z = command.wheel_action.angular_z
                 wheel_action_publisher.publish(wheel_action)
 
-            if command.front_arm_action is not None:
-                front_arm_action = std_msgs.msg.Float32()
-                front_arm_action.data = command.front_arm_action.value
-                front_arm_action_publisher.publish(front_arm_action)
-
             if command.back_arm_action is not None:
                 back_arm_action = std_msgs.msg.Float32()
                 back_arm_action.data = command.back_arm_action.value
                 back_arm_action_publisher.publish(back_arm_action)
-
-            if command.front_drum_action is not None:
-                front_drum_action = std_msgs.msg.Float32()
-                front_drum_action.data = command.front_drum_action.value
-                back_front_action_publisher.publish(front_drum_action)
 
             if command.back_drum_action is not None:
                 back_drum_action = std_msgs.msg.Float32()
@@ -94,6 +104,33 @@ def main(passed_args=None):
                 routine_action = std_msgs.msg.Int8()
                 routine_action.data = command.routine_action.value
                 routine_action_publisher.publish(routine_action)
+
+            if command.joint_1_action is not None:
+                joint_1_action = std_msgs.msg.Float64()
+                joint_1_action.data = command.joint_1_action.value
+                joint_1_action_publisher.publish(joint_1_action)
+
+            if command.joint_2_action is not None:
+                joint_2_action = std_msgs.msg.Float64()
+                joint_2_action.data = command.joint_2_action.value
+                joint_2_action_publisher.publish(joint_2_action)
+
+            if command.joint_3_action is not None:
+                joint_3_action = std_msgs.msg.Float64()
+                joint_3_action.data = command.joint_3_action.value
+                joint_3_action_publisher.publish(joint_3_action)
+
+            if command.joint_4_action is not None:
+                joint_4_action = std_msgs.msg.Float64()
+                joint_4_action.data = command.joint_4_action.value
+                joint_4_action_publisher.publish(joint_4_action)
+            
+            if command.joint_5_action is not None:
+                joint_5_action = std_msgs.msg.Float64()
+                joint_5_action.data = command.joint_5_action.value
+                joint_5_action_publisher.publish(joint_5_action)
+                
+
 
         # Create a Flask app to serve HTTP requests.
         app = flask.Flask(__name__)
