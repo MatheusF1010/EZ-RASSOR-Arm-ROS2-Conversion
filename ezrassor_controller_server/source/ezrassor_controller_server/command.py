@@ -52,6 +52,10 @@ def create_command(request):
     if server.JOINT_5_ACTION_KEY in request:
         joint_5_action = Joint5Action[request[server.JOINT_5_ACTION_KEY]]
 
+    claw_action = None
+    if server.CLAW_ACTION_KEY in request:
+        claw_action = ClawAction[request[server.CLAW_ACTION_KEY]]
+
     return Command(
         wheel_action,
         back_arm_action,
@@ -61,7 +65,8 @@ def create_command(request):
         joint_2_action,
         joint_3_action,
         joint_4_action,
-        joint_5_action
+        joint_5_action,
+        claw_action
     )
 
 
@@ -78,7 +83,8 @@ class Command:
         joint_2_action,
         joint_3_action,
         joint_4_action,
-        joint_5_action
+        joint_5_action,
+        claw_action
     ):
         """Initialize this command with actions."""
         self.wheel_action = wheel_action
@@ -90,6 +96,7 @@ class Command:
         self.joint_3_action = joint_3_action
         self.joint_4_action = joint_4_action
         self.joint_5_action = joint_5_action
+        self.claw_action = claw_action
 
 
 class MetaActionEnum(enum.EnumMeta):

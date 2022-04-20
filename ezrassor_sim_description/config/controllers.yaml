@@ -15,24 +15,28 @@ ezrassor:
       drum_back_velocity_controller:
         type: velocity_controllers/JointGroupVelocityController
       
-      joint_1_trajectory_controller:
+      joint_1_position_controller:
+        type: position_controllers/JointGroupPositionController
+
+      joint_2_position_controller:
+        type: position_controllers/JointGroupPositionController
+      
+      joint_3_position_controller:
+        type: position_controllers/JointGroupPositionController
+      
+      joint_4_position_controller:
+        type: position_controllers/JointGroupPositionController
+      
+      joint_5_position_controller:
+        type: position_controllers/JointGroupPositionController
+
+      claw_effect_controller:
+        type: effort_controllers/JointGroupEffortController
+
+      # Needs update
+      paver_arm_autonomy_controller:
         type: joint_trajectory_controller/JointTrajectoryController
 
-      joint_2_trajectory_controller:
-        type: joint_trajectory_controller/JointTrajectoryController
-      
-      joint_3_trajectory_controller:
-        type: joint_trajectory_controller/JointTrajectoryController
-      
-      joint_4_trajectory_controller:
-        type: joint_trajectory_controller/JointTrajectoryController
-      
-      joint_5_trajectory_controller:
-        type: joint_trajectory_controller/JointTrajectoryController
-      
-      # Needs update
-      paver_arm_claw_controller:
-        type: effort_controllers/JointGroupEffortController
 
   diff_drive_controller:
     ros__parameters:
@@ -103,183 +107,84 @@ ezrassor:
 
 
   # Paver arm controller using the joint trajectory controller
-  paver_arm_claw_controller:
+  joint_1_position_controller:
+    ros__parameters:
+      joints:
+        - joint12
+      pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  joint_2_position_controller:
+    ros__parameters:
+      joints:
+        - joint23
+      pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  joint_3_position_controller:
+    ros__parameters:
+      joints:
+        - joint34
+      pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  joint_4_position_controller:
+    ros__parameters:
+      joints:
+        - joint45
+      pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  joint_5_position_controller:
+    ros__parameters:
+      joints:
+        - joint56
+      pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  claw_effect_controller:
     ros__parameters:
       joints: 
         - grabber_joint1
         - grabber_joint2
-
-      command_interfaces:
-        - effort
-
-      state_interfaces:
-        - effort
-        - velocity
-
-      grabber_joint1: {p: 10.0, i: 0.00, d: 0.0}
-      grabber_joint2: {p: 10.0, i: 0.00, d: 0.0}
-
-  
-  joint_1_trajectory_controller:
-    ros__parameters:
-      joints:
-        - joint12
-
-      command_interfaces:
-        - position
-
-      state_interfaces:
-        - position
-        - velocity
-
-      constraints:
-        goal_time: 0.5
-        stopped_velocity_tolerance: 0.02
-        joint12:
-          trajectory: 0.05
-          goal: 0.02
-
-      pid: {p: 100, d: 1, i: 1, i_clamp: 1}
-      stop_trajectory_duration: 0.5
-      state_publish_rate: 25.0
-      action_monitor_rate: 10.0
-
-  joint_2_trajectory_controller:
-    ros__parameters:
-      joints:
-        - joint23
-
-      command_interfaces:
-        - position
-
-      state_interfaces:
-        - position
-        - velocity
-
-      constraints:
-        goal_time: 0.5
-        stopped_velocity_tolerance: 0.02
-        joint23:
-          trajectory: 0.05
-          goal: 0.02
-        
-      pid: {p: 100, d: 1, i: 1, i_clamp: 1}
-      stop_trajectory_duration: 0.5
-      state_publish_rate: 25.0
-      action_monitor_rate: 10.0
-
-  joint_3_trajectory_controller:
-    ros__parameters:
-      joints:
-        - joint34
-
-      command_interfaces:
-        - position
-
-      state_interfaces:
-        - position
-        - velocity
-
-      constraints:
-        goal_time: 0.5
-        stopped_velocity_tolerance: 0.02
-        joint34:
-          trajectory: 0.05
-          goal: 0.02
-        
-      pid: {p: 100, d: 1, i: 1, i_clamp: 1}
-      stop_trajectory_duration: 0.5
-      state_publish_rate: 25.0
-      action_monitor_rate: 10.0
-
-  joint_4_trajectory_controller:
-    ros__parameters:
-      joints:
-        - joint45
-
-      command_interfaces:
-        - position
-
-      state_interfaces:
-        - position
-        - velocity
-
-      constraints:
-        goal_time: 0.5
-        stopped_velocity_tolerance: 0.02
-        joint45:
-          trajectory: 0.05
-          goal: 0.02
-        
-      pid: {p: 100, d: 1, i: 1, i_clamp: 1}
-      stop_trajectory_duration: 0.5
-      state_publish_rate: 25.0
-      action_monitor_rate: 10.0
-
-  joint_5_trajectory_controller:
-    ros__parameters:
-      joints:
-        - joint56
-
-      command_interfaces:
-        - position
-
-      state_interfaces:
-        - position
-        - velocity
-
-      constraints:
-        goal_time: 0.5
-        stopped_velocity_tolerance: 0.02
-        joint56:
-          goal: 0.01
-        
-      pid: {p: 100, d: 1, i: 1, i_clamp: 1}
-      stop_trajectory_duration: 0.5
-      state_publish_rate: 25.0
-      action_monitor_rate: 10.0
+      pid: {p: 10.0, i: 0.0, d: 0.0}
 
 
 
-# paver_arm_controller:
-#     ros__parameters:
-#       joints:
-#         - joint12
-#         - joint23
-#         - joint34
-#         - joint45
-#         - joint56
+  paver_arm_autonomy_controller:
+      ros__parameters:
+        joints:
+          - joint12
+          - joint23
+          - joint34
+          - joint45
+          - joint56
 
-#       command_interfaces:
-#         - position
+        command_interfaces:
+          - position
 
-#       state_interfaces:
-#         - position
-#         - velocity
+        state_interfaces:
+          - position
+          - velocity
 
-#       constraints:
-#         goal_time: 0.5
-#         stopped_velocity_tolerance: 0.02
-#         joint12:
-#           trajectory: 0.05
-#           goal: 0.02
-#         joint23:
-#           trajectory: 0.05
-#           goal: 0.02
-#         joint34:
-#           trajectory: 0.05
-#           goal: 0.02
-#         joint45:
-#           trajectory: 0.05
-#           goal: 0.02
-#         joint56:
-#           goal: 0.01
-#       gains:
-#         joint12: {p: 100, d: 1, i: 1, i_clamp: 1}
-#         joint23: {p: 100, d: 1, i: 1, i_clamp: 1}
-#         joint34: {p: 100, d: 1, i: 1, i_clamp: 1}
-#         joint45: {p: 100, d: 1, i: 1, i_clamp: 1}
-#         joint56: {p: 100, d: 1, i: 1, i_clamp: 1}
-#       stop_trajectory_duration: 0.5
-#       state_publish_rate: 25.0
-#       action_monitor_rate: 10.0
+        constraints:
+          goal_time: 0.5
+          stopped_velocity_tolerance: 0.02
+          joint12:
+            trajectory: 0.05
+            goal: 0.02
+          joint23:
+            trajectory: 0.05
+            goal: 0.02
+          joint34:
+            trajectory: 0.05
+            goal: 0.02
+          joint45:
+            trajectory: 0.05
+            goal: 0.02
+          joint56:
+            goal: 0.01
+        gains:
+          joint12: {p: 100, d: 1, i: 1, i_clamp: 1}
+          joint23: {p: 100, d: 1, i: 1, i_clamp: 1}
+          joint34: {p: 100, d: 1, i: 1, i_clamp: 1}
+          joint45: {p: 100, d: 1, i: 1, i_clamp: 1}
+          joint56: {p: 100, d: 1, i: 1, i_clamp: 1}
+        stop_trajectory_duration: 0.5
+        state_publish_rate: 25.0
+        action_monitor_rate: 10.0

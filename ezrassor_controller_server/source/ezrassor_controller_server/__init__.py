@@ -11,6 +11,7 @@ from .command import (
     Joint3Action,
     Joint4Action,
     Joint5Action,
+    ClawAction,
 )
 from .request import (
     WHEEL_ACTION_KEY,
@@ -24,6 +25,7 @@ from .request import (
     JOINT_3_ACTION_KEY,
     JOINT_4_ACTION_KEY,
     JOINT_5_ACTION_KEY,
+    CLAW_ACTION_KEY,
     verify,
     VerificationError,
 )

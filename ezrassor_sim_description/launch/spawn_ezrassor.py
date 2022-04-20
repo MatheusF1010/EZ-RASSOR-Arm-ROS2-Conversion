@@ -162,7 +162,7 @@ def __spawn_robot(context, *args, **kwargs):
     #     ],
     #     output="screen",
     # )
-    load_joint_1_trajectory_controller = ExecuteProcess(
+    load_joint_1_position_controller = ExecuteProcess(
         cmd=[
             "ros2",
             "control",
@@ -171,11 +171,11 @@ def __spawn_robot(context, *args, **kwargs):
             f"/{robot_name}/controller_manager",
             "--set-state",
             "start",
-            "joint_1_trajectory_controller"
+            "joint_1_position_controller"
         ],
         output="screen",
     )
-    load_joint_2_trajectory_controller = ExecuteProcess(
+    load_joint_2_position_controller = ExecuteProcess(
         cmd=[
             "ros2",
             "control",
@@ -184,11 +184,11 @@ def __spawn_robot(context, *args, **kwargs):
             f"/{robot_name}/controller_manager",
             "--set-state",
             "start",
-            "joint_2_trajectory_controller"
+            "joint_2_position_controller"
         ],
         output="screen",
     )
-    load_joint_3_trajectory_controller = ExecuteProcess(
+    load_joint_3_position_controller = ExecuteProcess(
         cmd=[
             "ros2",
             "control",
@@ -197,11 +197,11 @@ def __spawn_robot(context, *args, **kwargs):
             f"/{robot_name}/controller_manager",
             "--set-state",
             "start",
-            "joint_3_trajectory_controller"
+            "joint_3_position_controller"
         ],
         output="screen",
     )
-    load_joint_4_trajectory_controller = ExecuteProcess(
+    load_joint_4_position_controller = ExecuteProcess(
         cmd=[
             "ros2",
             "control",
@@ -210,11 +210,11 @@ def __spawn_robot(context, *args, **kwargs):
             f"/{robot_name}/controller_manager",
             "--set-state",
             "start",
-            "joint_4_trajectory_controller"
+            "joint_4_position_controller"
         ],
         output="screen",
     )
-    load_joint_5_trajectory_controller = ExecuteProcess(
+    load_joint_5_position_controller = ExecuteProcess(
         cmd=[
             "ros2",
             "control",
@@ -223,12 +223,12 @@ def __spawn_robot(context, *args, **kwargs):
             f"/{robot_name}/controller_manager",
             "--set-state",
             "start",
-            "joint_5_trajectory_controller"
+            "joint_5_position_controller"
         ],
         output="screen",
     )
 
-    load_paver_arm_claw_controller = ExecuteProcess(
+    load_claw_effect_controller = ExecuteProcess(
         cmd=[
             "ros2",
             "control",
@@ -237,7 +237,7 @@ def __spawn_robot(context, *args, **kwargs):
             f"/{robot_name}/controller_manager",
             "--set-state",
             "start",
-            "paver_arm_claw_controller"
+            "claw_effect_controller"
         ],
         output="screen",
     )
@@ -264,37 +264,37 @@ def __spawn_robot(context, *args, **kwargs):
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_joint_1_trajectory_controller],
+                on_exit=[load_joint_1_position_controller],
             )
         ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_joint_2_trajectory_controller],
+                on_exit=[load_joint_2_position_controller],
             )
         ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_joint_3_trajectory_controller],
+                on_exit=[load_joint_3_position_controller],
             )
         ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_joint_4_trajectory_controller],
+                on_exit=[load_joint_4_position_controller],
             )
         ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_joint_5_trajectory_controller],
+                on_exit=[load_joint_5_position_controller],
             )
         ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_paver_arm_claw_controller],
+                on_exit=[load_claw_effect_controller],
             )
         ),
         RegisterEventHandler(

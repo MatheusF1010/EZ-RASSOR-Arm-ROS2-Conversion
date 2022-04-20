@@ -21,17 +21,17 @@ from std_msgs.msg import (
 
 NODE = "paver_arm_driver"
 FIRST_JOINT_EXTERNAL_TOPIC = "joint_1_action"
-FIRST_JOINT_INTERNAL_TOPIC = "joint_1_trajectory_controller/commands"
+FIRST_JOINT_INTERNAL_TOPIC = "joint_1_position_controller/commands"
 SECOND_JOINT_EXTERNAL_TOPIC = "joint_2_action"
-SECOND_JOINT_INTERNAL_TOPIC = "joint_2_trajectory_controller/commands"
+SECOND_JOINT_INTERNAL_TOPIC = "joint_2_position_controller/commands"
 THIRD_JOINT_EXTERNAL_TOPIC = "joint_3_action"
-THIRD_JOINT_INTERNAL_TOPIC = "joint_3_trajectory_controller/commands"
+THIRD_JOINT_INTERNAL_TOPIC = "joint_3_position_controller/commands"
 FOURTH_JOINT_EXTERNAL_TOPIC = "joint_4_action"
-FOURTH_JOINT_INTERNAL_TOPIC = "joint_4_trajectory_controller/commands"
+FOURTH_JOINT_INTERNAL_TOPIC = "joint_4_position_controller/commands"
 FIFTH_JOINT_EXTERNAL_TOPIC = "joint_5_action"
-FIFTH_JOINT_INTERNAL_TOPIC = "joint_5_trajectory_controller/commands"
+FIFTH_JOINT_INTERNAL_TOPIC = "joint_5_position_controller/commands"
 CLAW_EXTERNAL_TOPIC = "claw_action"
-CLAW_INTERNAL_TOPIC = "claw_velocity_controller/commands"
+CLAW_INTERNAL_TOPIC = "claw_effect_controller/commands"
 
 QUEUE_SIZE = 10
 
@@ -43,35 +43,35 @@ def handle_first_joint_movements(data):
     first_joint_msg = Float64()
     first_joint_msg.data = [data.data]
 
-    publishers[FIRST_JOINT_INTERNAL_TOPIC].publish(first_joint_msg)
+    publishers[FIRST_JOINT_INTERNAL_TOPIC].publish(first_joint_msg.data)
 
 def handle_second_joint_movements(data):
 
     second_joint_msg = Float64()
     second_joint_msg.data = [data.data]
 
-    publishers[SECOND_JOINT_INTERNAL_TOPIC].publish(second_joint_msg)
+    publishers[SECOND_JOINT_INTERNAL_TOPIC].publish(second_joint_msg.data)
 
 def handle_third_joint_movements(data):
 
     third_joint_msg = Float64()
     third_joint_msg.data = [data.data]
 
-    publishers[THIRD_JOINT_INTERNAL_TOPIC].publish(third_joint_msg)
+    publishers[THIRD_JOINT_INTERNAL_TOPIC].publish(third_joint_msg.data)
 
 def handle_fourth_joint_movements(data):
 
     fourth_joint_msg = Float64()
     fourth_joint_msg.data = [data.data]
 
-    publishers[FOURTH_JOINT_INTERNAL_TOPIC].publish(fourth_joint_msg)
+    publishers[FOURTH_JOINT_INTERNAL_TOPIC].publish(fourth_joint_msg.data)
 
 def handle_fifth_joint_movements(data):
 
     fifth_joint_msg = Float64()
     fifth_joint_msg.data = [data.data]
 
-    publishers[FIFTH_JOINT_INTERNAL_TOPIC].publish(fifth_joint_msg)
+    publishers[FIFTH_JOINT_INTERNAL_TOPIC].publish(fifth_joint_msg.data)
 
 def handle_claw_movements(data):
     claw_msg = Float64MultiArray()
@@ -141,7 +141,7 @@ def main(passed_args=None):
             QUEUE_SIZE,
         )
         node.create_subscription(
-            Float32,
+            Float64MultiArray,
             CLAW_EXTERNAL_TOPIC,
             handle_claw_movements,
             QUEUE_SIZE,

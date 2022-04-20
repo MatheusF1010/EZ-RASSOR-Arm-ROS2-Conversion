@@ -14,6 +14,7 @@ JOINT_2_ACTION_KEY = "joint_2_action"
 JOINT_3_ACTION_KEY = "joint_3_action"
 JOINT_4_ACTION_KEY = "joint_4_action"
 JOINT_5_ACTION_KEY = "joint_5_action"
+CLAW_ACTION_KEY = "claw_action"
 
 
 def verify(request):
@@ -71,6 +72,11 @@ def verify(request):
             if request[key] not in server.Joint5Action:
                 raise VerificationError(
                     f"{key} value must be one of the [{str(server.Joint5Action)}]",
+                )
+        elif key == CLAW_ACTION_KEY:
+            if request[key] not in server.ClawAction:
+                raise VerificationError(
+                    f"{key} value must be one of the [{str(server.ClawAction)}]",
                 )
         else:
             raise VerificationError(f"unknown key: {key}")

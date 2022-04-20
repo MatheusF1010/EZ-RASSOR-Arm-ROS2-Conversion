@@ -22,6 +22,7 @@ JOINT_2_ACTION_TOPIC = "joint_2_action"
 JOINT_3_ACTION_TOPIC = "joint_3_action"
 JOINT_4_ACTION_TOPIC = "joint_4_action"
 JOINT_5_ACTION_TOPIC = "joint_5_action"
+CLAW_ACTION_TOPIC = "claw_action"
 
 QUEUE_SIZE = 10
 
@@ -78,6 +79,11 @@ def main(passed_args=None):
             JOINT_5_ACTION_TOPIC,
             QUEUE_SIZE,
         )
+        claw_action_publisher = node.create_publisher(
+            std_msgs.msg.Float64MultiArray,
+            CLAW_ACTION_TOPIC,
+            QUEUE_SIZE,
+        )
 
         def process_request(request):
             """Callback to create and publish a command from a request."""
@@ -129,6 +135,11 @@ def main(passed_args=None):
                 joint_5_action = std_msgs.msg.Float64()
                 joint_5_action.data = command.joint_5_action.value
                 joint_5_action_publisher.publish(joint_5_action)
+
+            if command.claw_action is not None:
+                claw_action = std_msgs.msg.Float64MultiArray()
+                claw_action.data = command.claw_action.value
+                claw_action_publisher.publish(claw_action)
                 
 
 
