@@ -40,38 +40,38 @@ publishers = {}
 
 def handle_first_joint_movements(data):
 
-    first_joint_msg = Float64()
+    first_joint_msg = Float64MultiArray()
     first_joint_msg.data = [data.data]
 
-    publishers[FIRST_JOINT_INTERNAL_TOPIC].publish(first_joint_msg.data)
+    publishers[FIRST_JOINT_INTERNAL_TOPIC].publish(first_joint_msg)
 
 def handle_second_joint_movements(data):
 
-    second_joint_msg = Float64()
+    second_joint_msg = Float64MultiArray()
     second_joint_msg.data = [data.data]
 
-    publishers[SECOND_JOINT_INTERNAL_TOPIC].publish(second_joint_msg.data)
+    publishers[SECOND_JOINT_INTERNAL_TOPIC].publish(second_joint_msg)
 
 def handle_third_joint_movements(data):
 
-    third_joint_msg = Float64()
+    third_joint_msg = Float64MultiArray()
     third_joint_msg.data = [data.data]
 
-    publishers[THIRD_JOINT_INTERNAL_TOPIC].publish(third_joint_msg.data)
+    publishers[THIRD_JOINT_INTERNAL_TOPIC].publish(third_joint_msg)
 
 def handle_fourth_joint_movements(data):
 
-    fourth_joint_msg = Float64()
+    fourth_joint_msg = Float64MultiArray()
     fourth_joint_msg.data = [data.data]
 
-    publishers[FOURTH_JOINT_INTERNAL_TOPIC].publish(fourth_joint_msg.data)
+    publishers[FOURTH_JOINT_INTERNAL_TOPIC].publish(fourth_joint_msg)
 
 def handle_fifth_joint_movements(data):
 
-    fifth_joint_msg = Float64()
+    fifth_joint_msg = Float64MultiArray()
     fifth_joint_msg.data = [data.data]
 
-    publishers[FIFTH_JOINT_INTERNAL_TOPIC].publish(fifth_joint_msg.data)
+    publishers[FIFTH_JOINT_INTERNAL_TOPIC].publish(fifth_joint_msg)
 
 def handle_claw_movements(data):
     claw_msg = Float64MultiArray()
@@ -91,19 +91,19 @@ def main(passed_args=None):
 
         # Create publishers to Gazebo velocity managers.
         publishers[FIRST_JOINT_INTERNAL_TOPIC] = node.create_publisher(
-            Float64, FIRST_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
+            Float64MultiArray, FIRST_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
         )
         publishers[SECOND_JOINT_INTERNAL_TOPIC] = node.create_publisher(
-            Float64, SECOND_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
+            Float64MultiArray, SECOND_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
         )
         publishers[THIRD_JOINT_INTERNAL_TOPIC] = node.create_publisher(
-            Float64, THIRD_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
+            Float64MultiArray, THIRD_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
         )
         publishers[FOURTH_JOINT_INTERNAL_TOPIC] = node.create_publisher(
-            Float64, FOURTH_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
+            Float64MultiArray, FOURTH_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
         )
         publishers[FIFTH_JOINT_INTERNAL_TOPIC] = node.create_publisher(
-            Float64, FIFTH_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
+            Float64MultiArray, FIFTH_JOINT_INTERNAL_TOPIC, QUEUE_SIZE
         )
         publishers[CLAW_INTERNAL_TOPIC] = node.create_publisher(
             Float64MultiArray, CLAW_INTERNAL_TOPIC, QUEUE_SIZE

@@ -17,11 +17,11 @@ BACK_ARM_ACTION_TOPIC = "back_arm_action"
 BACK_DRUM_ACTION_TOPIC = "back_drum_action"
 ROUTINE_ACTION_TOPIC = "routine_action"
 
-JOINT_1_ACTION_TOPIC = "joint_1_action"
-JOINT_2_ACTION_TOPIC = "joint_2_action"
-JOINT_3_ACTION_TOPIC = "joint_3_action"
-JOINT_4_ACTION_TOPIC = "joint_4_action"
-JOINT_5_ACTION_TOPIC = "joint_5_action"
+JOINT_1_ACTION_TOPIC = "/ezrassor/joint_1_action"
+JOINT_2_ACTION_TOPIC = "/ezrassor/joint_2_action"
+JOINT_3_ACTION_TOPIC = "/ezrassor/joint_3_action"
+JOINT_4_ACTION_TOPIC = "/ezrassor/joint_4_action"
+JOINT_5_ACTION_TOPIC = "/ezrassor/joint_5_action"
 CLAW_ACTION_TOPIC = "claw_action"
 
 QUEUE_SIZE = 10
