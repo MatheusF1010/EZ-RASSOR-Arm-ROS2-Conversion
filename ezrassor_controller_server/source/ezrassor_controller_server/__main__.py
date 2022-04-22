@@ -22,7 +22,7 @@ JOINT_2_ACTION_TOPIC = "/ezrassor/joint_2_action"
 JOINT_3_ACTION_TOPIC = "/ezrassor/joint_3_action"
 JOINT_4_ACTION_TOPIC = "/ezrassor/joint_4_action"
 JOINT_5_ACTION_TOPIC = "/ezrassor/joint_5_action"
-CLAW_ACTION_TOPIC = "claw_action"
+CLAW_ACTION_TOPIC = "/ezrassor/claw_action"
 
 QUEUE_SIZE = 10
 
@@ -80,7 +80,7 @@ def main(passed_args=None):
             QUEUE_SIZE,
         )
         claw_action_publisher = node.create_publisher(
-            std_msgs.msg.Float64MultiArray,
+            std_msgs.msg.Float64,
             CLAW_ACTION_TOPIC,
             QUEUE_SIZE,
         )
@@ -137,7 +137,7 @@ def main(passed_args=None):
                 joint_5_action_publisher.publish(joint_5_action)
 
             if command.claw_action is not None:
-                claw_action = std_msgs.msg.Float64MultiArray()
+                claw_action = std_msgs.msg.Float64()
                 claw_action.data = command.claw_action.value
                 claw_action_publisher.publish(claw_action)
                 
