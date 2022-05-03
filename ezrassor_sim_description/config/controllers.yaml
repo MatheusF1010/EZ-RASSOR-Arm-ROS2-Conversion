@@ -16,7 +16,7 @@ ezrassor:
         type: velocity_controllers/JointGroupVelocityController
       
       joint_1_velocity_controller:
-        type: velocity_controllers/JointGroupvelocityController
+        type: velocity_controllers/JointGroupVelocityController
 
       joint_2_velocity_controller:
         type: velocity_controllers/JointGroupVelocityController
@@ -30,8 +30,8 @@ ezrassor:
       joint_5_velocity_controller:
         type: velocity_controllers/JointGroupVelocityController
 
-      claw_effect_controller:
-        type: effort_controllers/JointGroupPositionController
+      claw_effort_controller:
+        type: effort_controllers/JointGroupEffortController
 
       # Needs update
       paver_arm_autonomy_controller:
@@ -137,7 +137,7 @@ ezrassor:
         - joint56
       pid: {p: 100.0, i: 0.01, d: 10.0}
 
-  claw_effect_controller:
+  claw_effort_controller:
     ros__parameters:
       joints: 
         - grabber_joint1

@@ -150,7 +150,7 @@ export default class ControllerScreen extends React.Component {
            <View style={ControllerStyle.upAndDownDPad} >
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT2, Operation.ARMUP)}} 
-                //  onPressOut={() => {this.sendOperation(Robot.JOINT2, Operation.STOP)}}
+                 onPressOut={() => {this.sendOperation(Robot.JOINT2, Operation.STOP)}}
                  >  
                <FontAwesome name="chevron-up" size={50} color='#fff'/>
              </TouchableOpacity>
@@ -159,7 +159,7 @@ export default class ControllerScreen extends React.Component {
                <View style={ControllerStyle.dPadLeft}>
                  <TouchableOpacity
                      onPressIn={() => {this.sendOperation(Robot.JOINT1, Operation.ARMLEFT)}}
-                    //  onPressOut={() => {this.sendOperation(Robot.JOINT1, Operation.STOP)}}
+                     onPressOut={() => {this.sendOperation(Robot.JOINT1, Operation.STOP)}}
                      >
                    <FontAwesome name="chevron-left" size={50} color='#fff'/>
                  </TouchableOpacity>
@@ -167,7 +167,7 @@ export default class ControllerScreen extends React.Component {
                <View style={ControllerStyle.dPadRight}>
                  <TouchableOpacity
                      onPressIn={() => {this.sendOperation(Robot.JOINT1, Operation.ARMRIGHT)}}
-                    //  onPressOut={() => {this.sendOperation(Robot.JOINT1, Operation.STOP)}}
+                     onPressOut={() => {this.sendOperation(Robot.JOINT1, Operation.STOP)}}
                      >
                    <FontAwesome name="chevron-right" size={50} color='#fff'/>
                  </TouchableOpacity>
@@ -176,7 +176,7 @@ export default class ControllerScreen extends React.Component {
              <View style={ControllerStyle.upAndDownDPad} >
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT2, Operation.ARMDOWN)}} 
-                //  onPressOut={() => {this.sendOperation(Robot.JOINT2, Operation.STOP)}}
+                 onPressOut={() => {this.sendOperation(Robot.JOINT2, Operation.STOP)}}
                  >  
                <FontAwesome name="chevron-down" size={50} color='#fff'/>
              </TouchableOpacity>
@@ -187,7 +187,7 @@ export default class ControllerScreen extends React.Component {
            <View style={ControllerStyle.upAndDownDPad} >
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT3, Operation.CLAWUP)}} 
-                //  onPressOut={() => {this.sendOperation(Robot.JOINT3, Operation.STOP)}}
+                 onPressOut={() => {this.sendOperation(Robot.JOINT3, Operation.STOP)}}
                  >  
                <FontAwesome name="chevron-up" size={50} color='#fff'/>
              </TouchableOpacity>
@@ -196,7 +196,7 @@ export default class ControllerScreen extends React.Component {
                <View style={ControllerStyle.dPadLeft}>
                  <TouchableOpacity
                      onPressIn={() => {this.sendOperation(Robot.JOINT4, Operation.CLAWLEFT)}}
-                    //  onPressOut={() => {this.sendOperation(Robot.JOINT4, Operation.STOP)}}
+                     onPressOut={() => {this.sendOperation(Robot.JOINT4, Operation.STOP)}}
                      >
                    <FontAwesome name="chevron-left" size={50} color='#fff'/>
                  </TouchableOpacity>
@@ -204,7 +204,7 @@ export default class ControllerScreen extends React.Component {
                <View style={ControllerStyle.dPadRight}>
                  <TouchableOpacity
                      onPressIn={() => {this.sendOperation(Robot.JOINT4, Operation.CLAWRIGHT)}}
-                    //  onPressOut={() => {this.sendOperation(Robot.JOINT4, Operation.STOP)}}
+                     onPressOut={() => {this.sendOperation(Robot.JOINT4, Operation.STOP)}}
                      >
                    <FontAwesome name="chevron-right" size={50} color='#fff'/>
                  </TouchableOpacity>
@@ -213,7 +213,7 @@ export default class ControllerScreen extends React.Component {
              <View style={ControllerStyle.upAndDownDPad} >
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT3, Operation.CLAWDOWN)}} 
-                //  onPressOut={() => {this.sendOperation(Robot.JOINT3, Operation.STOP)}}
+                 onPressOut={() => {this.sendOperation(Robot.JOINT3, Operation.STOP)}}
                  >  
                <FontAwesome name="chevron-down" size={50} color='#fff'/>
              </TouchableOpacity>
@@ -224,7 +224,7 @@ export default class ControllerScreen extends React.Component {
              <View style={ControllerStyle.upAndDownDPad} >
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT5, Operation.GRABBERRIGHT)}} 
-                //  onPressOut={() => {this.sendOperation(Robot.JOINT5, Operation.STOP)}}
+                 onPressOut={() => {this.sendOperation(Robot.JOINT5, Operation.STOP)}}
                  >  
                <FontAwesome name="rotate-right" size={50} color='#fff'/>
              </TouchableOpacity>
@@ -246,7 +246,7 @@ export default class ControllerScreen extends React.Component {
                <View style={ControllerStyle.upAndDownDPad} >
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT5, Operation.GRABBERLEFT)}} 
-                //  onPressOut={() => {this.sendOperation(Robot.JOINT5, Operation.STOP)}}
+                 onPressOut={() => {this.sendOperation(Robot.JOINT5, Operation.STOP)}}
                  >  
                <FontAwesome name="rotate-left" size={50} color='#fff'/>
              </TouchableOpacity>

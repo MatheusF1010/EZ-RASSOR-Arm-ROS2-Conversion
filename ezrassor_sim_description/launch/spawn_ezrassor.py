@@ -228,7 +228,7 @@ def __spawn_robot(context, *args, **kwargs):
         output="screen",
     )
 
-    load_claw_effect_controller = ExecuteProcess(
+    load_claw_effort_controller = ExecuteProcess(
         cmd=[
             "ros2",
             "control",
@@ -237,7 +237,7 @@ def __spawn_robot(context, *args, **kwargs):
             f"/{robot_name}/controller_manager",
             "--set-state",
             "start",
-            "claw_effect_controller"
+            "claw_effort_controller"
         ],
         output="screen",
     )
@@ -294,7 +294,7 @@ def __spawn_robot(context, *args, **kwargs):
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_claw_effect_controller],
+                on_exit=[load_claw_effort_controller],
             )
         ),
         RegisterEventHandler(

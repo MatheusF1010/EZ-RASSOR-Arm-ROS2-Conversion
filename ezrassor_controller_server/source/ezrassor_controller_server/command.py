@@ -186,5 +186,5 @@ class Joint5Action(enum.Enum, metaclass=MetaActionEnum):
 
 class ClawAction(enum.Enum, metaclass=MetaActionEnum):
     """This action describes which joint to execute for an EZRASSOR."""
-    OPEN = 0.0
-    CLOSE = 1.0
+    OPEN = -6.0
+    CLOSE = 6.0

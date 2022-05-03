@@ -559,7 +559,7 @@
         <!-- ARM CONTROLS -->
 
         <joint name="joint12">
-            <command_interface name="position">
+            <command_interface name="velocity">
                 <param name="min">-10</param>
                 <param name="max">10</param>
             </command_interface>
@@ -567,7 +567,7 @@
             <state_interface name="velocity" />
         </joint>
         <joint name="joint23">
-            <command_interface name="position">
+            <command_interface name="velocity">
                 <param name="min">-10</param>
                 <param name="max">10</param>
             </command_interface>
@@ -575,7 +575,7 @@
             <state_interface name="velocity" />
         </joint>
         <joint name="joint34">
-            <command_interface name="position">
+            <command_interface name="velocity">
                 <param name="min">-10</param>
                 <param name="max">10</param>
             </command_interface>
@@ -583,7 +583,7 @@
             <state_interface name="velocity" />
         </joint>
         <joint name="joint45">
-            <command_interface name="position">
+            <command_interface name="velocity">
                 <param name="min">-10</param>
                 <param name="max">10</param>
             </command_interface>
@@ -591,7 +591,7 @@
             <state_interface name="velocity" />
         </joint>
         <joint name="joint56">
-            <command_interface name="position">
+            <command_interface name="velocity">
                 <param name="min">-10</param>
                 <param name="max">10</param>
             </command_interface>

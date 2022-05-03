@@ -31,7 +31,7 @@ FOURTH_JOINT_INTERNAL_TOPIC = "joint_4_velocity_controller/commands"
 FIFTH_JOINT_EXTERNAL_TOPIC = "joint_5_action"
 FIFTH_JOINT_INTERNAL_TOPIC = "joint_5_velocity_controller/commands"
 CLAW_EXTERNAL_TOPIC = "claw_action"
-CLAW_INTERNAL_TOPIC = "claw_effect_controller/commands"
+CLAW_INTERNAL_TOPIC = "claw_effort_controller/commands"
 
 QUEUE_SIZE = 10
 
@@ -79,7 +79,7 @@ def handle_claw_movements(data):
     claw_msg.layout.dim[0].size = 2
     claw_msg.layout.dim[0].stride = 1
     claw_msg.layout.dim[0].label = "x"
-    claw_msg.data = [data.data * 2]
+    claw_msg.data = [data.data] * 2
     
     publishers[CLAW_INTERNAL_TOPIC].publish(claw_msg)
 
@@ -141,7 +141,7 @@ def main(passed_args=None):
             QUEUE_SIZE,
         )
         node.create_subscription(
-            Float64MultiArray,
+            Float64,
             CLAW_EXTERNAL_TOPIC,
             handle_claw_movements,
             QUEUE_SIZE,
