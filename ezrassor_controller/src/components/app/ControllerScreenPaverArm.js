@@ -96,13 +96,13 @@ export default class ControllerScreen extends React.Component {
                 <Text style={ControllerStyle.textLarge}>Activate Autonomous Arm Function(s)</Text>
               </View>
               <View style={{ flexDirection: 'row', marginVertical: 15, justifyContent: 'center' }}> 
-                  <TouchableOpacity style={ControllerStyle.modalButton} onPress={() => {this.sendOperation(Robot.ARM, Operation.PICKUP)}}>
+                  <TouchableOpacity style={ControllerStyle.modalButton} onPress={() => {this.sendOperation(Robot.AUTONOMY, Operation.PICKUP)}}>
                     <Text style={ControllerStyle.textSmall}>Pick Up Paver</Text> 
                   </TouchableOpacity> 
-                  <TouchableOpacity style={ControllerStyle.modalButton} onPress={() => {this.sendOperation(Robot.ARM, Operation.PLACE)}}>
+                  <TouchableOpacity style={ControllerStyle.modalButton} onPress={() => {this.sendOperation(Robot.AUTONOMY, Operation.PLACE)}}>
                     <Text style={ControllerStyle.textSmall}>Place Paver</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={ControllerStyle.modalButton} onPress={() => {this.sendOperation(Robot.ARM, Operation.HOME)}}>
+                  <TouchableOpacity style={ControllerStyle.modalButton} onPress={() => {this.sendOperation(Robot.AUTONOMY, Operation.HOME)}}>
                     <Text style={ControllerStyle.textSmall}>Return Home</Text>
                   </TouchableOpacity>
               </View>

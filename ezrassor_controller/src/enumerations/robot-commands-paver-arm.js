@@ -5,7 +5,7 @@ const Robot = Object.freeze({
     JOINT4: Symbol('joint4'),
     JOINT5: Symbol('joint5'),
     CLAW: Symbol('claw'),
-    // AUTONOMY: Symbol('autonomy'),
+    AUTONOMY: Symbol('autonomy'),
     ALL: Symbol('all')
 });
 
