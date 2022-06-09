@@ -148,20 +148,21 @@ def __spawn_robot(context, *args, **kwargs):
         output="screen",
     )
 
-    # ARM
-    # load_paver_arm_controller = ExecuteProcess(
-    #     cmd=[
-    #         "ros2",
-    #         "control",
-    #         "load_controller",
-    #         "-c",
-    #         f"/{robot_name}/controller_manager",
-    #         "--set-state",
-    #         "start",
-    #         "paver_arm_controller"
-    #     ],
-    #     output="screen",
-    # )
+    #ARM
+    load_paver_arm_autonomy_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "paver_arm_autonomy_controller"
+        ],
+        output="screen",
+    )
+
     load_joint_1_velocity_controller = ExecuteProcess(
         cmd=[
             "ros2",
@@ -255,12 +256,12 @@ def __spawn_robot(context, *args, **kwargs):
                 on_exit=[load_diff_drive_controller],
             )
         ),
-        # RegisterEventHandler(
-        #     event_handler=OnProcessExit(
-        #         target_action=load_joint_state_controller,
-        #         on_exit=[load_paver_arm_controller],
-        #     )
-        # ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[load_paver_arm_autonomy_controller],
+            )
+        ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,

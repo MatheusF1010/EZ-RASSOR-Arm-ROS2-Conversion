@@ -1,0 +1,15 @@
+Arm Parts
+-> nav_functions (calculating function for proper arm movements)
+-> publisher (publish information from camara , need to figure what camara_info.k,d,r,p means)
+-> simulation_interact (contains all the simulation function and the rutine for joints to move when the routine comman is exicuted)
+
+
+-> ai_objects (basically default values and publishers for different parts)
+-> auto_functions (automatic function that can be exicuted though controller input , need to add controller input part)
+-> autonomous_control (where everything is tracked and everything is executed.)
+-> utility_functions (unit function like turn righ left until obstical is not detected)
+
+Computer Vision Parts
+-> camera_image (This recives the camara image directly from the ezrassor)
+-> pointcloud_processor (I think this gets the infrom from camara image but i dont know how)
+-> obstacle_detection (here obsticle detection takes place based upon the infrmation recieved by camara and pointcloud data and this is converted to laser scan)

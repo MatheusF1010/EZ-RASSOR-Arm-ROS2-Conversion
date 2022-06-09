@@ -41,9 +41,12 @@ const Operation = Object.freeze({
     STOP: 'STOP', 
 
     // Paver Arm Autonomy
-    PICKUP: '',
-    PLACE: '',
-    HOME: '',
+    PICKUP: 'PICK',
+    PLACE: 'PLACE',
+    HOME: 'RESET',
+
+    // Paver Arm COmputer Vision Autonomy
+    FULLAUTONOMY: 'AUTOMATIC',
 
 });
 

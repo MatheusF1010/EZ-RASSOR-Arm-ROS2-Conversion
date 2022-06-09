@@ -68,8 +68,24 @@ export default class EZRASSOR {
     // Update only the instruction needed
     updateTwistMsg(instruction) {
         this._twistMsg = instruction; 
-    } 
+    }
+    
+    // Update Arm Autonomy movemts
+    updateAutonomyArmTwistMsg(instruction){
+        //PartialAutonomy
+        if(instruction == Operation.PICKUP || instruction == Operation.PICKUP || instruction == Operation.PICKUP){
+            this._twistMsg = instruction;
+        }
 
+        //FullAutonomy
+        if(instruction == Operation.FULLAUTONOMY){
+            this._twistMsg = {
+
+            }
+        }
+    }
+
+    //This need to be fixed
     updateAutonomyTwistMsg(instruction) {
         if(instruction == Operation.DRIVE || instruction == Operation.FULLAUTONOMY) {
             this._twistMsg = {
@@ -125,7 +141,7 @@ export default class EZRASSOR {
                 this.updateTwistMsg({claw_action:operation});
                 break;
             case Robot.AUTONOMY:
-                this.updateAutonomyTwistMsg(operation);
+                this.updateAutonomyArmTwistMsg(operation);
                 break;
             default:
                 console.log('Invalid robot part selected');
