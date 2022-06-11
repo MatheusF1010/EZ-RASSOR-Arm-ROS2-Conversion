@@ -1,4 +1,5 @@
 """Request verification tools."""
+from tokenize import Double
 import ezrassor_controller_server as server
 
 
@@ -100,16 +101,6 @@ def verify(request):
                 raise VerificationError(f"missing {JOINT4_AUTO_KEY} for {key}")
             if JOINT5_AUTO_KEY not in request[key]:
                 raise VerificationError(f"missing {JOINT5_AUTO_KEY} for {key}")
-            if not isinstance(request[key][JOINT1_AUTO_KEY], float):
-                raise VerificationError(f"{JOINT1_AUTO_KEY} must be a float")
-            if not isinstance(request[key][JOINT2_AUTO_KEY], float):
-                raise VerificationError(f"{JOINT2_AUTO_KEY} must be a float")
-            if not isinstance(request[key][JOINT3_AUTO_KEY], float):
-                raise VerificationError(f"{JOINT3_AUTO_KEY} must be a float")
-            if not isinstance(request[key][JOINT4_AUTO_KEY], float):
-                raise VerificationError(f"{JOINT4_AUTO_KEY} must be a float")
-            if not isinstance(request[key][JOINT5_AUTO_KEY], float):
-                raise VerificationError(f"{JOINT5_AUTO_KEY} must be a float")
         else:
             raise VerificationError(f"unknown key: {key}")
 

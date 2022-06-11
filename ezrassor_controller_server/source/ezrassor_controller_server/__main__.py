@@ -23,7 +23,7 @@ JOINT_3_ACTION_TOPIC = "/ezrassor/joint_3_action"
 JOINT_4_ACTION_TOPIC = "/ezrassor/joint_4_action"
 JOINT_5_ACTION_TOPIC = "/ezrassor/joint_5_action"
 CLAW_ACTION_TOPIC = "/ezrassor/claw_action"
-PARTIAL_AUTOMATION_TOPIC = "/ezrassor/paver_arm_autonomy"
+PARTIAL_AUTOMATION_TOPIC = "/ezrassor/partial_autonomy"
 
 QUEUE_SIZE = 10
 
@@ -85,7 +85,7 @@ def main(passed_args=None):
             CLAW_ACTION_TOPIC,
             QUEUE_SIZE,
         )
-        paver_arm_autonomy_publisher = node.create_publisher(
+        partial_autonomy_publisher = node.create_publisher(
             std_msgs.msg.Float64MultiArray,
             PARTIAL_AUTOMATION_TOPIC,
             QUEUE_SIZE,
@@ -146,6 +146,16 @@ def main(passed_args=None):
                 claw_action = std_msgs.msg.Float64()
                 claw_action.data = command.claw_action.value
                 claw_action_publisher.publish(claw_action)
+
+            if command.partial_autonomy_action is not None:
+                partial_autonomy_action = std_msgs.msg.Float64MultiArray()
+                partial_autonomy_action.data = {command.partial_autonomy_action.Joint1,
+                                                command.partial_autonomy_action.Joint2,
+                                                command.partial_autonomy_action.Joint3,
+                                                command.partial_autonomy_action.Joint4,
+                                                command.partial_autonomy_action.Joint5}
+                partial_autonomy_publisher.publish(partial_autonomy_action)
+            
                 
             
         # Create a Flask app to serve HTTP requests.

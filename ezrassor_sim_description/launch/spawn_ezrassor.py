@@ -149,7 +149,7 @@ def __spawn_robot(context, *args, **kwargs):
     )
 
     #ARM
-    load_paver_arm_autonomy_controller = ExecuteProcess(
+    load_partial_autonomy_controller = ExecuteProcess(
         cmd=[
             "ros2",
             "control",
@@ -158,7 +158,7 @@ def __spawn_robot(context, *args, **kwargs):
             f"/{robot_name}/controller_manager",
             "--set-state",
             "start",
-            "paver_arm_autonomy_controller"
+            "partial_autonomy_controller"
         ],
         output="screen",
     )
@@ -259,7 +259,7 @@ def __spawn_robot(context, *args, **kwargs):
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_paver_arm_autonomy_controller],
+                on_exit=[load_partial_autonomy_controller],
             )
         ),
         RegisterEventHandler(

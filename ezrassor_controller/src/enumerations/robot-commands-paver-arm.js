@@ -49,18 +49,18 @@ const Operation = Object.freeze({
         Joint5 : -0.1709,
     },
     PLACE: {
-        Joint1 : 0,
+        Joint1 : 0.0000,
         Joint2 : -0.8505,
         Joint3 : 1.6489,
         Joint4 : -1.3017,
-        Joint5 : 0,
+        Joint5 : 0.0000,
     },
     HOME: {
-        Joint1 : 0,
-        Joint2 : 0,
-        Joint3 : 0,
-        Joint4 : 0,
-        Joint5 : 0,
+        Joint1 : 0.0000,
+        Joint2 : 0.0000,
+        Joint3 : 0.0000,
+        Joint4 : 0.0000,
+        Joint5 : 0.0000,
     },
 
     // Paver Arm COmputer Vision Autonomy

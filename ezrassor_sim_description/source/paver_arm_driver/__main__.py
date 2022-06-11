@@ -33,8 +33,8 @@ FIFTH_JOINT_INTERNAL_TOPIC = "joint_5_velocity_controller/commands"
 CLAW_EXTERNAL_TOPIC = "claw_action"
 CLAW_INTERNAL_TOPIC = "claw_effort_controller/commands"
 
-PARTIAL_AUTOMATION_EXTERNAL_TOPIC = "paver_arm_autonomy"
-PARTIAL_AUTOMATION_INTERNAL_TOPIC = "paver_arm_autonomy_controller/commands"
+PARTIAL_AUTOMATION_EXTERNAL_TOPIC = "partial_autonomy"
+PARTIAL_AUTOMATION_INTERNAL_TOPIC = "partial_autonomy_controller/commands"
 
 QUEUE_SIZE = 10
 
@@ -87,12 +87,12 @@ def handle_claw_movements(data):
     publishers[CLAW_INTERNAL_TOPIC].publish(claw_msg)
 
 # NEED TO FIX THIS AND TAKE INFOR AS AN ARRAY AND DAT WITH EACH INDEX ARRAY 
-def handle_paver_arm_autonomy_movements(data):
+def handle_partial_autonomy_movements(data):
 
-    paver_arm_automation_msg = Float64MultiArray()
-    paver_arm_automation_msg = [data.data]
+    partial_automation_msg = Float64MultiArray()
+    partial_automation_msg = [data.data]
 
-    publishers[PARTIAL_AUTOMATION_INTERNAL_TOPIC].publish(paver_arm_automation_msg)
+    publishers[PARTIAL_AUTOMATION_INTERNAL_TOPIC].publish(partial_automation_msg)
 
     # #First Joint
     # first_joint_msg = Float64MultiArray()
@@ -192,7 +192,7 @@ def main(passed_args=None):
         node.create_subscription(
             Float64MultiArray,
             PARTIAL_AUTOMATION_EXTERNAL_TOPIC,
-            handle_paver_arm_autonomy_movements,
+            handle_partial_autonomy_movements,
             QUEUE_SIZE,
         )
 

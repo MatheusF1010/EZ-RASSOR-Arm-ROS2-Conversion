@@ -34,8 +34,9 @@ ezrassor:
         type: effort_controllers/JointGroupEffortController
 
       # Needs update
-      paver_arm_autonomy_controller:
-        type: position_controllers/JointTrajectoryController
+      partial_autonomy_controller:
+        type: velocity_controllers/JointGroupVelocityController
+
 
 
   diff_drive_controller:
@@ -144,7 +145,7 @@ ezrassor:
         - grabber_joint2
       pid: {p: 10.0, i: 0.0, d: 0.0}
 
-  paver_arm_autonomy_controller:
+  partial_autonomy_controller:
     ros__parameters:
       joints:
         - joint12
