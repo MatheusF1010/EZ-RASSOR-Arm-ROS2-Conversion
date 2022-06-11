@@ -16,6 +16,13 @@ JOINT_4_ACTION_KEY = "joint_4_action"
 JOINT_5_ACTION_KEY = "joint_5_action"
 CLAW_ACTION_KEY = "claw_action"
 
+PARTIAL_AUTOMATION_KEY = "partial_autonomy"
+JOINT1_AUTO_KEY = "Joint1"
+JOINT2_AUTO_KEY = "Joint2"
+JOINT3_AUTO_KEY = "Joint3"
+JOINT4_AUTO_KEY = "Joint4"
+JOINT5_AUTO_KEY = "Joint5"
+
 
 def verify(request):
     """Validate the contents of the request."""
@@ -78,6 +85,31 @@ def verify(request):
                 raise VerificationError(
                     f"{key} value must be one of the [{str(server.ClawAction)}]",
                 )
+        elif key == PARTIAL_AUTOMATION_KEY:
+            if not isinstance(request[key], dict):
+                raise VerificationError(
+                    f"missing the joints input for {key}",
+                )
+            if JOINT1_AUTO_KEY not in request[key]:
+                raise VerificationError(f"missing {JOINT1_AUTO_KEY} for {key}")
+            if JOINT2_AUTO_KEY not in request[key]:
+                raise VerificationError(f"missing {JOINT2_AUTO_KEY} for {key}")
+            if JOINT3_AUTO_KEY not in request[key]:
+                raise VerificationError(f"missing {JOINT3_AUTO_KEY} for {key}")
+            if JOINT4_AUTO_KEY not in request[key]:
+                raise VerificationError(f"missing {JOINT4_AUTO_KEY} for {key}")
+            if JOINT5_AUTO_KEY not in request[key]:
+                raise VerificationError(f"missing {JOINT5_AUTO_KEY} for {key}")
+            if not isinstance(request[key][JOINT1_AUTO_KEY], float):
+                raise VerificationError(f"{JOINT1_AUTO_KEY} must be a float")
+            if not isinstance(request[key][JOINT2_AUTO_KEY], float):
+                raise VerificationError(f"{JOINT2_AUTO_KEY} must be a float")
+            if not isinstance(request[key][JOINT3_AUTO_KEY], float):
+                raise VerificationError(f"{JOINT3_AUTO_KEY} must be a float")
+            if not isinstance(request[key][JOINT4_AUTO_KEY], float):
+                raise VerificationError(f"{JOINT4_AUTO_KEY} must be a float")
+            if not isinstance(request[key][JOINT5_AUTO_KEY], float):
+                raise VerificationError(f"{JOINT5_AUTO_KEY} must be a float")
         else:
             raise VerificationError(f"unknown key: {key}")
 

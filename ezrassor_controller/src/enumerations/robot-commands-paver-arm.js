@@ -41,9 +41,27 @@ const Operation = Object.freeze({
     STOP: 'STOP', 
 
     // Paver Arm Autonomy
-    PICKUP: 'PICK',
-    PLACE: 'PLACE',
-    HOME: 'RESET',
+    PICKUP: {
+        Joint1 : 2.5167,
+        Joint2 : -1.3500,
+        Joint3 : 1.1900,
+        Joint4 : 0.1562,
+        Joint5 : -0.1709,
+    },
+    PLACE: {
+        Joint1 : 0,
+        Joint2 : -0.8505,
+        Joint3 : 1.6489,
+        Joint4 : -1.3017,
+        Joint5 : 0,
+    },
+    HOME: {
+        Joint1 : 0,
+        Joint2 : 0,
+        Joint3 : 0,
+        Joint4 : 0,
+        Joint5 : 0,
+    },
 
     // Paver Arm COmputer Vision Autonomy
     FULLAUTONOMY: 'AUTOMATIC',
