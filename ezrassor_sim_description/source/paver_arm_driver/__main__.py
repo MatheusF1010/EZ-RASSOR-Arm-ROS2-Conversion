@@ -33,9 +33,6 @@ FIFTH_JOINT_INTERNAL_TOPIC = "joint_5_velocity_controller/commands"
 CLAW_EXTERNAL_TOPIC = "claw_action"
 CLAW_INTERNAL_TOPIC = "claw_effort_controller/commands"
 
-PARTIAL_AUTOMATION_EXTERNAL_TOPIC = "partial_autonomy"
-PARTIAL_AUTOMATION_INTERNAL_TOPIC = "partial_autonomy_controller/commands"
-
 QUEUE_SIZE = 10
 
 # Dictionary values set after publishers get created in main()
@@ -86,40 +83,6 @@ def handle_claw_movements(data):
     
     publishers[CLAW_INTERNAL_TOPIC].publish(claw_msg)
 
-# NEED TO FIX THIS AND TAKE INFOR AS AN ARRAY AND DAT WITH EACH INDEX ARRAY 
-def handle_partial_autonomy_movements(data):
-
-    partial_automation_msg = Float64MultiArray()
-    partial_automation_msg = [data.data]
-
-    publishers[PARTIAL_AUTOMATION_INTERNAL_TOPIC].publish(partial_automation_msg)
-
-    # #First Joint
-    # first_joint_msg = Float64MultiArray()
-    # first_joint_msg.data = [data.data]
-
-    # #Second Joint
-    # second_joint_msg = Float64MultiArray()
-    # second_joint_msg.data = [data.data]
-
-    # #Third Joint
-    # third_joint_msg = Float64MultiArray()
-    # third_joint_msg.data = [data.data]
-
-    # #Forth Joint
-    # fourth_joint_msg = Float64MultiArray()
-    # fourth_joint_msg.data = [data.data]
-
-    # #Fifth Joint
-    # fifth_joint_msg = Float64MultiArray()
-    # fifth_joint_msg.data = [data.data]
-
-    #Publishes
-    # publishers[FIRST_JOINT_INTERNAL_TOPIC].publish(first_joint_msg)
-    # publishers[SECOND_JOINT_INTERNAL_TOPIC].publish(second_joint_msg)
-    # publishers[THIRD_JOINT_INTERNAL_TOPIC].publish(third_joint_msg)
-    # publishers[FOURTH_JOINT_INTERNAL_TOPIC].publish(fourth_joint_msg)
-    # publishers[FIFTH_JOINT_INTERNAL_TOPIC].publish(fifth_joint_msg)
 
 
 
@@ -147,9 +110,6 @@ def main(passed_args=None):
         )
         publishers[CLAW_INTERNAL_TOPIC] = node.create_publisher(
             Float64MultiArray, CLAW_INTERNAL_TOPIC, QUEUE_SIZE
-        )
-        publishers[PARTIAL_AUTOMATION_INTERNAL_TOPIC] = node.create_publisher(
-            Float64MultiArray, PARTIAL_AUTOMATION_INTERNAL_TOPIC, QUEUE_SIZE
         )
 
         # Create subscriptions to listen for specific robot actions from users.
@@ -187,12 +147,6 @@ def main(passed_args=None):
             Float64,
             CLAW_EXTERNAL_TOPIC,
             handle_claw_movements,
-            QUEUE_SIZE,
-        )
-        node.create_subscription(
-            Float64MultiArray,
-            PARTIAL_AUTOMATION_EXTERNAL_TOPIC,
-            handle_partial_autonomy_movements,
             QUEUE_SIZE,
         )
 

@@ -149,20 +149,6 @@ def __spawn_robot(context, *args, **kwargs):
     )
 
     #ARM
-    load_partial_autonomy_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "partial_autonomy_controller"
-        ],
-        output="screen",
-    )
-
     load_joint_1_velocity_controller = ExecuteProcess(
         cmd=[
             "ros2",
@@ -254,12 +240,6 @@ def __spawn_robot(context, *args, **kwargs):
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
                 on_exit=[load_diff_drive_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_partial_autonomy_controller],
             )
         ),
         RegisterEventHandler(
