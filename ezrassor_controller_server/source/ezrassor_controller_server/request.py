@@ -17,14 +17,6 @@ JOINT_4_ACTION_KEY = "joint_4_action"
 JOINT_5_ACTION_KEY = "joint_5_action"
 CLAW_ACTION_KEY = "claw_action"
 
-PARTIAL_AUTOMATION_KEY = "partial_autonomy"
-JOINT1_AUTO_KEY = "Joint1"
-JOINT2_AUTO_KEY = "Joint2"
-JOINT3_AUTO_KEY = "Joint3"
-JOINT4_AUTO_KEY = "Joint4"
-JOINT5_AUTO_KEY = "Joint5"
-
-
 def verify(request):
     """Validate the contents of the request."""
     for key in request.keys():
@@ -57,50 +49,35 @@ def verify(request):
                     f"{key} value must be one of [{str(server.RoutineAction)}]",
                 )
         elif key == JOINT_1_ACTION_KEY:
-            if request[key] not in server.Joint1Action:
+            if request[key] not in server.AllJointAction:
                 raise VerificationError(
-                    f"{key} value must be one of the [{str(server.Joint1Action)}]",
+                    f"{key} value must be one of the [{str(server.AllJointAction)}]",
                 )
         elif key == JOINT_2_ACTION_KEY:
-            if request[key] not in server.Joint2Action:
+            if request[key] not in server.AllJointAction:
                 raise VerificationError(
-                    f"{key} value must be one of the [{str(server.Joint2Action)}]",
+                    f"{key} value must be one of the [{str(server.AllJointAction)}]",
                 )
         elif key == JOINT_3_ACTION_KEY:
-            if request[key] not in server.Joint3Action:
+            if request[key] not in server.AllJointAction:
                 raise VerificationError(
-                    f"{key} value must be one of the [{str(server.Joint3Action)}]",
+                    f"{key} value must be one of the [{str(server.AllJointAction)}]",
                 )
         elif key == JOINT_4_ACTION_KEY:
-            if request[key] not in server.Joint4Action:
+            if request[key] not in server.AllJointAction:
                 raise VerificationError(
-                    f"{key} value must be one of the [{str(server.Joint4Action)}]",
+                    f"{key} value must be one of the [{str(server.AllJointAction)}]",
                 )
         elif key == JOINT_5_ACTION_KEY:
-            if request[key] not in server.Joint5Action:
+            if request[key] not in server.AllJointAction:
                 raise VerificationError(
-                    f"{key} value must be one of the [{str(server.Joint5Action)}]",
+                    f"{key} value must be one of the [{str(server.AllJointAction)}]",
                 )
         elif key == CLAW_ACTION_KEY:
             if request[key] not in server.ClawAction:
                 raise VerificationError(
                     f"{key} value must be one of the [{str(server.ClawAction)}]",
                 )
-        elif key == PARTIAL_AUTOMATION_KEY:
-            if not isinstance(request[key], dict):
-                raise VerificationError(
-                    f"missing the joints input for {key}",
-                )
-            if JOINT1_AUTO_KEY not in request[key]:
-                raise VerificationError(f"missing {JOINT1_AUTO_KEY} for {key}")
-            if JOINT2_AUTO_KEY not in request[key]:
-                raise VerificationError(f"missing {JOINT2_AUTO_KEY} for {key}")
-            if JOINT3_AUTO_KEY not in request[key]:
-                raise VerificationError(f"missing {JOINT3_AUTO_KEY} for {key}")
-            if JOINT4_AUTO_KEY not in request[key]:
-                raise VerificationError(f"missing {JOINT4_AUTO_KEY} for {key}")
-            if JOINT5_AUTO_KEY not in request[key]:
-                raise VerificationError(f"missing {JOINT5_AUTO_KEY} for {key}")
         else:
             raise VerificationError(f"unknown key: {key}")
 

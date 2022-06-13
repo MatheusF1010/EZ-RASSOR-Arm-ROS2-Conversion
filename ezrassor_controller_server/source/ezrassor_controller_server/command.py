@@ -34,37 +34,27 @@ def create_command(request):
     #Set the Joints action, if available in the request.
     joint_1_action = None
     if server.JOINT_1_ACTION_KEY in request:
-        joint_1_action = Joint1Action[request[server.JOINT_1_ACTION_KEY]]
+        joint_1_action = AllJointAction[request[server.JOINT_1_ACTION_KEY]]
 
     joint_2_action = None
     if server.JOINT_2_ACTION_KEY in request:
-        joint_2_action = Joint2Action[request[server.JOINT_2_ACTION_KEY]]
+        joint_2_action = AllJointAction[request[server.JOINT_2_ACTION_KEY]]
 
     joint_3_action = None
     if server.JOINT_3_ACTION_KEY in request:
-        joint_3_action = Joint3Action[request[server.JOINT_3_ACTION_KEY]]
+        joint_3_action = AllJointAction[request[server.JOINT_3_ACTION_KEY]]
     
     joint_4_action = None
     if server.JOINT_4_ACTION_KEY in request:
-        joint_4_action = Joint4Action[request[server.JOINT_4_ACTION_KEY]]
+        joint_4_action = AllJointAction[request[server.JOINT_4_ACTION_KEY]]
         
     joint_5_action = None
     if server.JOINT_5_ACTION_KEY in request:
-        joint_5_action = Joint5Action[request[server.JOINT_5_ACTION_KEY]]
+        joint_5_action = AllJointAction[request[server.JOINT_5_ACTION_KEY]]
 
     claw_action = None
     if server.CLAW_ACTION_KEY in request:
         claw_action = ClawAction[request[server.CLAW_ACTION_KEY]]
-
-    partial_autonomy_action = None
-    if server.PARTIAL_AUTOMATION_KEY in request:
-        partial_autonomy_action = PartialAutomation(
-            Joint1=request[server.PARTIAL_AUTOMATION_KEY][server.JOINT1_AUTO_KEY],
-            Joint2=request[server.PARTIAL_AUTOMATION_KEY][server.JOINT2_AUTO_KEY],
-            Joint3=request[server.PARTIAL_AUTOMATION_KEY][server.JOINT3_AUTO_KEY],
-            Joint4=request[server.PARTIAL_AUTOMATION_KEY][server.JOINT4_AUTO_KEY],
-            Joint5=request[server.PARTIAL_AUTOMATION_KEY][server.JOINT5_AUTO_KEY],
-        )
 
     return Command(
         wheel_action,
@@ -76,8 +66,7 @@ def create_command(request):
         joint_3_action,
         joint_4_action,
         joint_5_action,
-        claw_action,
-        partial_autonomy_action
+        claw_action
     )
 
 
@@ -95,8 +84,7 @@ class Command:
         joint_3_action,
         joint_4_action,
         joint_5_action,
-        claw_action,
-        partial_autonomy_action
+        claw_action
     ):
         """Initialize this command with actions."""
         self.wheel_action = wheel_action
@@ -109,7 +97,6 @@ class Command:
         self.joint_4_action = joint_4_action
         self.joint_5_action = joint_5_action
         self.claw_action = claw_action
-        self.partial_autonomy_action = partial_autonomy_action
 
 
 class MetaActionEnum(enum.EnumMeta):
@@ -167,48 +154,16 @@ class RoutineAction(enum.Enum, metaclass=MetaActionEnum):
     FULL_AUTONOMY = 0b010000
     STOP = 0b100000
 
-class Joint1Action(enum.Enum, metaclass=MetaActionEnum):
-    """This action describes which joint to execute for an EZRASSOR."""
-    J12R = -0.2
-    J12L = 0.2
-    STOP = 0.0
-
-class Joint2Action(enum.Enum, metaclass=MetaActionEnum):
-    """This action describes which joint to execute for an EZRASSOR."""
-    J23U = -0.2
-    J23D = 0.2
-    STOP = 0.0
-
-class Joint3Action(enum.Enum, metaclass=MetaActionEnum):
-    """This action describes which joint to execute for an EZRASSOR."""
-    J34U = -0.2
-    J34D = 0.2
-    STOP = 0.0
-
-class Joint4Action(enum.Enum, metaclass=MetaActionEnum):
-    """This action describes which joint to execute for an EZRASSOR."""
-    J45R = -0.2
-    J45L = 0.2
-    STOP = 0.0
-
-class Joint5Action(enum.Enum, metaclass=MetaActionEnum):
-    """This action describes which joint to execute for an EZRASSOR."""
-    J56R = -0.2
-    J56L = 0.2
+class AllJointAction(enum.Enum, metaclass=MetaActionEnum):
+    """These are the actions All joints have in common to exeecute for an EZRASSOR"""
+    ROTATELEFT = 0.2
+    ROTATERIGHT = -0.2
+    ROTATEUP = -0.2
+    ROTATEDOWN = 0.2
     STOP = 0.0
 
 class ClawAction(enum.Enum, metaclass=MetaActionEnum):
     """This action describes which joint to execute for an EZRASSOR."""
     OPEN = -6.0
     CLOSE = 6.0
-
-class PartialAutomation:
-    """THis describes all the automation actions"""
-    def __init__(self, Joint1, Joint2, Joint3, Joint4, Joint5):
-        """Initialize this action with movement floats."""
-        self.Joint1 = Joint1
-        self.Joint2 = Joint2
-        self.Joint3 = Joint3
-        self.Joint4 = Joint4
-        self.Joint5 = Joint5
     

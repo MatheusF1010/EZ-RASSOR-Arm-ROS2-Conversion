@@ -6,13 +6,8 @@ from .command import (
     ArmAction,
     DrumAction,
     RoutineAction,
-    Joint1Action,
-    Joint2Action,
-    Joint3Action,
-    Joint4Action,
-    Joint5Action,
     ClawAction,
-    PartialAutomation,
+    AllJointAction,
 )
 from .request import (
     WHEEL_ACTION_KEY,
@@ -27,12 +22,6 @@ from .request import (
     JOINT_4_ACTION_KEY,
     JOINT_5_ACTION_KEY,
     CLAW_ACTION_KEY,
-    PARTIAL_AUTOMATION_KEY,
-    JOINT1_AUTO_KEY,
-    JOINT2_AUTO_KEY,
-    JOINT3_AUTO_KEY,
-    JOINT4_AUTO_KEY,
-    JOINT5_AUTO_KEY,
     verify,
     VerificationError,
 )

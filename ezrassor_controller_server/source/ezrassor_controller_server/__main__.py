@@ -85,11 +85,6 @@ def main(passed_args=None):
             CLAW_ACTION_TOPIC,
             QUEUE_SIZE,
         )
-        partial_autonomy_publisher = node.create_publisher(
-            std_msgs.msg.Float64MultiArray,
-            PARTIAL_AUTOMATION_TOPIC,
-            QUEUE_SIZE,
-        )
 
         def process_request(request):
             """Callback to create and publish a command from a request."""
@@ -146,17 +141,6 @@ def main(passed_args=None):
                 claw_action = std_msgs.msg.Float64()
                 claw_action.data = command.claw_action.value
                 claw_action_publisher.publish(claw_action)
-
-            if command.partial_autonomy_action is not None:
-                partial_autonomy_action = std_msgs.msg.Float64MultiArray()
-                partial_autonomy_action.data = {command.partial_autonomy_action.Joint1,
-                                                command.partial_autonomy_action.Joint2,
-                                                command.partial_autonomy_action.Joint3,
-                                                command.partial_autonomy_action.Joint4,
-                                                command.partial_autonomy_action.Joint5}
-                partial_autonomy_publisher.publish(partial_autonomy_action)
-            
-                
             
         # Create a Flask app to serve HTTP requests.
         app = flask.Flask(__name__)

@@ -13,32 +13,18 @@ const Operation = Object.freeze({
 
     // Paver Arm
 
-    // Arm right left
-    ARMRIGHT: 'J12R',
-    ARMLEFT: 'J12L',
-
-    // Arm up down
-    ARMUP: 'J23U',
-    ARMDOWN: 'J23D', 
-
-    // Claw up down
-    CLAWUP: 'J34U',
-    CLAWDOWN: 'J34D',
-
-    // Claw right left
-    CLAWRIGHT: 'J45R',
-    CLAWLEFT: 'J45L',
-    
-    // Grabber rotate 
-    GRABBERRIGHT: 'J56R',
-    GRABBERLEFT: 'J56L',
-
     // Grabber open close
     GRABBERCLOSE: 'CLOSE',
     GRABBEROPEN: 'OPEN',
 
     // Stop all
-    STOP: 'STOP', 
+    STOP: 'STOP',
+    
+    //SIMPLIFYING THE MOVEMENTS
+    ROTATELEFT: "ROTATELEFT",
+    ROTATERIGHT: "ROTATERIGHT",
+    ROTATEUP: "ROTATEUP",
+    ROTATEDOWN: "ROTATEDOWN",
 
     // Paver Arm Autonomy
     PICKUP: {
