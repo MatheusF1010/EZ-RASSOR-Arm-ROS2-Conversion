@@ -55,6 +55,10 @@ def create_command(request):
     claw_action = None
     if server.CLAW_ACTION_KEY in request:
         claw_action = ClawAction[request[server.CLAW_ACTION_KEY]]
+    
+    partial_autonomy = None
+    if server.PARTIAL_AUTONOMY_KEY in request:
+        partial_autonomy = PartialAutonomy[request[server.PARTIAL_AUTONOMY_KEY]]
 
     return Command(
         wheel_action,
@@ -66,7 +70,8 @@ def create_command(request):
         joint_3_action,
         joint_4_action,
         joint_5_action,
-        claw_action
+        claw_action,
+        partial_autonomy
     )
 
 
@@ -84,7 +89,8 @@ class Command:
         joint_3_action,
         joint_4_action,
         joint_5_action,
-        claw_action
+        claw_action,
+        partial_autonomy
     ):
         """Initialize this command with actions."""
         self.wheel_action = wheel_action
@@ -97,6 +103,7 @@ class Command:
         self.joint_4_action = joint_4_action
         self.joint_5_action = joint_5_action
         self.claw_action = claw_action
+        self.partial_autonomy = partial_autonomy
 
 
 class MetaActionEnum(enum.EnumMeta):
@@ -166,4 +173,28 @@ class ClawAction(enum.Enum, metaclass=MetaActionEnum):
     """This action describes which joint to execute for an EZRASSOR."""
     OPEN = -6.0
     CLOSE = 6.0
+
+class PartialAutonomy():
+    """This action describes autonomous movement for the EZRASSSOR ARM"""
+    PICKUP = {
+        2.5167,
+        -1.3500,
+        1.1900,
+        0.1562,
+        -0.1709
+    }
+    PLACE = {
+        0.0000,
+        -0.8505,
+        1.6489,
+        -1.3017,
+        0.0000
+    }
+    HOME = {
+        0.0000,
+        0.0000,
+        0.0000,
+        0.0000,
+        0.0000
+    }
     

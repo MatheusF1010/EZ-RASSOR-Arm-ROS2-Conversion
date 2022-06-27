@@ -23,7 +23,7 @@ JOINT_3_ACTION_TOPIC = "/ezrassor/joint_3_action"
 JOINT_4_ACTION_TOPIC = "/ezrassor/joint_4_action"
 JOINT_5_ACTION_TOPIC = "/ezrassor/joint_5_action"
 CLAW_ACTION_TOPIC = "/ezrassor/claw_action"
-PARTIAL_AUTOMATION_TOPIC = "/ezrassor/partial_autonomy"
+PARTIAL_AUTONOMY_TOPIC = "/ezrassor/partial_autonomy"
 
 QUEUE_SIZE = 10
 
@@ -85,6 +85,11 @@ def main(passed_args=None):
             CLAW_ACTION_TOPIC,
             QUEUE_SIZE,
         )
+        partial_autonomy_publisher = node.create_publisher(
+           std_msgs.msg.Float64MultiArray,
+           PARTIAL_AUTONOMY_TOPIC,
+           QUEUE_SIZE, 
+        )
 
         def process_request(request):
             """Callback to create and publish a command from a request."""
@@ -141,6 +146,11 @@ def main(passed_args=None):
                 claw_action = std_msgs.msg.Float64()
                 claw_action.data = command.claw_action.value
                 claw_action_publisher.publish(claw_action)
+            
+            if command.partial_autonomy is not None:
+                partial_autonomy = std_msgs.msg.Float64MultiArray()
+                partial_autonomy = command.partial_autonomy.value
+                partial_autonomy_publisher.publish(partial_autonomy)
             
         # Create a Flask app to serve HTTP requests.
         app = flask.Flask(__name__)

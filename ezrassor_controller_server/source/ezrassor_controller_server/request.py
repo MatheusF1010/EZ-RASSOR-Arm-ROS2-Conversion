@@ -16,6 +16,7 @@ JOINT_3_ACTION_KEY = "joint_3_action"
 JOINT_4_ACTION_KEY = "joint_4_action"
 JOINT_5_ACTION_KEY = "joint_5_action"
 CLAW_ACTION_KEY = "claw_action"
+PARTIAL_AUTONOMY_KEY = "partial_autonomy"
 
 def verify(request):
     """Validate the contents of the request."""
@@ -77,6 +78,11 @@ def verify(request):
             if request[key] not in server.ClawAction:
                 raise VerificationError(
                     f"{key} value must be one of the [{str(server.ClawAction)}]",
+                )
+        elif key == PARTIAL_AUTONOMY_KEY:
+            if request[key] not in server.PartialAutonomy:
+                raise VerificationError(
+                    f"{key} value must be one of the [{str(server.PartialAutonomy)}]",
                 )
         else:
             raise VerificationError(f"unknown key: {key}")
