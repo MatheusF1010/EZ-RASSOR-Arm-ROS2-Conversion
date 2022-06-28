@@ -8,6 +8,7 @@ from .command import (
     RoutineAction,
     ClawAction,
     AllJointAction,
+    PartialAutonomy,
 )
 from .request import (
     WHEEL_ACTION_KEY,
@@ -22,6 +23,7 @@ from .request import (
     JOINT_4_ACTION_KEY,
     JOINT_5_ACTION_KEY,
     CLAW_ACTION_KEY,
+    PARTIAL_AUTONOMY_KEY,
     verify,
     VerificationError,
 )

@@ -145,38 +145,38 @@ ezrassor:
         - grabber_joint2
       pid: {p: 10.0, i: 0.0, d: 0.0}
 
-  partial_autonomy_controller:
-    ros_parameters:
-      joints:
-      - joint12
-      - joint23
-      - joint34
-      - joint45
-      - joint56
+  # partial_autonomy_controller:
+  #   ros_parameters:
+  #     joints:
+  #     - joint12
+  #     - joint23
+  #     - joint34
+  #     - joint45
+  #     - joint56
 
-      constraints:
-        goal_time: 0.5
-        stopped_velocity_tolerance: 0.02
-        joint1:
-          trajectory: 0.05
-          goal: 0.02
-        joint2:
-          trajectory: 0.05
-          goal: 0.02
-        joint3:
-          trajectory: 0.05
-          goal: 0.02
-        joint4:
-          trajectory: 0.05
-          goal: 0.02
-        joint5:
-          goal: 0.01
-      gains:
-        joint12: {p: 100, d: 1, i: 1, i_clamp: 1}
-        joint23: {p: 100, d: 1, i: 1, i_clamp: 1}
-        joint34: {p: 100, d: 1, i: 1, i_clamp: 1}
-        joint45: {p: 100, d: 1, i: 1, i_clamp: 1}
-        joint56: {p: 100, d: 1, i: 1, i_clamp: 1}
-      stop_trajectory_duration: 0.5
-      state_publish_rate: 25
-      action_monitor_rate: 10
+  #     constraints:
+  #       goal_time: 0.5
+  #       stopped_velocity_tolerance: 0.02
+  #       joint1:
+  #         trajectory: 0.05
+  #         goal: 0.02
+  #       joint2:
+  #         trajectory: 0.05
+  #         goal: 0.02
+  #       joint3:
+  #         trajectory: 0.05
+  #         goal: 0.02
+  #       joint4:
+  #         trajectory: 0.05
+  #         goal: 0.02
+  #       joint5:
+  #         goal: 0.01
+  #     gains:
+  #       joint12: {p: 100, d: 1, i: 1, i_clamp: 1}
+  #       joint23: {p: 100, d: 1, i: 1, i_clamp: 1}
+  #       joint34: {p: 100, d: 1, i: 1, i_clamp: 1}
+  #       joint45: {p: 100, d: 1, i: 1, i_clamp: 1}
+  #       joint56: {p: 100, d: 1, i: 1, i_clamp: 1}
+  #     stop_trajectory_duration: 0.5
+  #     state_publish_rate: 25
+  #     action_monitor_rate: 10
