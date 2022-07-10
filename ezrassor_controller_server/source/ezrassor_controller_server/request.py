@@ -80,9 +80,9 @@ def verify(request):
                     f"{key} value must be one of the [{str(server.ClawAction)}]",
                 )
         elif key == PARTIAL_AUTONOMY_KEY:
-            if request[key] not in server.PartialAutonomy:
+            # if request[key] not in server.PartialAutonomy:
                 raise VerificationError(
-                    f"{key} value must be one of the [{str(server.PartialAutonomy)}]",
+                    f"{request[key]} value must be one of the [{str(server.PartialAutonomy)}]",
                 )
         else:
             raise VerificationError(f"unknown key: {key}")

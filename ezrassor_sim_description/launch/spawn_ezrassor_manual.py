@@ -355,9 +355,9 @@ def generate_launch_description():
         namespace=LaunchConfiguration("robot_name"),
         output={"both": "screen"},
     )
-    paver_arm_driver_node = Node(
+    paver_arm_manual_driver_node = Node(
         package="ezrassor_sim_description",
-        executable="paver_arm_driver",
+        executable="paver_arm_manual_driver",
         namespace=LaunchConfiguration("robot_name"),
         output={"both": "screen"},
     )
@@ -394,7 +394,7 @@ def generate_launch_description():
             wheels_driver_node,
             arms_driver_node,
             drums_driver_node,
-            paver_arm_driver_node,
+            paver_arm_manual_driver_node,
             depth_img_to_ls
         ]
     )

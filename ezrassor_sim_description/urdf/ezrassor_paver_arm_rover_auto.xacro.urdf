@@ -619,7 +619,7 @@
     </ros2_control>
     <gazebo>
         <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-            <parameters>$(find ezrassor_sim_description)/config/controllers.yaml</parameters>
+            <parameters>$(find ezrassor_sim_description)/config/controllers_auto.yaml</parameters>
         </plugin>
     </gazebo>
 

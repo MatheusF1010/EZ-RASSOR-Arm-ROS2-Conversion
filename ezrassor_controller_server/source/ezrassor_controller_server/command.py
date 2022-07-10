@@ -174,27 +174,9 @@ class ClawAction(enum.Enum, metaclass=MetaActionEnum):
     OPEN = -6.0
     CLOSE = 6.0
 
-class PartialAutonomy():
+class PartialAutonomy(enum.Enum, metaclass=MetaActionEnum):
     """This action describes autonomous movement for the EZRASSSOR ARM"""
-    PICKUP = {
-        2.5167,
-        -1.3500,
-        1.1900,
-        0.1562,
-        -0.1709
-    }
-    PLACE = {
-        0.0000,
-        -0.8505,
-        1.6489,
-        -1.3017,
-        0.0000
-    }
-    HOME = {
-        0.0000,
-        0.0000,
-        0.0000,
-        0.0000,
-        0.0000
-    }
+    PICKUP = 1.0
+    PLACE = -1.0
+    HOME = 0.0
     

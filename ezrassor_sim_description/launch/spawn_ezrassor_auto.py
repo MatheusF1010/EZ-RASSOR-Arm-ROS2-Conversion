@@ -148,7 +148,7 @@ def __spawn_robot(context, *args, **kwargs):
         output="screen",
     )
 
-    load_partial_autonomy_controller = ExecuteProcess(
+    load_joint_1_position_controller = ExecuteProcess(
         cmd=[
             "ros2",
             "control",
@@ -157,10 +157,76 @@ def __spawn_robot(context, *args, **kwargs):
             f"/{robot_name}/controller_manager",
             "--set-state",
             "start",
-            "partial_autonomy_controller"
+            "joint_1_position_controller"
         ],
         output="screen",
     )
+    load_joint_2_position_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "joint_2_position_controller"
+        ],
+        output="screen",
+    )
+    load_joint_3_position_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "joint_3_position_controller"
+        ],
+        output="screen",
+    )
+    load_joint_4_position_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "joint_4_position_controller"
+        ],
+        output="screen",
+    )
+    load_joint_5_position_controller = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "control",
+            "load_controller",
+            "-c",
+            f"/{robot_name}/controller_manager",
+            "--set-state",
+            "start",
+            "joint_5_position_controller"
+        ],
+        output="screen",
+    )
+
+    # load_partial_autonomy_controller = ExecuteProcess(
+    #     cmd=[
+    #         "ros2",
+    #         "control",
+    #         "load_controller",
+    #         "-c",
+    #         f"/{robot_name}/controller_manager",
+    #         "--set-state",
+    #         "start",
+    #         "partial_autonomy_controller"
+    #     ],
+    #     output="screen",
+    # )
 
     load_claw_effort_controller = ExecuteProcess(
         cmd=[
@@ -192,9 +258,39 @@ def __spawn_robot(context, *args, **kwargs):
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_partial_autonomy_controller],
+                on_exit=[load_joint_1_position_controller],
             )
         ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[load_joint_2_position_controller],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[load_joint_3_position_controller],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[load_joint_4_position_controller],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[load_joint_5_position_controller],
+            )
+        ),
+        # RegisterEventHandler(
+        #     event_handler=OnProcessExit(
+        #         target_action=load_joint_state_controller,
+        #         on_exit=[load_partial_autonomy_controller],
+        #     )
+        # ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
@@ -278,9 +374,9 @@ def generate_launch_description():
         namespace=LaunchConfiguration("robot_name"),
         output={"both": "screen"},
     )
-    paver_arm_driver_node = Node(
+    paver_arm_auto_driver_node = Node(
         package="ezrassor_sim_description",
-        executable="paver_arm_driver",
+        executable="paver_arm_auto_driver",
         namespace=LaunchConfiguration("robot_name"),
         output={"both": "screen"},
     )
@@ -317,7 +413,7 @@ def generate_launch_description():
             wheels_driver_node,
             arms_driver_node,
             drums_driver_node,
-            paver_arm_driver_node,
+            paver_arm_auto_driver_node,
             depth_img_to_ls
         ]
     )
