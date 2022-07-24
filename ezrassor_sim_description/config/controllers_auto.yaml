@@ -18,24 +18,9 @@ ezrassor:
       claw_effort_controller:
         type: effort_controllers/JointGroupEffortController
 
-      joint_1_position_controller:
-        type: position_controllers/JointGroupPositionController
-
-      joint_2_position_controller:
-        type: position_controllers/JointGroupPositionController
-      
-      joint_3_position_controller:
-        type: position_controllers/JointGroupPositionController
-      
-      joint_4_position_controller:
-        type: position_controllers/JointGroupPositionController
-      
-      joint_5_position_controller:
-        type: position_controllers/JointGroupPositionController
-
       # # Needs update
-      # partial_autonomy_controller:
-      #   type: position_controllers/JointTrajectoryController
+      partial_autonomy_controller:
+        type: position_controllers/JointGroupPositionController
         
 
   diff_drive_controller:
@@ -112,65 +97,33 @@ ezrassor:
         - grabber_joint2
       pid: {p: 10.0, i: 0.0, d: 0.0}
 
-  joint_1_position_controller:
+  partial_autonomy_controller:
     ros__parameters:
       joints:
-        - joint12
-      pid: {p: 100.0, i: 0.01, d: 10.0}
+      - joint12
+      - joint23
+      - joint34
+      - joint45
+      - joint56
 
-  joint_2_position_controller:
-    ros__parameters:
-      joints:
-        - joint23
-      pid: {p: 100.0, i: 0.01, d: 10.0}
+      constraints:
+        goal_time: 0.5
+        stopped_velocity_tolerance: 0.02
+        joint12:
+          trajectory: 0.05
+          goal: 0.02
+        joint23:
+          trajectory: 0.05
+          goal: 0.02
+        joint34:
+          trajectory: 0.05
+          goal: 0.02
+        joint45:
+          trajectory: 0.05
+          goal: 0.02
+        joint56:
+          goal: 0.01
 
-  joint_3_position_controller:
-    ros__parameters:
-      joints:
-        - joint34
-      pid: {p: 100.0, i: 0.01, d: 10.0}
-
-  joint_4_position_controller:
-    ros__parameters:
-      joints:
-        - joint45
-      pid: {p: 100.0, i: 0.01, d: 10.0}
-
-  joint_5_position_controller:
-    ros__parameters:
-      joints:
-        - joint56
-      pid: {p: 100.0, i: 0.01, d: 10.0}
-
-    
-
-  # partial_autonomy_controller:
-  #   ros_parameters:
-  #     joints:
-  #     - joint12
-  #     - joint23
-  #     - joint34
-  #     - joint45
-  #     - joint56
-
-  #     constraints:
-  #       goal_time: 0.5
-  #       stopped_velocity_tolerance: 0.02
-  #       joint1:
-  #         trajectory: 0.05
-  #         goal: 0.02
-  #       joint2:
-  #         trajectory: 0.05
-  #         goal: 0.02
-  #       joint3:
-  #         trajectory: 0.05
-  #         goal: 0.02
-  #       joint4:
-  #         trajectory: 0.05
-  #         goal: 0.02
-  #       joint5:
-  #         goal: 0.01
-
-  #     stop_trajectory_duration: 0.5
-  #     state_publish_rate: 25
-  #     action_monitor_rate: 10
+      stop_trajectory_duration: 0.5
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0

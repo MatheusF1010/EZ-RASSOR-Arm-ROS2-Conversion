@@ -9,6 +9,7 @@ import flask
 import geometry_msgs.msg
 import rclpy
 import std_msgs.msg
+import trajectory_msgs.msg
 
 
 NODE = "controller_server"
@@ -148,46 +149,9 @@ def main(passed_args=None):
                 claw_action_publisher.publish(claw_action)
             
             if command.partial_autonomy is not None:
-
-                joint_1_action = std_msgs.msg.Float64()
-                joint_2_action = std_msgs.msg.Float64()
-                joint_3_action = std_msgs.msg.Float64()
-                joint_4_action = std_msgs.msg.Float64()
-                joint_5_action = std_msgs.msg.Float64()
-
-
-                if command.partial_autonomy.value == 0.0:
-                    joint_1_action.data = 1.0
-                    joint_2_action.data = 2.0
-                    joint_3_action.data = 2.0
-                    joint_4_action.data = 0.0
-                    joint_5_action.data = 5.0
-
-
-                elif command.partial_autonomy.value == 1.0:
-                    joint_1_action.data = 0.0
-                    joint_2_action.data = 0.0
-                    joint_3_action.data = 0.0
-                    joint_4_action.data = 0.0
-                    joint_5_action.data = 3.0
- 
-
-                elif command.partial_autonomy.value == -1.0:
-                    joint_1_action.data = 1.0
-                    joint_2_action.data = 3.0
-                    joint_3_action.data = 2.0
-                    joint_4_action.data = 0.0
-                    joint_5_action.data = 2.0
-
-                joint_1_action_publisher.publish(joint_1_action)
-                joint_2_action_publisher.publish(joint_2_action)
-                joint_3_action_publisher.publish(joint_3_action)
-                joint_4_action_publisher.publish(joint_4_action)
-                joint_5_action_publisher.publish(joint_5_action)
-
-                # partial_autonomy = std_msgs.msg.Float64MultiArray()
-                # partial_autonomy = command.partial_autonomy.value
-                # partial_autonomy_publisher.publish(partial_autonomy)
+                partial_autonomy = std_msgs.msg.Float64MultiArray()
+                partial_autonomy.data = command.partial_autonomy.value
+                partial_autonomy_publisher.publish(partial_autonomy)
             
         
 

@@ -148,7 +148,7 @@ def __spawn_robot(context, *args, **kwargs):
         output="screen",
     )
 
-    load_joint_1_position_controller = ExecuteProcess(
+    load_partial_autonomy_controller = ExecuteProcess(
         cmd=[
             "ros2",
             "control",
@@ -157,76 +157,10 @@ def __spawn_robot(context, *args, **kwargs):
             f"/{robot_name}/controller_manager",
             "--set-state",
             "start",
-            "joint_1_position_controller"
+            "partial_autonomy_controller"
         ],
         output="screen",
     )
-    load_joint_2_position_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "joint_2_position_controller"
-        ],
-        output="screen",
-    )
-    load_joint_3_position_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "joint_3_position_controller"
-        ],
-        output="screen",
-    )
-    load_joint_4_position_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "joint_4_position_controller"
-        ],
-        output="screen",
-    )
-    load_joint_5_position_controller = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "control",
-            "load_controller",
-            "-c",
-            f"/{robot_name}/controller_manager",
-            "--set-state",
-            "start",
-            "joint_5_position_controller"
-        ],
-        output="screen",
-    )
-
-    # load_partial_autonomy_controller = ExecuteProcess(
-    #     cmd=[
-    #         "ros2",
-    #         "control",
-    #         "load_controller",
-    #         "-c",
-    #         f"/{robot_name}/controller_manager",
-    #         "--set-state",
-    #         "start",
-    #         "partial_autonomy_controller"
-    #     ],
-    #     output="screen",
-    # )
 
     load_claw_effort_controller = ExecuteProcess(
         cmd=[
@@ -258,39 +192,9 @@ def __spawn_robot(context, *args, **kwargs):
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
-                on_exit=[load_joint_1_position_controller],
+                on_exit=[load_partial_autonomy_controller],
             )
         ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_joint_2_position_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_joint_3_position_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_joint_4_position_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_joint_5_position_controller],
-            )
-        ),
-        # RegisterEventHandler(
-        #     event_handler=OnProcessExit(
-        #         target_action=load_joint_state_controller,
-        #         on_exit=[load_partial_autonomy_controller],
-        #     )
-        # ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,

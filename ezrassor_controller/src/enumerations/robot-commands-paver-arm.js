@@ -27,9 +27,9 @@ const Operation = Object.freeze({
     ROTATEDOWN: "ROTATEDOWN",
 
     // Paver Arm Autonomy
-    PICKUP: "PICKUP",
-    PLACE: "PLACE",
-    HOME: "HOME",
+    PICKUP: "Pickup_First_Paver_Prep",
+    PLACE: "Simple_Place_Prep",
+    HOME: "Home",
 
     // Paver Arm COmputer Vision Autonomy
     FULLAUTONOMY: 'AUTOMATIC',
