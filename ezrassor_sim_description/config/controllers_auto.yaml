@@ -20,7 +20,7 @@ ezrassor:
 
       # # Needs update
       partial_autonomy_controller:
-        type: position_controllers/JointGroupPositionController
+        type: joint_trajectory_controller/JointTrajectoryController
         
 
   diff_drive_controller:
@@ -105,6 +105,12 @@ ezrassor:
       - joint34
       - joint45
       - joint56
+
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
 
       constraints:
         goal_time: 0.5

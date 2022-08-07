@@ -18,7 +18,8 @@ from std_msgs.msg import (
     Float64MultiArray,
     MultiArrayDimension,
 )
-import trajectory_msgs.msg
+from trajectory_msgs.msg import JointTrajectory
+
 
 NODE = "paver_arm_driver"
 CLAW_EXTERNAL_TOPIC = "claw_action"
@@ -42,8 +43,8 @@ def handle_claw_movements(data):
     publishers[CLAW_INTERNAL_TOPIC].publish(claw_msg)
 
 def handle_partial_autonomy_movements(data):
-    partial_autonomy_msg = Float64MultiArray()
-    partial_autonomy_msg.data = data.data
+    partial_autonomy_msg = JointTrajectory()
+    partial_autonomy_msg = data
 
     publishers[PARTIAL_AUTONOMY_INTERNAL_TOPIC].publish(partial_autonomy_msg)
 
@@ -59,7 +60,7 @@ def main(passed_args=None):
             Float64MultiArray, CLAW_INTERNAL_TOPIC, QUEUE_SIZE
         )
         publishers[PARTIAL_AUTONOMY_INTERNAL_TOPIC] = node.create_publisher(
-            Float64MultiArray, PARTIAL_AUTONOMY_INTERNAL_TOPIC, QUEUE_SIZE
+            JointTrajectory, PARTIAL_AUTONOMY_INTERNAL_TOPIC, QUEUE_SIZE
         )
 
         # Create subscriptions to listen for specific robot actions from users
@@ -70,7 +71,7 @@ def main(passed_args=None):
             QUEUE_SIZE,
         )
         node.create_subscription(
-            Float64MultiArray,
+            JointTrajectory,
             PARTIAL_AUTONOMY_EXTERNAL_TOPIC,
             handle_partial_autonomy_movements,
             QUEUE_SIZE,

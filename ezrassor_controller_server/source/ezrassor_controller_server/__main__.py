@@ -9,7 +9,10 @@ import flask
 import geometry_msgs.msg
 import rclpy
 import std_msgs.msg
-import trajectory_msgs.msg
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+import random
+from rclpy.duration import Duration
+from rclpy.clock import Clock
 
 
 NODE = "controller_server"
@@ -87,7 +90,7 @@ def main(passed_args=None):
             QUEUE_SIZE,
         )
         partial_autonomy_publisher = node.create_publisher(
-           std_msgs.msg.Float64MultiArray,
+           JointTrajectory,
            PARTIAL_AUTONOMY_TOPIC,
            QUEUE_SIZE, 
         )
@@ -149,9 +152,41 @@ def main(passed_args=None):
                 claw_action_publisher.publish(claw_action)
             
             if command.partial_autonomy is not None:
-                partial_autonomy = std_msgs.msg.Float64MultiArray()
-                partial_autonomy.data = command.partial_autonomy.value
-                partial_autonomy_publisher.publish(partial_autonomy)
+
+                # rclpy.init_node('inverse_kinematics')
+                # control_publisher = rclpy.Publisher('/ezrassor/partial_autonomy', JointTrajectory, queue_size=10)
+
+                # while not rclpy.is_shutdown():
+
+                msg = JointTrajectory()
+
+                msg.header.stamp = Clock().now().to_msg()
+                msg.header.frame_id = ''
+                msg.joint_names = ['joint12', 'joint23', 'joint34', 'joint45', 'joint56']
+
+                point = JointTrajectoryPoint()
+                j1 = 2 * (random.random() - 0.5)  # 0 - 1 -> -0.5 - 0.5
+                j2 = 2 * (random.random() - 0.5)
+                j3 = 2 * (random.random() - 0.5)
+                j4 = 2 * (random.random() - 0.5)
+                j5 = 2 * (random.random() - 0.5)
+
+                point.positions = [j1, j2, j3, j4, j5]
+                point.velocities = []
+                point.accelerations = []
+                point.effort = []
+
+                dur = Duration()
+                point.time_from_start = Duration(seconds=5).to_msg()
+
+                msg.points.append( point )
+
+                partial_autonomy_publisher.publish( msg )
+                # node.loginfo( msg ) 
+
+                # partial_autonomy = std_msgs.msg.Float64MultiArray()
+                # partial_autonomy.data = command.partial_autonomy.value
+                # partial_autonomy_publisher.publish(partial_autonomy)
             
         
 
