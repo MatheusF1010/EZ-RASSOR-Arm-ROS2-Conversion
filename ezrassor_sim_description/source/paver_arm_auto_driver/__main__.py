@@ -43,8 +43,8 @@ def handle_claw_movements(data):
     publishers[CLAW_INTERNAL_TOPIC].publish(claw_msg)
 
 def handle_partial_autonomy_movements(data):
-    partial_autonomy_msg = JointTrajectory()
-    partial_autonomy_msg = data
+    partial_autonomy_msg = Float64MultiArray()
+    partial_autonomy_msg = [data.data]
 
     publishers[PARTIAL_AUTONOMY_INTERNAL_TOPIC].publish(partial_autonomy_msg)
 
@@ -60,8 +60,8 @@ def main(passed_args=None):
             Float64MultiArray, CLAW_INTERNAL_TOPIC, QUEUE_SIZE
         )
         publishers[PARTIAL_AUTONOMY_INTERNAL_TOPIC] = node.create_publisher(
-            JointTrajectory, PARTIAL_AUTONOMY_INTERNAL_TOPIC, QUEUE_SIZE
-        )
+            Float64MultiArray, PARTIAL_AUTONOMY_INTERNAL_TOPIC, QUEUE_SIZE
+        ) #JointTrajectory
 
         # Create subscriptions to listen for specific robot actions from users
         node.create_subscription(
@@ -71,7 +71,7 @@ def main(passed_args=None):
             QUEUE_SIZE,
         )
         node.create_subscription(
-            JointTrajectory,
+            Float64, #JointTrajectory
             PARTIAL_AUTONOMY_EXTERNAL_TOPIC,
             handle_partial_autonomy_movements,
             QUEUE_SIZE,
