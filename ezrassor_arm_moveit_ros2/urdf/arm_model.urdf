@@ -646,7 +646,7 @@
   </transmission>
   <transmission name="joint1_tran">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint1">
+    <joint name="joint12">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
     <actuator name="joint1_motor">
@@ -656,7 +656,7 @@
   </transmission>
   <transmission name="joint2_tran">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint2">
+    <joint name="joint23">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
     <actuator name="joint2_motor">
@@ -666,7 +666,7 @@
   </transmission>
   <transmission name="joint3_tran">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint3">
+    <joint name="joint34">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
     <actuator name="joint3_motor">
@@ -676,7 +676,7 @@
   </transmission>
   <transmission name="joint4_tran">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint4">
+    <joint name="joint45">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
     <actuator name="joint4_motor">
@@ -686,7 +686,7 @@
   </transmission>
   <transmission name="joint5_tran">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint5">
+    <joint name="joint56">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
     <actuator name="joint5_motor">
@@ -830,47 +830,47 @@
     <joint_properties damping="0.0" friction="0.0"/>
   </joint>
   <!-- ARM Joints-->
-  <joint name="joint0" type="fixed">
+  <joint name="jointRoverLink1" type="fixed">
     <axis xyz="0 0 0"/>
     <origin rpy="0 0 0" xyz="0.55 -0.1 0.27"/>
     <parent link="base_link"/>
     <child link="link1"/>
   </joint>
-  <joint name="joint0.1" type="fixed">
+  <!-- <joint name="joint0.1" type="fixed">
     <axis xyz="0 0 0"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <parent link="base_link"/>
     <child link="arm_front"/>
-  </joint>
-  <joint name="joint1" type="continuous">
+  </joint> -->
+  <joint name="joint12" type="continuous">
     <origin rpy="0 0 0" xyz="0 -0.12 0.09"/>
     <child link="link2"/>
     <parent link="link1"/>
     <axis rpy="0 0 0" xyz="0 0 1"/>
     <joint_properties damping="0.0" friction="0.0"/>
   </joint>
-  <joint name="joint2" type="continuous">
+  <joint name="joint23" type="continuous">
     <origin rpy="0 0 0" xyz="0 0.037 0.13"/>
     <child link="link3"/>
     <parent link="link2"/>
     <axis rpy="0 0 0" xyz="0 1 0"/>
     <joint_properties damping="0.0" friction="0.0"/>
   </joint>
-  <joint name="joint3" type="continuous">
+  <joint name="joint34" type="continuous">
     <origin rpy="0 0 0" xyz="0.44 -0.037 0"/>
     <child link="link4"/>
     <parent link="link3"/>
     <axis rpy="0 0 0" xyz="0 1 0"/>
     <joint_properties damping="0.0" friction="0.0"/>
   </joint>
-  <joint name="joint4" type="continuous">
+  <joint name="joint45" type="continuous">
     <origin rpy="0 0 0" xyz="0.42 0.0 0"/>
     <child link="link5"/>
     <parent link="link4"/>
     <axis rpy="0 0 0" xyz="0 1 0"/>
     <joint_properties damping="0.0" friction="0.0"/>
   </joint>
-  <joint name="joint5" type="continuous">
+  <joint name="joint56" type="continuous">
     <origin rpy="0 0 0" xyz="0 0.12 0"/>
     <child link="link6"/>
     <parent link="link5"/>
