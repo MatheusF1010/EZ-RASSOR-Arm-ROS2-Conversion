@@ -51,7 +51,7 @@
       <!-- Stops working here -->
 
       <!-- <push-ros-namespace namespace="move_group"/> -->
-      <!-- <let name="pipeline" value="$(var pipeline)" /> -->
+      <arg name="pipeline" value="$(var pipeline)" />
       <!-- <param name="capabilities" value="$(var capabilities)"/>
       <param name="disable_capabilities" value="$(var disable_capabilities)"/> -->
     </include>
@@ -63,11 +63,11 @@
 
       <!-- Stops working here -->
 
-      <!-- <push-ros-namespace namespace="move_group"/>
-      <let name="moveit_manage_controllers" value="true" />
-      <let name="moveit_controller_manager" value="ezrassor" unless="$(var fake_execution)"/>
-      <let name="moveit_controller_manager" value="fake" if="$(var fake_execution)"/>
-      <let name="execution_type" value="$(var execution_type)" /> -->
+      <!-- <push-ros-namespace namespace="move_group"/> -->
+      <arg name="moveit_manage_controllers" value="true" />
+      <!-- <arg name="moveit_controller_manager" value="ezrassor" unless="$(var fake_execution)"/> -->
+      <!-- <let name="moveit_controller_manager" value="fake" if="$(var fake_execution)"/> -->
+      <arg name="execution_type" value="$(var execution_type)" />
     </include>
   </group>
 
