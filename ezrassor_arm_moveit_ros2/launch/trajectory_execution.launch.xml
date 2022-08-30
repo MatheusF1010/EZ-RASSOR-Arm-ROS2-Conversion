@@ -25,8 +25,7 @@
   <!-- Load the robot specific controller manager; this sets the moveit_controller_manager ROS parameter -->
   <arg name="moveit_controller_manager" default="ezrassor" />
   <include file="$(find-pkg-share ezrassor_arm_moveit_ros2)/launch/$(var moveit_controller_manager)_moveit_controller_manager.launch.xml">
-    <!-- Stops working here -->
-    <!-- <let name="execution_type" value="$(var execution_type)" /> -->
+    <arg name="execution_type" value="$(var execution_type)" />
   </include>
 
 </launch>

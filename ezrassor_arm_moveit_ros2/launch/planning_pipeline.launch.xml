@@ -12,11 +12,8 @@
   <arg name="disable_capabilities" default=""/>
 
   <include file="$(find-pkg-share ezrassor_arm_moveit_ros2)/launch/$(var pipeline)_planning_pipeline.launch.xml">
-
-    <!-- Stops working here -->
-
-    <!-- <let name="capabilities" value="$(var capabilities)"/>
-    <let name="disable_capabilities" value="$(var disable_capabilities)"/> -->
+    <arg name="capabilities" value="$(var capabilities)"/>
+    <arg name="disable_capabilities" value="$(var disable_capabilities)"/>
   </include>
 
 </launch>
