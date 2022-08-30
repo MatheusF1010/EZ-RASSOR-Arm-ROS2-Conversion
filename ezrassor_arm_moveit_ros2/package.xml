@@ -15,14 +15,15 @@
   <url type="repository">https://github.com/ros-planning/moveit</url>
 
   <!-- <depend>catkin</depend> -->
-  <buildtool_depend>geometry_msgs</buildtool_depend>
+  <!-- <buildtool_depend>geometry_msgs</buildtool_depend> -->
+  <depend>geometry_msgs</depend>
   <depend>launch</depend>
   <depend>launch_ros</depend>
   <depend>rclpy</depend>
   <depend>std_msgs</depend>
   <depend>python3-flask</depend>
 
-  <run_depend>moveit_ros_move_group</run_depend>
+  <exec_depend>moveit_ros_move_group</exec_depend>
   <!-- <exec_depend>moveit_fake_controller_manager</exec_depend> -->
   <exec_depend>moveit_kinematics</exec_depend>
   <exec_depend>moveit_planners_ompl</exec_depend>
