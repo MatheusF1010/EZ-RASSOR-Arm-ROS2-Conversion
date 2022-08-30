@@ -1,0 +1,96 @@
+<launch>
+
+  <!-- GDB Debug Option -->
+  <let name="debug" value="false" />
+  <let unless="$(var debug)" name="launch_prefix" value="" />
+  <let     if="$(var debug)" name="launch_prefix"
+           value="gdb -x $(find-pkg-share ezrassor_arm_moveit_ros2)/launch/gdb_settings.gdb --ex run --args" />
+
+  <!-- Verbose Mode Option -->
+  <let name="info" value="$(var debug)" />
+  <let unless="$(var info)" name="command_args" value="" />
+  <let     if="$(var info)" name="command_args" value="--debug" />
+
+  <!-- move_group settings -->
+  <let name="pipeline" value="ompl" />
+  <let name="allow_trajectory_execution" value="true"/>
+  <let name="fake_execution" value="false"/>
+  <let name="execution_type" value="interpolate"/> <!-- set to 'last point' to skip intermediate trajectory in fake execution -->
+  <let name="max_safe_path_cost" value="1"/>
+  <let name="jiggle_fraction" value="0.05" />
+  <let name="publish_monitored_planning_scene" value="true"/>
+
+  <let name="capabilities" value=""/>
+  <let name="disable_capabilities" value=""/>
+  <!-- load these non-default MoveGroup capabilities (space seperated) -->
+  <!--
+  <arg name="capabilities" value="
+                a_package/AwsomeMotionPlanningCapability
+                another_package/GraspPlanningPipeline
+                " />
+  -->
+
+  <!-- inhibit these default MoveGroup capabilities (space seperated) -->
+  <!--
+  <arg name="disable_capabilities" value="
+                move_group/MoveGroupKinematicsService
+                move_group/ClearOctomapService
+                " />
+  -->
+
+  <let name="load_robot_description" value="true" />
+  <!-- load URDF, SRDF and joint_limits configuration -->
+  <group>
+    <include file="$(find-pkg-share ezrassor_arm_moveit_ros2)/launch/planning_context.launch">
+      <arg name="load_robot_description" value="$(var load_robot_description)" />
+    </include>
+  </group>
+
+  <!-- Planning Functionality -->
+  <group>
+    <push-ros-namespace namespace="move_group"/>
+    <include file="$(find-pkg-share ezrassor_arm_moveit_ros2)/launch/planning_pipeline.launch.xml">
+      <arg name="pipeline" value="$(arg pipeline)" />
+      <param name="capabilities" value="$(var capabilities)"/>
+      <param name="disable_capabilities" value="$(var disable_capabilities)"/>
+    </include>
+  </group>
+
+  <!-- Trajectory Execution Functionality -->
+  <group>
+    <push-ros-namespace namespace="move_group"/>
+    <include file="$(find-pkg-share ezrassor_arm_moveit_ros2)/launch/trajectory_execution.launch.xml" if="$(var allow_trajectory_execution)">
+      <arg name="moveit_manage_controllers" value="true" />
+      <arg name="moveit_controller_manager" value="ezrassor" unless="$(var fake_execution)"/>
+      <arg name="moveit_controller_manager" value="fake" if="$(var fake_execution)"/>
+      <arg name="execution_type" value="$(var execution_type)" />
+    </include>
+  </group>
+
+  <!-- Sensors Functionality -->
+  <group>
+    <push-ros-namespace namespace="move_group"/>
+    <include file="$(find-pkg-share ezrassor_arm_moveit_ros2)/launch/sensor_manager.launch.xml" if="$(var allow_trajectory_execution)">
+      <arg name="moveit_sensor_manager" value="ezrassor" />
+    </include>
+  </group>
+
+  <!-- Start the actual move_group node/action server -->
+  <node name="move_group" launch-prefix="$(var launch_prefix)" pkg="moveit_ros_move_group" exec="move_group" respawn="false" output="screen" args="$(var command_args)">
+    <!-- Set the display variable, in case OpenGL code is used internally -->
+    <env name="DISPLAY" value="$(env DISPLAY :0)" />
+
+    <param name="allow_trajectory_execution" value="$(var allow_trajectory_execution)"/>
+    <param name="max_safe_path_cost" value="$(var max_safe_path_cost)"/>
+    <param name="jiggle_fraction" value="$(var jiggle_fraction)" />
+
+
+    <!-- Publish the planning scene of the physical robot so that rviz plugin can know actual robot -->
+    <param name="planning_scene_monitor/publish_planning_scene" value="$(var publish_monitored_planning_scene)" />
+    <param name="planning_scene_monitor/publish_geometry_updates" value="$(var publish_monitored_planning_scene)" />
+    <param name="planning_scene_monitor/publish_state_updates" value="$(var publish_monitored_planning_scene)" />
+    <param name="planning_scene_monitor/publish_transforms_updates" value="$(var publish_monitored_planning_scene)" />
+
+  </node>
+
+</launch>

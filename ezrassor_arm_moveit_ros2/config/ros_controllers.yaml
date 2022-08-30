@@ -29,7 +29,7 @@ joint_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 50
 controller_list:
-  - name: paver_arm_controller
+  - name: partial_autonomy_controller
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
     default: true
@@ -43,34 +43,69 @@ controller_list:
 #moveit_arm_controller_controller:
 #  type: position_controllers/JointTrajectoryController
 #  joints:
-#    - joint1
-#    - joint2
-#    - joint3
-#    - joint4
-#    - joint5
+#    - joint12
+#    - joint23
+#    - joint34
+#    - joint45
+#    - joint56
 #  gains:
-#    joint1:
+#    joint12:
 #      p: 100
 #      d: 1
 #      i: 1
 #      i_clamp: 1
-#    joint2:
+#    joint23:
 #      p: 100
 #      d: 1
 #      i: 1
 #      i_clamp: 1
-#    joint3:
+#    joint34:
 #      p: 100
 #      d: 1
 #      i: 1
 #      i_clamp: 1
-#    joint4:
+#    joint45:
 #      p: 100
 #      d: 1
 #      i: 1
 #      i_clamp: 1
-#    joint5:
+#    joint56:
 #      p: 100
 #      d: 1
 #      i: 1
 #      i_clamp: 1
+
+
+
+# controller_manager:
+#   ros__parameters:
+#     update_rate: 600  # Hz
+#     manipulator_joint_trajectory_controller:
+#       type: joint_trajectory_controller/JointTrajectoryController
+#     joint_state_controller:
+#       type: joint_state_controller/JointStateController
+
+# # parameters for each controller listed under controller manager
+# manipulator_joint_trajectory_controller:
+#   ros__parameters:
+#     command_interfaces:
+#       - position
+#     state_interfaces:
+#       - position
+#       - velocity
+#     joints:
+#     - joint12
+#     - joint23
+#     - joint34
+#     - joint45
+#     - joint56
+#     state_publish_rate: 100.0
+#     action_monitor_rate: 20.0
+#     allow_partial_joints_goal: false
+#     constraints:
+#       stopped_velocity_tolerance: 0.0
+#       goal_time: 0.0
+
+# joint_state_controller:
+#   ros__parameters:
+#     type: joint_state_controller/JointStateController

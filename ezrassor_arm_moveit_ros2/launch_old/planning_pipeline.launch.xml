@@ -12,7 +12,7 @@
   <let name="disable_capabilities" default=""/>
 
   <group>
-    <include file="$(find-pkg-share ezrassor_arm_moveit)/launch/$(var pipeline)_planning_pipeline.launch.xml">
+    <include file="$(find-pkg-share ezrassor_arm_moveit_ros2)/launch/$(var pipeline)_planning_pipeline.launch.xml">
       <let name="capabilities" value="$(var capabilities)"/>
       <let name="disable_capabilities" value="$(var disable_capabilities)"/>
     </include>
