@@ -125,6 +125,8 @@ def generate_launch_description():
     #     ]
     # )
 
+    # If statements always false? trajectory_execution_launch_include file gives error when in nested if. Same for sensor_manager_launch_include
+
     # if LaunchConfiguration("allow_trajectory_execution") == "true":
     #     if LaunchConfiguration("fake_execution") == "true":
     #         trajectory_execution_launch_include = GroupAction(
@@ -183,28 +185,31 @@ def generate_launch_description():
     #         ]
     #     )
 
-    move_group_node = Node(
-        package='moveit_ros_move_group',
-        executable='move_group',
-        name='move_group',
-        # launch_prefix_launch_arg=LaunchConfiguration("launch_prefix"),
-        respawn='false',
-        output='screen',
-        arguments=[{
-            LaunchConfiguration("command_args"),
-            LaunchConfiguration("launch_prefix")
-        }],
-        #env=
-        parameters=[{
-            "allow_trajectory_execution": LaunchConfiguration('allow_trajectory_execution'),
-            "max_safe_path_cost": LaunchConfiguration('max_safe_path_cost'),
-            "jiggle_fraction": LaunchConfiguration('jiggle_fraction'),
-            "planning_scene_monitor/publish_planning_scene": LaunchConfiguration('publish_monitored_planning_scene'),
-            "planning_scene_monitor/publish_geometry_updates": LaunchConfiguration('publish_monitored_planning_scene'),
-            "planning_scene_monitor/publish_state_updates": LaunchConfiguration('publish_monitored_planning_scene'),
-            "planning_scene_monitor/publish_transforms_updates": LaunchConfiguration('publish_monitored_planning_scene'),
-        }]
-    )    
+
+    # Env and launch-prefix not expected.
+    
+    # move_group_node = Node(
+    #     package='moveit_ros_move_group',
+    #     executable='move_group',
+    #     name='move_group',
+    #     # launch_prefix_launch_arg=LaunchConfiguration("launch_prefix"),
+    #     respawn='false',
+    #     output='screen',
+    #     arguments=[{
+    #         LaunchConfiguration("command_args"),
+    #         LaunchConfiguration("launch_prefix")
+    #     }],
+    #     #env=
+    #     parameters=[{
+    #         "allow_trajectory_execution": LaunchConfiguration('allow_trajectory_execution'),
+    #         "max_safe_path_cost": LaunchConfiguration('max_safe_path_cost'),
+    #         "jiggle_fraction": LaunchConfiguration('jiggle_fraction'),
+    #         "planning_scene_monitor/publish_planning_scene": LaunchConfiguration('publish_monitored_planning_scene'),
+    #         "planning_scene_monitor/publish_geometry_updates": LaunchConfiguration('publish_monitored_planning_scene'),
+    #         "planning_scene_monitor/publish_state_updates": LaunchConfiguration('publish_monitored_planning_scene'),
+    #         "planning_scene_monitor/publish_transforms_updates": LaunchConfiguration('publish_monitored_planning_scene'),
+    #     }]
+    # )    
 
     return LaunchDescription([
         debug_launch_arg,
@@ -225,5 +230,5 @@ def generate_launch_description():
         # planning_pipeline_launch_include,
         # trajectory_execution_launch_include,
         # sensor_manager_launch_include,
-        move_group_node,
+        # move_group_node,
     ])
