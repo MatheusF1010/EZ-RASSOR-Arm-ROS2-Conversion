@@ -12,6 +12,8 @@ from launch.substitutions import LaunchConfiguration
 from launch.substitutions import TextSubstitution
 from launch_ros.actions import Node
 from launch_ros.actions import PushRosNamespace
+from launch.conditions import IfCondition
+from launch.conditions import UnlessCondition
 
 
 def generate_launch_description():
@@ -51,10 +53,12 @@ def generate_launch_description():
         "pipeline", default_value=TextSubstitution(text="ompl")
     )
 
+    should_launch_allow_trajectory_execution = LaunchConfiguration('allow_trajectory_execution')
     allow_trajectory_execution_launch_arg = DeclareLaunchArgument(
         "allow_trajectory_execution", default_value=TextSubstitution(text="true")
     )
 
+    should_launch_moveit_controller_manager = LaunchConfiguration('fake_execution')
     fake_execution_launch_arg = DeclareLaunchArgument(
         "fake_execution", default_value=TextSubstitution(text="false")
     )
@@ -87,7 +91,6 @@ def generate_launch_description():
         "load_robot_description", default_value=TextSubstitution(text="true")
     )
 
-    # include another launch file
     # planning_context_launch_include = IncludeLaunchDescription(
     #     PythonLaunchDescriptionSource(
     #         os.path.join(
@@ -125,65 +128,68 @@ def generate_launch_description():
     #     ]
     # )
 
-    # If statements always false? trajectory_execution_launch_include file gives error when in nested if. Same for sensor_manager_launch_include
-
-    # if LaunchConfiguration("allow_trajectory_execution") == "true":
-    #     if LaunchConfiguration("fake_execution") == "true":
-    #         trajectory_execution_launch_include = GroupAction(
-    #             actions=[
-    #                 # push-ros-namespace to set namespace of included nodes
-    #                 PushRosNamespace('move_group'),
-    #                 IncludeLaunchDescription(
-    #                     PythonLaunchDescriptionSource(
-    #                         os.path.join(
-    #                             get_package_share_directory('ezrassor_arm_moveit_ros2'),
-    #                             'launch/sensor_manager.launch.xml')
-    #                     ),
-    #                     launch_arguments=[{
-    #                         "moveit_manage_controllers": LaunchConfiguration("true"),
-    #                         "moveit_controller_manager": LaunchConfiguration('fake'),
-    #                         "execution_type": LaunchConfiguration('execution_type')
-    #                     }]
-    #                 )
-    #             ]
+    # Unless tag launch file contents.
+    # unless_trajectory_execution_launch_include = GroupAction(
+    #     condition=IfCondition(should_launch_allow_trajectory_execution), # If condition is true, proceed to include?
+    #     actions=[
+    #         PushRosNamespace('move_group'),
+    #         IncludeLaunchDescription(
+    #             PythonLaunchDescriptionSource(
+    #                 os.path.join(
+    #                     get_package_share_directory('ezrassor_arm_moveit_ros2'),
+    #                     'launch/trajectory_execution.launch.xml')
+    #             ),
+    #             condition=UnlessCondition(should_launch_moveit_controller_manager), # Unless condition is true, launch args?
+    #             launch_arguments=[{
+    #                 "moveit_manage_controllers": LaunchConfiguration("true"),
+    #                 "moveit_controller_manager": LaunchConfiguration('ezrassor'),
+    #                 "execution_type": LaunchConfiguration('execution_type')
+    #             }]
     #         )
-    #     else:
-    #         trajectory_execution_launch_include = GroupAction(
-    #             actions=[
-    #                 # push-ros-namespace to set namespace of included nodes
-    #                 PushRosNamespace('move_group'),
-    #                 IncludeLaunchDescription(
-    #                     PythonLaunchDescriptionSource(
-    #                         os.path.join(
-    #                             get_package_share_directory('ezrassor_arm_moveit_ros2'),
-    #                             'launch/sensor_manager.launch.xml')
-    #                     ),
-    #                     launch_arguments=[{
-    #                         "moveit_manage_controllers": LaunchConfiguration("true"),
-    #                         "moveit_controller_manager": LaunchConfiguration('ezrassor'),
-    #                         "execution_type": LaunchConfiguration('execution_type')
-    #                     }]
-    #                 )
-    #             ]
+    #     ]
+    # )
+    
+    # ONLY INCLUDES THAT DOES NOT THROW ERROR BECAUSE IF CONDITION IS FALSE. 
+    # Therefore it will not launch this includes action. Will only launch previous one. One or the other.
+    
+    # If tag launch file contents.
+    # if_trajectory_execution_launch_include = GroupAction(
+    #     condition=IfCondition(should_launch_allow_trajectory_execution), # If condition is true, procees to include?
+    #     actions=[
+    #         PushRosNamespace('move_group'),
+    #         IncludeLaunchDescription(
+    #             PythonLaunchDescriptionSource(
+    #                 os.path.join(
+    #                     get_package_share_directory('ezrassor_arm_moveit_ros2'),
+    #                     'launch/trajectory_execution.launch.xml')
+    #             ),
+    #             condition=IfCondition(should_launch_moveit_controller_manager), # If condition is true, launch args? (means previous Unless was true, does not launch previous node?)
+    #             launch_arguments=[{
+    #                 "moveit_manage_controllers": LaunchConfiguration("true"),
+    #                 "moveit_controller_manager": LaunchConfiguration('fake'), 
+    #                 "execution_type": LaunchConfiguration('execution_type')
+    #             }]
     #         )
+    #     ]
+    # )
 
-    # if LaunchConfiguration("allow_trajectory_execution") == "true":
-    #     sensor_manager_launch_include = GroupAction(
-    #         actions=[
-    #             # push-ros-namespace to set namespace of included nodes
-    #             PushRosNamespace('move_group'),
-    #             IncludeLaunchDescription(
-    #                 PythonLaunchDescriptionSource(
-    #                     os.path.join(
-    #                         get_package_share_directory('ezrassor_arm_moveit_ros2'),
-    #                         'launch/sensor_manager.launch.xml')
-    #                 ),
-    #                 launch_arguments=[{
-    #                     "moveit_sensor_manager": LaunchConfiguration("ezrassor"),
-    #                 }]
-    #             )
-    #         ]
-    #     )
+    # sensor_manager_launch_include = GroupAction(
+    #     condition=IfCondition(should_launch_allow_trajectory_execution), # If condition is true, procees to include?
+    #     actions=[
+    #         # push-ros-namespace to set namespace of included nodes
+    #         PushRosNamespace('move_group'),
+    #         IncludeLaunchDescription(
+    #             PythonLaunchDescriptionSource(
+    #                 os.path.join(
+    #                     get_package_share_directory('ezrassor_arm_moveit_ros2'),
+    #                     'launch/sensor_manager.launch.xml')
+    #             ),
+    #             launch_arguments=[{
+    #                 "moveit_sensor_manager": LaunchConfiguration("ezrassor"),
+    #             }]
+    #         )
+    #     ]
+    # )
 
 
     # Env and launch-prefix not expected.
@@ -192,7 +198,7 @@ def generate_launch_description():
     #     package='moveit_ros_move_group',
     #     executable='move_group',
     #     name='move_group',
-    #     # launch_prefix_launch_arg=LaunchConfiguration("launch_prefix"),
+    #     # launch_prefix_launch_arg=LaunchConfiguration("launch_prefix"), # USE THIS- prefix=
     #     respawn='false',
     #     output='screen',
     #     arguments=[{
@@ -228,7 +234,8 @@ def generate_launch_description():
         load_robot_description_launch_arg,
         # planning_context_launch_include,
         # planning_pipeline_launch_include,
-        # trajectory_execution_launch_include,
+        # unless_trajectory_execution_launch_include,
+        # if_trajectory_execution_launch_include,
         # sensor_manager_launch_include,
         # move_group_node,
     ])
