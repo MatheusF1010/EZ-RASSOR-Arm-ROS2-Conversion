@@ -14,39 +14,38 @@ from launch_ros.actions import Node
 from launch_ros.actions import PushRosNamespace
 from launch.conditions import IfCondition
 from launch.conditions import UnlessCondition
+from launch.actions import SetEnvironmentVariable
 
 
 def generate_launch_description():
 
     # args that can be set from the command line or a default will be used
+    should_launch_debug = LaunchConfiguration('debug')
     debug_launch_arg = DeclareLaunchArgument(
         "debug", default_value=TextSubstitution(text="false")
     )
 
-    if LaunchConfiguration("debug") == "true":
+    if IfCondition(should_launch_debug): # If true, create this argument
         launch_prefix_launch_arg = DeclareLaunchArgument(
-            "launch_prefix",
-            default_value='gdb -x $(find-pkg-share ezrassor_arm_moveit_ros2)/launch/gdb_settings.gdb --ex run --args'
+            "launch_prefix", default_value='gdb -x $(find-pkg-share ezrassor_arm_moveit_ros2)/launch/gdb_settings.gdb --ex run --args'
         )
-    else:
+    else: # Else -> False, create this argument
         launch_prefix_launch_arg = DeclareLaunchArgument(
-            "launch_prefix",
-            default_value=''
+            "launch_prefix", default_value=''
         )
     
+    should_launch_info = LaunchConfiguration('info')
     info_launch_arg = DeclareLaunchArgument(
         "info", default_value=LaunchConfiguration("debug")
     )
 
-    if LaunchConfiguration("info") == "true":
+    if IfCondition(should_launch_info): # If true, create this argument
         command_args_launch_arg = DeclareLaunchArgument(
-            "command_args",
-            default_value='--debug'
+            "command_args", default_value='--debug'
         )
-    else:
+    else: # Else -> False, create this argument
         command_args_launch_arg = DeclareLaunchArgument(
-            "command_args",
-            default_value=''
+            "command_args", default_value=''
         )
 
     pipeline_launch_arg = DeclareLaunchArgument(
@@ -91,16 +90,16 @@ def generate_launch_description():
         "load_robot_description", default_value=TextSubstitution(text="true")
     )
 
-    # planning_context_launch_include = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         os.path.join(
-    #         get_package_share_directory('ezrassor_arm_moveit_ros2'),
-    #         'launch/planning_context.launch'),
-    #     ),
-    #     launch_arguments=[{
-    #         "load_robot_description": LaunchConfiguration("load_robot_description")
-    #     }]
-    # )
+    planning_context_launch_include = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(
+            get_package_share_directory('ezrassor_arm_moveit_ros2'),
+            'launch/planning_context.py'),
+        ),
+        launch_arguments=[
+            {"load_robot_description", LaunchConfiguration("load_robot_description")}
+        ]
+    )
 
     # planning_pipeline_launch_include = GroupAction(
     #     actions=[
@@ -151,7 +150,7 @@ def generate_launch_description():
     
     # ONLY INCLUDES THAT DOES NOT THROW ERROR BECAUSE IF CONDITION IS FALSE. 
     # Therefore it will not launch this includes action. Will only launch previous one. One or the other.
-    
+
     # If tag launch file contents.
     # if_trajectory_execution_launch_include = GroupAction(
     #     condition=IfCondition(should_launch_allow_trajectory_execution), # If condition is true, procees to include?
@@ -192,30 +191,34 @@ def generate_launch_description():
     # )
 
 
-    # Env and launch-prefix not expected.
-    
-    # move_group_node = Node(
-    #     package='moveit_ros_move_group',
-    #     executable='move_group',
-    #     name='move_group',
-    #     # launch_prefix_launch_arg=LaunchConfiguration("launch_prefix"), # USE THIS- prefix=
-    #     respawn='false',
-    #     output='screen',
-    #     arguments=[{
-    #         LaunchConfiguration("command_args"),
-    #         LaunchConfiguration("launch_prefix")
-    #     }],
-    #     #env=
-    #     parameters=[{
-    #         "allow_trajectory_execution": LaunchConfiguration('allow_trajectory_execution'),
-    #         "max_safe_path_cost": LaunchConfiguration('max_safe_path_cost'),
-    #         "jiggle_fraction": LaunchConfiguration('jiggle_fraction'),
-    #         "planning_scene_monitor/publish_planning_scene": LaunchConfiguration('publish_monitored_planning_scene'),
-    #         "planning_scene_monitor/publish_geometry_updates": LaunchConfiguration('publish_monitored_planning_scene'),
-    #         "planning_scene_monitor/publish_state_updates": LaunchConfiguration('publish_monitored_planning_scene'),
-    #         "planning_scene_monitor/publish_transforms_updates": LaunchConfiguration('publish_monitored_planning_scene'),
-    #     }]
-    # )    
+    SetEnvironmentVariable(name='DISPLAY', value='$(optenv DISPLAY :0)')
+    move_group_node = Node(
+        package='moveit_ros_move_group',
+        executable='move_group',
+        name='move_group',
+        prefix=LaunchConfiguration("launch_prefix"),
+        respawn='false',
+        output='screen',
+        arguments=[{
+            LaunchConfiguration("command_args"),
+            LaunchConfiguration("launch_prefix")
+        }],
+        parameters=[{
+            # move_group.launch
+            "allow_trajectory_execution": LaunchConfiguration('allow_trajectory_execution'),
+            "max_safe_path_cost": LaunchConfiguration('max_safe_path_cost'),
+            "jiggle_fraction": LaunchConfiguration('jiggle_fraction'),
+            "planning_scene_monitor/publish_planning_scene": LaunchConfiguration('publish_monitored_planning_scene'),
+            "planning_scene_monitor/publish_geometry_updates": LaunchConfiguration('publish_monitored_planning_scene'),
+            "planning_scene_monitor/publish_state_updates": LaunchConfiguration('publish_monitored_planning_scene'),
+            "planning_scene_monitor/publish_transforms_updates": LaunchConfiguration('publish_monitored_planning_scene'),
+            
+            # planning_context.launch
+            # Does not include <param if="$(var load_robot_description)" name="$(var robot_description)" textfile="$(find-pkg-share ezrassor_arm_moveit_ros2)/urdf/arm_model.urdf"/>
+        }]
+    )    
+
+
 
     return LaunchDescription([
         debug_launch_arg,
@@ -232,7 +235,7 @@ def generate_launch_description():
         capabilities_launch_arg,
         disable_capabilities_launch_arg,
         load_robot_description_launch_arg,
-        # planning_context_launch_include,
+        planning_context_launch_include,
         # planning_pipeline_launch_include,
         # unless_trajectory_execution_launch_include,
         # if_trajectory_execution_launch_include,
