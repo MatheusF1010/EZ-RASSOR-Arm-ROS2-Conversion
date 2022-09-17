@@ -183,12 +183,12 @@ def __spawn_robot(context, *args, **kwargs):
                 on_exit=[load_joint_state_controller],
             )
         ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_diff_drive_controller],
-            )
-        ),
+        # RegisterEventHandler(
+        #     event_handler=OnProcessExit(
+        #         target_action=load_joint_state_controller,
+        #         on_exit=[load_diff_drive_controller],
+        #     )
+        # ),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
@@ -201,18 +201,18 @@ def __spawn_robot(context, *args, **kwargs):
                 on_exit=[load_claw_effort_controller],
             )
         ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_arm_back_velocity_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_drum_back_velocity_controller],
-            )
-        ),
+        # RegisterEventHandler(
+        #     event_handler=OnProcessExit(
+        #         target_action=load_joint_state_controller,
+        #         on_exit=[load_arm_back_velocity_controller],
+        #     )
+        # ),
+        # RegisterEventHandler(
+        #     event_handler=OnProcessExit(
+        #         target_action=load_joint_state_controller,
+        #         on_exit=[load_drum_back_velocity_controller],
+        #     )
+        # ),
         robot_state_publisher,
         spawn_entity,
     ]
@@ -314,9 +314,9 @@ def generate_launch_description():
             p_axis_argument,
             y_axis_argument,
             OpaqueFunction(function=__spawn_robot),
-            wheels_driver_node,
-            arms_driver_node,
-            drums_driver_node,
+            # wheels_driver_node,
+            # arms_driver_node,
+            # drums_driver_node,
             paver_arm_auto_driver_node,
             depth_img_to_ls
         ]

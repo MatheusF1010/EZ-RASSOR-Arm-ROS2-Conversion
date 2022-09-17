@@ -20,7 +20,7 @@ from rclpy.node import Node
 from pymoveit2 import MoveIt2
 from pymoveit2.robots import panda
 
-from moveit import PickupFirstPaverOffBack
+# from moveit import PickupFirstPaverOffBack
 
 NODE = "controller_server"
 WHEEL_ACTION_TOPIC = "wheel_action"
@@ -158,10 +158,10 @@ def main(passed_args=None):
                 claw_action.data = command.claw_action.value
                 claw_action_publisher.publish(claw_action)
             
-            if command.partial_autonomy is not None:
+            # if command.partial_autonomy is not None:
 
-                if command.partial_autonomy.value == 3.0: #pickup
-                    PickupFirstPaverOffBack()
+                # if command.partial_autonomy.value == 3.0: #pickup
+                #     PickupFirstPaverOffBack()
 
 
                 # partial_autonomy = std_msgs.msg.Float64MultiArray()

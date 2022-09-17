@@ -583,137 +583,7 @@
       </geometry>
     </visual>
   </link>
-  <!-- Transmissions -->
-  <transmission name="left_wheel_front_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_wheel_front_hinge">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="left_wheel_front_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="left_wheel_back_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_wheel_back_hinge">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="left_wheel_back_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="right_wheel_front_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_wheel_front_hinge">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="right_wheel_front_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="right_wheel_back_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_wheel_back_hinge">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="right_wheel_back_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="arm_back_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="arm_back_hinge">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="arm_back_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="drum_back_hinge_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="drum_back_hinge">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="drum_back_hinge_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="joint1_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint12">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="joint1_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="joint2_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint23">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="joint2_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="joint3_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint34">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="joint3_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="joint4_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint45">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="joint4_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="joint5_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint56">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="joint5_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="grabber1_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="grabber_joint1">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="grabber1_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-  <transmission name="grabber2_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="grabber_joint2">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="grabber2_motor">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
+  
   <!-- Front Camera Added -->
   <link name="depth_camera_front">
     <collision>
@@ -836,12 +706,12 @@
     <parent link="base_link"/>
     <child link="link1"/>
   </joint>
-  <!-- <joint name="joint0.1" type="fixed">
+  <joint name="joint0.1" type="fixed">
     <axis xyz="0 0 0"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <parent link="base_link"/>
     <child link="arm_front"/>
-  </joint> -->
+  </joint>
   <joint name="joint12" type="continuous">
     <origin rpy="0 0 0" xyz="0 -0.12 0.09"/>
     <child link="link2"/>
@@ -891,16 +761,16 @@
   </joint>
   <joint name="grabber_joint1" type="prismatic">
     <origin rpy="0 0 0" xyz="0.1 -0.31 -0.24"/>
-    <child link="grabber1"/>
     <parent link="link6"/>
+    <child link="grabber1"/>
     <axis rpy="0 0 0" xyz="1 1 0"/>
     <joint_properties damping="0.0" friction="0.0"/>
     <limit effort="1" lower="-0.02" upper="0.03" velocity="1"/>
   </joint>
   <joint name="grabber_joint2" type="prismatic">
     <origin rpy="0 0 0" xyz="0.1 0.31 -0.24"/>
-    <child link="grabber2"/>
     <parent link="link6"/>
+    <child link="grabber2"/>
     <axis rpy="0 0 0" xyz="1 -1 0"/>
     <joint_properties damping="0.0" friction="0.0"/>
     <limit effort="1" lower="-0.02" upper="0.03" velocity="1"/>

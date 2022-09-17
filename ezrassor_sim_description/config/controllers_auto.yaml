@@ -21,6 +21,8 @@ ezrassor:
       # # Needs update
       partial_autonomy_controller:
         type: joint_trajectory_controller/JointTrajectoryController
+        # type: joint_state_controller/JointStateController
+        # type: follow_joint_trajectory/FollowJointTrajectory
         
 
   diff_drive_controller:

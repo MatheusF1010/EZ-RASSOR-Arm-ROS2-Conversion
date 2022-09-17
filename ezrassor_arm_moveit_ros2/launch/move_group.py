@@ -1,3 +1,4 @@
+from ntpath import join
 import os
 import sys
 
@@ -11,6 +12,15 @@ from launch.actions import (
     ExecuteProcess, 
     RegisterEventHandler)
 from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
+from launch.substitutions import (
+    LaunchConfiguration,
+    Command,
+    PathJoinSubstitution,
+)
+from launch.substitutions.find_executable import FindExecutable
+import yaml
+
 
 
 def generate_launch_description():
@@ -20,181 +30,166 @@ def generate_launch_description():
     # Verbose Mode Option right now
         # Not important
 
-    # move_group settings
-    pipeline_launch_arg = DeclareLaunchArgument(
-            name='pipeline',
-            default_value='ompl'
-    )
-    allow_trajectory_execution_launch_arg = DeclareLaunchArgument(
-            name='allow_trajectory_execution',
-            default_value='true'
-    )
-    fake_execution_launch_arg = DeclareLaunchArgument(
-            name='fake_execution',
-            default_value='false'
-    )
-    execution_type_launch_arg = DeclareLaunchArgument(
-        name='execution_type',
-        default_value='interpolate'
-    )
-    max_safe_path_cost_launch_arg = DeclareLaunchArgument(
-        name='max_safe_path_cost',
-        default_value='1'
-    )
-    jiggle_fraction_launch_arg = DeclareLaunchArgument(
-        name='jiggle_fraction',
-        default_value='0.05'
-    )
-    publish_monitored_planning_scene_launch_arg = DeclareLaunchArgument(
-        name='publish_monitored_planning_scene',
-        default_value='true'
-    )
-    capabilities_launch_arg = DeclareLaunchArgument(
-        name='capabilities',
-        default_value=''
-    )
-    disable_capabilities_launch_arg = DeclareLaunchArgument(
-        name='disable_capabilities',
-        default_value=''
-    )
-    load_robot_description_launch_arg = DeclareLaunchArgument(
-        name='load_robot_description',
-        default_value='true'
-    )
-
-    # load URDF, SRDF and joint_limits configuration
-        # planning_context.launch should go here
-        # Load /urdf/arm_model.urdf 
-        # Load config/ezrassor.srdf
+    # execution_type = "interpolate" #ros controller.yaml
+    max_safe_path_cost = 1
+    jiggle_fraction = 0.05
     
-    # joint_limits.yaml
-    joint_limits = { 
+    #ompl.yaml
+    planning_plugin = "ompl_interface/OMPLPlanner" 
+    planning_adapters = "default_planner_request_adapters/AddTimeParameterization default_planner_request_adapters/FixWorkspaceBounds default_planner_request_adapters/FixStartStateBounds default_planner_request_adapters/FixStartStateCollision default_planner_request_adapters/FixStartStatePathConstraints"
+    start_state_max_bounds_error = 0.1
+    
+    pkg_ezrassor_arm_moveit_ros2 = os.path.join(
+        get_package_share_directory("ezrassor_arm_moveit_ros2")
+    )
 
-        'grabber_joint1': {
-            'has_velocity_limits': 'true',
-            'max_velocity': 1,
-            'has_acceleration_limits': 'false',
-            'max_acceleration': 0
-        },
-        'grabber_joint2': {
-            'has_velocity_limits': 'true',
-            'max_velocity': 1,
-            'has_acceleration_limits': 'false',
-            'max_acceleration': 0
-        },
-        'joint12': {
-            'has_velocity_limits': 'true',
-            'max_velocity': 1,
-            'has_acceleration_limits': 'false',
-            'max_acceleration': 1
-        },
-        'joint23': {
-            'has_velocity_limits': 'true',
-            'max_velocity': 1,
-            'has_acceleration_limits': 'false',
-            'max_acceleration': 1
-        },
-        'joint34': {
-            'has_velocity_limits': 'true',
-            'max_velocity': 1,
-            'has_acceleration_limits': 'false',
-            'max_acceleration': 1
-        },
-        'joint45': {
-            'has_velocity_limits': 'true',
-            'max_velocity': 1,
-            'has_acceleration_limits': 'false',
-            'max_acceleration': 1
-        },
-        'joint56': {
-            'has_velocity_limits': 'true',
-            'max_velocity': 1,
-            'has_acceleration_limits': 'false',
-            'max_acceleration': 1
+    # loading arm_model.urdf
+    urdf_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "urdf", "arm_model.urdf"
+    )
+    # with open(urdf_file, 'r') as infp:
+    #     robot_urdf = infp.read()
+    robot_urdf = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name="xacro")]),
+            " ",
+            urdf_file,
+            " ",
+        ]
+    )
+
+    # loading ros_controllers.yaml
+    controller_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "ros_controllers.yaml"
+    )
+    with open(controller_yaml_file, 'r') as file:
+        controller = yaml.safe_load(file)
+
+    # loading ompl_planning.yaml
+    ompl_planning_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "ompl_planning.yaml"
+    )
+    with open(ompl_planning_yaml_file, 'r') as file:
+        ompl_planning = yaml.safe_load(file)
+
+    # loading joint_limits.yaml
+    joint_limits_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "joint_limits.yaml"
+    )
+    with open(joint_limits_yaml_file, 'r') as file:
+        joint_limits = yaml.safe_load(file)
+
+    # loading cartesian_limits.yaml
+    cartesian_limits_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "cartesian_limits.yaml"
+    )
+    with open(cartesian_limits_yaml_file, 'r') as file:
+        cartesian_limits = yaml.safe_load(file)
+
+    # loading kinematics.yaml
+    kinematics_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "kinematics.yaml"
+    )
+    with open(kinematics_yaml_file, 'r') as file:
+        kinematics = yaml.safe_load(file)
+
+    # loading sensors_3d.yaml
+    sensors_3d_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "sensors_3d.yaml"
+    )
+    with open(sensors_3d_yaml_file, 'r') as file:
+        sensors_3d = yaml.safe_load(file)
+
+    # loading ezrassor.srdf
+    ezrassor_srdf_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "ezrassor.srdf"
+    )
+    with open(ezrassor_srdf_file, 'r') as infp:
+        robot_desc = infp.read()
+
+    param = {
+        "robot_description": robot_urdf
         }
-    }
 
-    # cartesian_limits.yaml
-    cartesian_limits = { 
-        'max_trans_vel': 1,
-        'max_trans_acc': 2.25,
-        'max_trans_dec': -5,
-        'max_rot_vel': 1.57
-    }
-
-    # kinematics.yaml
-    kinematics = { 
-
-        'moveit_arm_controller': { # Might have to change  **********************************************************
-            'kinematics_solver': 'kdl_kinematics_plugin/KDLKinematicsPlugin',
-            'kinematics_solver_search_resolution': 0.005,
-            'kinematics_solver_timeout': 0.005
-        },
-        'gripper_controller': {
-            'kinematics_solver': 'kdl_kinematics_plugin/KDLKinematicsPlugin',
-            'kinematics_solver_search_resolution': 0.005,
-            'kinematics_solver_timeout': 0.005
-        }
-    }
-
-
-    # Planning Functionality
-    planning_pipeline(LaunchConfiguration("pipeline"), LaunchConfiguration("capabilities"), LaunchConfiguration("disable_capabilities"))
-
-
-
-    # Trajectory Execution Functionality
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[param]
+    )
+    
+    trajectory_execution_allowed_execution_duration_scaling = 1.2
+    trajectory_execution_allowed_goal_duration_margin = 0.5
+    trajectory_execution_allowed_start_tolerance = 0.01
+    moveit_controller_manager = "moveit_simple_controller_manager/MoveItSimpleControllerManager"
 
 
     # Sensors Functionality
+    # moveit_sensor_manager="ezrassor"
+    octomap_resolution = 0.025
+    max_range = 5.0
+    # LOAD config/sensors_3d.yaml ********************************************************
 
 
     # Start the actual move_group node/action server
         # Set the display variable, in case OpenGL code is used internally
         # Publish the planning scene of the physical robot so that rviz plugin can know actual robot 
 
+    move_group = Node(
+        name="move_group",
+        namespace='/ezrassor',
+        package='moveit_ros_move_group',
+        executable='move_group',
+        respawn="false",
+        output="screen",
+        
+        # ENV *****************************************
+        
+        parameters=[{
+            "allow_trajectory_execution": True,
+            "max_safe_path_cost": max_safe_path_cost,
+            "jiggle_fraction": jiggle_fraction,
+            "planning_scene_monitor/publish_planning_scene": True,
+            "planning_scene_monitor/publish_geometry_updates": True,
+            "planning_scene_monitor/publish_state_updates": True,
+            "planning_scene_monitor/publish_transforms_updates": True,
+            "robot_description": robot_urdf,
+            "moveit_simple_controller_manager": controller,
+            "ompl_planning": ompl_planning,
+            "robot_description_planning": joint_limits,
+            "robot_description_planning": cartesian_limits,
+            "robot_description_kinematics": kinematics,
+            "robot_description_semantic": robot_desc,
+            "octomap_resolution": octomap_resolution,
+            "max_range": max_range,
+            "moveit_controller_manager": moveit_controller_manager,
+            "moveit_manage_controllers": True,
+            "trajectory_execution/allowed_execution_duration_scaling": trajectory_execution_allowed_execution_duration_scaling,
+            "trajectory_execution/allowed_goal_duration_margin": trajectory_execution_allowed_goal_duration_margin,
+            "trajectory_execution/allowed_start_tolerance": trajectory_execution_allowed_start_tolerance,
+            "planning_plugin": planning_plugin,
+            "request_adapters": planning_adapters,
+            "start_state_max_bounds_error": start_state_max_bounds_error,
+        }]
+        
+    )
+
+    tf2 = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        arguments = ["0", "0", "0", "1", "0", "0", "Authority undetectable", "grabber1"],
+        parameters=[{
+            "robot_description": robot_urdf
+        }]
+    )
+
 
     return LaunchDescription([
-        pipeline_launch_arg,
-        allow_trajectory_execution_launch_arg,
-        fake_execution_launch_arg,
-        execution_type_launch_arg,
-        max_safe_path_cost_launch_arg,
-        jiggle_fraction_launch_arg,
-        publish_monitored_planning_scene_launch_arg,
-        capabilities_launch_arg,
-        disable_capabilities_launch_arg,
-        load_robot_description_launch_arg
+        # robot_state_publisher,
+        move_group,
+        tf2,
     ])
-
-
-# def planning_context(load_robot_description=LaunchConfiguration("load_robot_description")):
-
-def planning_pipeline(pipeline="ompl", capabilities="", disable_capabilities=""):
-    ompl_planning_pipeline(capabilities, disable_capabilities)
-    
-
-def ompl_planning_pipeline(capabilities="", disable_capabilities=""):
-
-    planning_plugin = "ompl_interface/OMPLPlanner"
-
-    planning_adapters = "default_planner_request_adapters/AddTimeParameterization default_planner_request_adapters/FixWorkspaceBounds default_planner_request_adapters/FixStartStateBounds default_planner_request_adapters/FixStartStateCollision default_planner_request_adapters/FixStartStatePathConstraints"
-
-    start_state_max_bounds_error = 0.1
-
-    # PARAMS
-    planning_plugin = "ompl_interface/OMPLPlanner"
-
-    request_adapters = "default_planner_request_adapters/AddTimeParameterization default_planner_request_adapters/FixWorkspaceBounds default_planner_request_adapters/FixStartStateBounds default_planner_request_adapters/FixStartStateCollision default_planner_request_adapters/FixStartStatePathConstraints"
-
-    start_state_max_bounds_error = 0.1
-
-    capabilities = ""
-
-    disable_capabilities = ""
-    
-    # Load ompl_planning.yaml with python. Replace other variables (lines 71-126) *****************************************************************
-
 
 if __name__ == '__main__':
     generate_launch_description()
