@@ -1,7 +1,0 @@
-# Colcon
-**/build
-**/install
-**/log
-
-# Python
-**/__pycache__

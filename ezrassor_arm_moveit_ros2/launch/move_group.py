@@ -188,7 +188,7 @@ def generate_launch_description():
     return LaunchDescription([
         # robot_state_publisher,
         move_group,
-        tf2,
+        # tf2,
     ])
 
 if __name__ == '__main__':

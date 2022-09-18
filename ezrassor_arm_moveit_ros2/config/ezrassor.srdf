@@ -3,7 +3,7 @@
     This is a format for representing semantic information about the robot structure.
     A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
 -->
-<robot name="ezrassor">
+<robot name="ezrassor_arm">
     <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
     <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
     <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
@@ -135,12 +135,12 @@
     <disable_collisions link1="drum_back" link2="link1" reason="Never" />
     <disable_collisions link1="drum_back" link2="link2" reason="Never" />
     <disable_collisions link1="drum_back" link2="right_wheel_back" reason="Never" />
-    <!-- <disable_collisions link1="grabber1" link2="grabber2" reason="Never" />
+    <disable_collisions link1="grabber1" link2="grabber2" reason="Never" />
     <disable_collisions link1="grabber1" link2="link5" reason="Never" />
     <disable_collisions link1="grabber1" link2="link6" reason="Adjacent" />
     <disable_collisions link1="grabber2" link2="imu_link" reason="Never" />
     <disable_collisions link1="grabber2" link2="link5" reason="Never" />
-    <disable_collisions link1="grabber2" link2="link6" reason="Adjacent" /> -->
+    <disable_collisions link1="grabber2" link2="link6" reason="Adjacent" />
     <disable_collisions link1="imu_link" link2="left_wheel_back" reason="Adjacent" />
     <disable_collisions link1="imu_link" link2="left_wheel_front" reason="Adjacent" />
     <disable_collisions link1="imu_link" link2="link1" reason="Adjacent" />

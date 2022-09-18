@@ -61,7 +61,7 @@ def main(passed_args=None):
         )
         publishers[PARTIAL_AUTONOMY_INTERNAL_TOPIC] = node.create_publisher(
             JointTrajectory, PARTIAL_AUTONOMY_INTERNAL_TOPIC, QUEUE_SIZE
-        ) #JointTrajectory
+        )
 
         # Create subscriptions to listen for specific robot actions from users
         node.create_subscription(
@@ -71,7 +71,7 @@ def main(passed_args=None):
             QUEUE_SIZE,
         )
         node.create_subscription(
-            JointTrajectory, #JointTrajectory
+            JointTrajectory,
             PARTIAL_AUTONOMY_EXTERNAL_TOPIC,
             handle_partial_autonomy_movements,
             QUEUE_SIZE,
