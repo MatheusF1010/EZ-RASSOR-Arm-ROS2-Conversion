@@ -22,18 +22,6 @@ from launch.substitutions.find_executable import FindExecutable
 import yaml
 
 
-def load_yaml_file(package_name, file_path):
-    package_path = get_package_share_directory(package_name)
-    absolute_file_path = os.path.join(package_path, file_path)
-
-    try:
-        with open(absolute_file_path, 'r') as file:
-            return file.read()
-            #return yaml.safe_load(file)
-    except EnvironmentError:  # parent of IOError, OSError *and* WindowsError where available
-        return None
-
-
 
 def generate_launch_description():
         
@@ -63,13 +51,54 @@ def generate_launch_description():
         ]
     )
 
-    controller = load_yaml_file(pkg_ezrassor_arm_moveit_ros2, "config/ros_controllers.yaml")
-    ompl_planning = load_yaml_file(pkg_ezrassor_arm_moveit_ros2, "config/ompl_planning.yaml")
-    joint_limits = load_yaml_file(pkg_ezrassor_arm_moveit_ros2, "config/joint_limits.yaml")
-    cartesian_limits = load_yaml_file(pkg_ezrassor_arm_moveit_ros2, "config/cartesian_limits.yaml")
-    kinematics = load_yaml_file(pkg_ezrassor_arm_moveit_ros2, "config/kinematics.yaml")
-    sensors_3d = load_yaml_file(pkg_ezrassor_arm_moveit_ros2, "config/sensors_3d.yaml")
-    robot_desc = load_yaml_file(pkg_ezrassor_arm_moveit_ros2, "config/ezrassor.srdf")
+    # loading ros_controllers.yaml
+    controller_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "ros_controllers.yaml"
+    )
+    with open(controller_yaml_file, 'r') as file:
+        controller = yaml.safe_load(file)
+
+    # loading ompl_planning.yaml
+    ompl_planning_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "ompl_planning.yaml"
+    )
+    with open(ompl_planning_yaml_file, 'r') as file:
+        ompl_planning = yaml.safe_load(file)
+
+    # loading joint_limits.yaml
+    joint_limits_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "joint_limits.yaml"
+    )
+    with open(joint_limits_yaml_file, 'r') as file:
+        joint_limits = yaml.safe_load(file)
+
+    # loading cartesian_limits.yaml
+    cartesian_limits_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "cartesian_limits.yaml"
+    )
+    with open(cartesian_limits_yaml_file, 'r') as file:
+        cartesian_limits = yaml.safe_load(file)
+
+    # loading kinematics.yaml
+    kinematics_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "kinematics.yaml"
+    )
+    with open(kinematics_yaml_file, 'r') as file:
+        kinematics = yaml.safe_load(file)
+
+    # loading sensors_3d.yaml
+    sensors_3d_yaml_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "sensors_3d.yaml"
+    )
+    with open(sensors_3d_yaml_file, 'r') as file:
+        sensors_3d = yaml.safe_load(file)
+
+    # loading ezrassor.srdf
+    ezrassor_srdf_file = os.path.join(
+        pkg_ezrassor_arm_moveit_ros2, "config", "ezrassor.srdf"
+    )
+    with open(ezrassor_srdf_file, 'r') as infp:
+        robot_desc = infp.read()
 
     param = {
         "robot_description": robot_urdf
@@ -168,56 +197,3 @@ def generate_launch_description():
 
 if __name__ == '__main__':
     generate_launch_description()
-
-
-
-
-
-# loading ros_controllers.yaml
-    # controller_yaml_file = os.path.join(
-    #     pkg_ezrassor_arm_moveit_ros2, "config", "ros_controllers.yaml"
-    # )
-    # with open(controller_yaml_file, 'r') as file:
-    #     controller = yaml.safe_load(file)
-
-    # loading ompl_planning.yaml
-    # ompl_planning_yaml_file = os.path.join(
-    #     pkg_ezrassor_arm_moveit_ros2, "config", "ompl_planning.yaml"
-    # )
-    # with open(ompl_planning_yaml_file, 'r') as file:
-    #     ompl_planning = yaml.safe_load(file)
-
-    # loading joint_limits.yaml
-    # joint_limits_yaml_file = os.path.join(
-    #     pkg_ezrassor_arm_moveit_ros2, "config", "joint_limits.yaml"
-    # )
-    # with open(joint_limits_yaml_file, 'r') as file:
-    #     joint_limits = yaml.safe_load(file)
-
-    # loading cartesian_limits.yaml
-    # cartesian_limits_yaml_file = os.path.join(
-    #     pkg_ezrassor_arm_moveit_ros2, "config", "cartesian_limits.yaml"
-    # )
-    # with open(cartesian_limits_yaml_file, 'r') as file:
-    #     cartesian_limits = yaml.safe_load(file)
-
-    # loading kinematics.yaml
-    # kinematics_yaml_file = os.path.join(
-    #     pkg_ezrassor_arm_moveit_ros2, "config", "kinematics.yaml"
-    # )
-    # with open(kinematics_yaml_file, 'r') as file:
-    #     kinematics = yaml.safe_load(file)
-
-    # loading sensors_3d.yaml
-    # sensors_3d_yaml_file = os.path.join(
-    #     pkg_ezrassor_arm_moveit_ros2, "config", "sensors_3d.yaml"
-    # )
-    # with open(sensors_3d_yaml_file, 'r') as file:
-    #     sensors_3d = yaml.safe_load(file)
-
-    # loading ezrassor.srdf
-    # ezrassor_srdf_file = os.path.join(
-    #     pkg_ezrassor_arm_moveit_ros2, "config", "ezrassor.srdf"
-    # )
-    # with open(ezrassor_srdf_file, 'r') as infp:
-    #     robot_desc = infp.read()
