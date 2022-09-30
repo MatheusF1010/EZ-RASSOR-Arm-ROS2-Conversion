@@ -18,8 +18,8 @@
     </group>
     <!-- <group name="gripper_controller">
         <link name="link6" />
-        <link name="grabber1" />
-        <link name="grabber2" />
+        <chain base_link="base_link" tip_link="grabber1" />
+        <chain base_link="base_link" tip_link="grabber2" />
     </group> -->
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
     <group_state name="Home" group="moveit_arm_controller">
