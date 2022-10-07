@@ -31,6 +31,9 @@ def load_yaml(package_name, file_path):
 
 def generate_launch_description():
 
+    joint_limit_yaml = load_yaml('ezrassor_arm_moveit_ros2', 'config/joint_limits.yaml')
+    robot_description_planning = {'robot_description_planning': joint_limit_yaml}
+
     # planning_context
     robot_description_config = xacro.process_file(
         os.path.join(
@@ -71,15 +74,6 @@ def generate_launch_description():
         "ezrassor_arm_moveit_ros2", "config/ros_controllers.yaml"
     )
 
-    # pkg_ezrassor_arm_moveit_ros2 = os.path.join(
-    #     get_package_share_directory("ezrassor_arm_moveit_ros2")
-    # )
-    # controller_yaml_file = os.path.join(
-    #     pkg_ezrassor_arm_moveit_ros2, "config", "ros_controllers.yaml"
-    # )
-    # with open(controller_yaml_file, 'r') as file:
-    #     controller = yaml.safe_load(file)
-
     moveit_controllers = {
         "moveit_simple_controller_manager": moveit_simple_controllers_yaml,
         "moveit_controller_manager": "moveit_simple_controller_manager/MoveItSimpleControllerManager",
@@ -97,24 +91,33 @@ def generate_launch_description():
         "publish_geometry_updates": True,
         "publish_state_updates": True,
         "publish_transforms_updates": True,
+        "planning_scene_monitor_options": {
+            "name": "planning_scene_monitor",
+            "robot_description": "robot_description",
+            "joint_state_topic": "/ezrassor/joint_states",
+            "attached_collision_object_topic": "/move_group/planning_scene_monitor",
+            "publish_planning_scene_topic": "/move_group/publish_planning_scene",
+            "monitored_planning_scene_topic": "/move_group/monitored_planning_scene",
+            "wait_for_initial_state_timeout": 10.0,
+        },
     }
 
     # Start the actual move_group node/action server
     run_move_group_node = Node(
         package="moveit_ros_move_group",
         name="move_group",
-        namespace="/ezrassor",
         executable="move_group",
         output="screen",
         parameters=[
             robot_description,
             robot_description_semantic,
-            # kinematics_yaml,
+            kinematics_yaml,
             robot_description_kinematics,
             ompl_planning_pipeline_config,
             trajectory_execution,
             moveit_controllers,
             planning_scene_monitor_parameters,
+            robot_description_planning,
         ],
     )
 
@@ -141,9 +144,9 @@ def generate_launch_description():
         package="tf2_ros",
         executable="static_transform_publisher",
         name="static_transform_publisher",
-        # namespace="/ezrassor",
+        namespace="/ezrassor",
         output="log",
-        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "grabber1"],
+        arguments=["0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "world", "base_link"],
     )
 
     # Publish TF

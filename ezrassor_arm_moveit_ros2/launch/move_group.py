@@ -131,7 +131,7 @@ def generate_launch_description():
 
     move_group = Node(
         name="move_group",
-        namespace='/ezrassor',
+        # namespace='/ezrassor',
         package='moveit_ros_move_group',
         executable='move_group',
         respawn="false",

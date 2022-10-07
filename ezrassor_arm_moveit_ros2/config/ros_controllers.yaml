@@ -9,8 +9,8 @@ generic_hw_control_loop:
 # Settings for ros_control hardware interface
 hardware_interface:
   joints:
-    # - arm_back_hinge
-    # - drum_back_hinge
+    - arm_back_hinge
+    - drum_back_hinge
     - joint12
     - joint23
     - joint34
@@ -18,10 +18,10 @@ hardware_interface:
     - joint56
     - grabber_joint1
     - grabber_joint2
-    # - left_wheel_back_hinge
-    # - left_wheel_front_hinge
-    # - right_wheel_back_hinge
-    # - right_wheel_front_hinge
+    - left_wheel_back_hinge
+    - left_wheel_front_hinge
+    - right_wheel_back_hinge
+    - right_wheel_front_hinge
   sim_control_mode: 0  # 0: position, 1: velocity
 
 joint_state_controller:
@@ -29,9 +29,9 @@ joint_state_controller:
   publish_rate: 50
 
 controller_names:
-  - partial_autonomy_controller
+  - /ezrassor/partial_autonomy_controller
 
-partial_autonomy_controller:
+/ezrassor/partial_autonomy_controller:
   action_ns: follow_joint_trajectory
   type: FollowJointTrajectory
   default: true
