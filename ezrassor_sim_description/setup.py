@@ -21,7 +21,7 @@ setup(
         "Topic :: Scientific/Engineering :: Astronomy",
         "Topic :: Scientific/Engineering :: Physics",
     ],
-    packages=["arms_driver", "wheels_driver", "drums_driver", "paver_arm_manual_driver", "paver_arm_auto_driver"],
+    packages=["arms_driver", "wheels_driver", "drums_driver", "paver_arm_manual_driver", "paver_arm_auto_driver", "paver_arm_auto_functions"],
     package_dir={"": "source"},
     install_requires=["setuptools"],
     data_files=[
@@ -45,6 +45,7 @@ setup(
             "drums_driver = drums_driver.__main__:main",
             "paver_arm_manual_driver = paver_arm_manual_driver.__main__:main",
             "paver_arm_auto_driver = paver_arm_auto_driver.__main__:main",
+            "paver_arm_auto_functions = paver_arm_auto_functions.joint_goal:main",
         ],
     },
 )

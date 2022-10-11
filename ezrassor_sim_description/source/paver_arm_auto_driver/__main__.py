@@ -20,17 +20,34 @@ from std_msgs.msg import (
 )
 from trajectory_msgs.msg import JointTrajectory
 
+from ast import List
+from threading import Thread
+from turtle import position
+
+import rclpy
+from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.node import Node
+
+from pymoveit2 import MoveIt2
+
+import paver_arm_auto_functions as autonomy
+# import pymoveit2.examples.joint_goal as autonomy
 
 NODE = "paver_arm_driver"
 CLAW_EXTERNAL_TOPIC = "claw_action"
 CLAW_INTERNAL_TOPIC = "claw_effort_controller/commands"
 PARTIAL_AUTONOMY_EXTERNAL_TOPIC = "partial_autonomy"
-PARTIAL_AUTONOMY_INTERNAL_TOPIC = "partial_autonomy_controller/commands"
 
 QUEUE_SIZE = 10
 
 # Dictionary values set after publishers get created in main()
 publishers = {}
+
+# def handle_joint_autonomous_movements(data):
+#     print()
+#     # autonomy.joint_goal.handle_autonomy_functions()
+#     # autonomy.main()
+
 
 def handle_claw_movements(data):
     claw_msg = Float64MultiArray()
@@ -42,11 +59,6 @@ def handle_claw_movements(data):
     
     publishers[CLAW_INTERNAL_TOPIC].publish(claw_msg)
 
-def handle_partial_autonomy_movements(data):
-    partial_autonomy_msg = JointTrajectory()
-    partial_autonomy_msg = [data.data]
-
-    publishers[PARTIAL_AUTONOMY_INTERNAL_TOPIC].publish(partial_autonomy_msg)
 
 
 def main(passed_args=None):
@@ -59,9 +71,6 @@ def main(passed_args=None):
         publishers[CLAW_INTERNAL_TOPIC] = node.create_publisher(
             Float64MultiArray, CLAW_INTERNAL_TOPIC, QUEUE_SIZE
         )
-        publishers[PARTIAL_AUTONOMY_INTERNAL_TOPIC] = node.create_publisher(
-            JointTrajectory, PARTIAL_AUTONOMY_INTERNAL_TOPIC, QUEUE_SIZE
-        )
 
         # Create subscriptions to listen for specific robot actions from users
         node.create_subscription(
@@ -70,12 +79,12 @@ def main(passed_args=None):
             handle_claw_movements,
             QUEUE_SIZE,
         )
-        node.create_subscription(
-            JointTrajectory,
-            PARTIAL_AUTONOMY_EXTERNAL_TOPIC,
-            handle_partial_autonomy_movements,
-            QUEUE_SIZE,
-        )
+        # node.create_subscription(
+        #     Float64,
+        #     PARTIAL_AUTONOMY_EXTERNAL_TOPIC,
+        #     handle_joint_autonomous_movements,
+        #     QUEUE_SIZE,
+        # )
 
         node.get_logger().info("paver_arm_driver node created successfully")
         

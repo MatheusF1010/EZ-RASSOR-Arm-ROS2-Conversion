@@ -18,7 +18,6 @@ import rclpy
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.node import Node
 from pymoveit2 import MoveIt2
-from pymoveit2.robots import panda
 
 # from moveit import PickupFirstPaverOffBack
 
@@ -158,15 +157,11 @@ def main(passed_args=None):
                 claw_action.data = command.claw_action.value
                 claw_action_publisher.publish(claw_action)
             
-            # if command.partial_autonomy is not None:
+            if command.partial_autonomy is not None:
 
-                # if command.partial_autonomy.value == 3.0: #pickup
-                #     PickupFirstPaverOffBack()
-
-
-                # partial_autonomy = std_msgs.msg.Float64MultiArray()
-                # partial_autonomy.data = command.partial_autonomy.value
-                # partial_autonomy_publisher.publish(partial_autonomy)
+                partial_autonomy = std_msgs.msg.Float64()
+                partial_autonomy.data = command.partial_autonomy.value
+                partial_autonomy_publisher.publish(partial_autonomy)
             
         
 
