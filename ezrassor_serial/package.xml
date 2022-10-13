@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+
+<!-- This file specifies metadata for the ezrassor_sim_gazebo ROS package. -->
+<package format="3">
+  <name>ezrassor_serial</name>
+  <version>2.0.0</version>
+  <description>Build the EZRASSOR simulation model from urdf and spawn it into Gazebo</description>
+  <url type="website">https://github.com/FlaSpaceInst/ezrassor_sim_description</url>
+  <maintainer email="ez.rassor@gmail.com">EZRASSOR Team</maintainer>
+  <author email="ez.rassor@gmail.com">EZRASSOR Team</author>
+  <license>MIT</license>
+
+  <depend>gazebo_ros_pkgs</depend>
+  <depend>ros2launch</depend>
+  <depend>xacro</depend>
+
+  <exec_depend>control_msgs</exec_depend>
+  <exec_depend>diff_drive_controller</exec_depend>
+  <exec_depend>effort_controllers</exec_depend>
+  <exec_depend>gazebo_ros2_control</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>hardware_interface</exec_depend>
+  <exec_depend>joint_trajectory_controller</exec_depend>
+  <exec_depend>joint_state_controller</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>ros2_control</exec_depend>
+  <exec_depend>ros2_controllers</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>velocity_controllers</exec_depend>
+  <!-- <exec_depend>pointcloud_to_laserscan</exec_depend> -->
+  
+  <exec_depend>depthimage_to_laserscan</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
