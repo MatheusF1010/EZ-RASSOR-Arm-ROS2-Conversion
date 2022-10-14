@@ -1,134 +1,154 @@
 """Tests for the command conversion code in this module."""
+import unittest
 import ezrassor_controller_server as server
 
+class unitTest(unittest.TestCase):
 
-def test_create_command_with_an_empty_request():
-    """Should create a command that does nothing."""
-    command = server.create_command({})
+    def test_create_command_with_an_empty_request(self):
+        """Should create a command that does nothing."""
+        command = server.create_command({})
 
-    assert command.routine_action is None
-    assert command.wheel_action is None
-    assert command.front_arm_action is None
-    assert command.back_arm_action is None
-    assert command.front_drum_action is None
-    assert command.back_drum_action is None
-
-
-def test_create_command_with_routine_action_in_request():
-    """Should create a command that starts a routine."""
-    command = server.create_command(
-        {server.ROUTINE_ACTION_KEY: server.RoutineAction.AUTO_DRIVE.name},
-    )
-
-    assert command.routine_action is server.RoutineAction.AUTO_DRIVE
-    assert command.wheel_action is None
-    assert command.front_arm_action is None
-    assert command.back_arm_action is None
-    assert command.front_drum_action is None
-    assert command.back_drum_action is None
+        assert command.joint_1_action is None
+        assert command.joint_2_action is None
+        assert command.joint_3_action is None
+        assert command.joint_4_action is None
+        assert command.joint_5_action is None
+        assert command.claw_action is None
+        assert command.partial_autonomy is None
 
 
-def test_create_command_with_wheel_action_in_request():
-    """Should create a command that moves the wheels."""
-    command = server.create_command(
-        {
-            server.WHEEL_ACTION_KEY: {
-                server.LINEAR_X_KEY: 1.0,
-                server.ANGULAR_Z_KEY: 0.0,
+    def test_create_command_with_joint_one_action_in_request(self):
+        """Should create a command that starts joint one action."""
+        command = server.create_command(
+            {server.JOINT_1_ACTION_KEY: server.AllJointAction.ROTATELEFT.name}
+        )
+
+        assert command.joint_1_action is server.AllJointAction.ROTATELEFT
+        assert command.joint_2_action is None
+        assert command.joint_3_action is None
+        assert command.joint_4_action is None
+        assert command.joint_5_action is None
+        assert command.claw_action is None
+        assert command.partial_autonomy is None
+
+
+    def test_create_command_with_joint_two_action_in_request(self):
+
+        """Should create a command that starts joint two action."""
+        command = server.create_command(
+            {server.JOINT_2_ACTION_KEY: server.AllJointAction.ROTATELEFT.name}
+        )
+
+        assert command.joint_1_action is None
+        assert command.joint_2_action is server.AllJointAction.ROTATELEFT
+        assert command.joint_3_action is None
+        assert command.joint_4_action is None
+        assert command.joint_5_action is None
+        assert command.claw_action is None
+        assert command.partial_autonomy is None
+
+    def test_create_command_with_joint_three_action_in_request(self):
+
+        """Should create a command that starts joint three action."""
+        command = server.create_command(
+            {server.JOINT_3_ACTION_KEY: server.AllJointAction.ROTATELEFT.name}
+        )
+
+        assert command.joint_1_action is None
+        assert command.joint_2_action is None
+        assert command.joint_3_action is server.AllJointAction.ROTATELEFT
+        assert command.joint_4_action is None
+        assert command.joint_5_action is None
+        assert command.claw_action is None
+        assert command.partial_autonomy is None
+
+    def test_create_command_with_joint_four_action_in_request(self):
+
+        """Should create a command that starts joint four action."""
+        command = server.create_command(
+            {server.JOINT_4_ACTION_KEY: server.AllJointAction.ROTATELEFT.name}
+        )
+
+        assert command.joint_1_action is None
+        assert command.joint_2_action is None
+        assert command.joint_3_action is None
+        assert command.joint_4_action is server.AllJointAction.ROTATELEFT
+        assert command.joint_5_action is None
+        assert command.claw_action is None
+        assert command.partial_autonomy is None
+
+    def test_create_command_with_joint_five_action_in_request(self):
+
+        """Should create a command that starts joint five action."""
+        command = server.create_command(
+            {server.JOINT_5_ACTION_KEY: server.AllJointAction.ROTATELEFT.name}
+        )
+
+        assert command.joint_1_action is None
+        assert command.joint_2_action is None
+        assert command.joint_3_action is None
+        assert command.joint_4_action is None
+        assert command.joint_5_action is server.AllJointAction.ROTATELEFT
+        assert command.claw_action is None
+        assert command.partial_autonomy is None
+
+    def test_create_command_with_claw_action_in_request(self):
+
+        """Should create a command that starts a claw action."""
+        command = server.create_command(
+            {server.CLAW_ACTION_KEY: server.ClawAction.OPEN.name}
+        )
+
+        assert command.joint_1_action is None
+        assert command.joint_2_action is None
+        assert command.joint_3_action is None
+        assert command.joint_4_action is None
+        assert command.joint_5_action is None
+        assert command.claw_action is server.ClawAction.OPEN
+        assert command.partial_autonomy is None
+
+    def test_create_command_with_autonomy_action_in_request(self):
+
+        """Should create a command that starts a claw action."""
+        command = server.create_command(
+            {server.PARTIAL_AUTONOMY_KEY: server.PartialAutonomy.HOME.name}
+        )
+
+        assert command.joint_1_action is None
+        assert command.joint_2_action is None
+        assert command.joint_3_action is None
+        assert command.joint_4_action is None
+        assert command.joint_5_action is None
+        assert command.claw_action is None
+        assert command.partial_autonomy is server.PartialAutonomy.HOME
+
+    def test_create_command_with_serveral_actions_in_request(self):
+        """Should create a command that instructs the EZRASSOR to do many things.
+
+        This test ensures that complex requests are fully translated.
+        """
+        command = server.create_command(
+            {
+                server.JOINT_1_ACTION_KEY: server.AllJointAction.ROTATELEFT.name,
+                server.JOINT_2_ACTION_KEY: server.AllJointAction.ROTATERIGHT.name,
+                server.JOINT_3_ACTION_KEY: server.AllJointAction.ROTATEUP.name,
+                server.JOINT_4_ACTION_KEY: server.AllJointAction.ROTATEDOWN.name,
+                server.JOINT_5_ACTION_KEY: server.AllJointAction.ROTATELEFT.name,
+                server.CLAW_ACTION_KEY: server.ClawAction.CLOSE.name,
+                server.PARTIAL_AUTONOMY_KEY: server.PartialAutonomy.PLACE.name
             },
-        },
-    )
+        )
 
-    assert command.routine_action is None
-    assert command.wheel_action is not None
-    assert command.wheel_action.linear_x == 1.0
-    assert command.wheel_action.angular_z == 0.0
-    assert command.front_arm_action is None
-    assert command.back_arm_action is None
-    assert command.front_drum_action is None
-    assert command.back_drum_action is None
+        assert command.joint_1_action is server.AllJointAction.ROTATELEFT
+        assert command.joint_2_action is server.AllJointAction.ROTATERIGHT
+        assert command.joint_3_action is server.AllJointAction.ROTATEUP
+        assert command.joint_4_action is server.AllJointAction.ROTATEDOWN
+        assert command.joint_5_action is server.AllJointAction.ROTATELEFT
+        assert command.claw_action is server.ClawAction.CLOSE
+        assert command.partial_autonomy is server.PartialAutonomy.PLACE
 
 
-def test_create_command_with_front_arm_action_in_request():
-    """Should create a command that manipulates the front arm."""
-    command = server.create_command(
-        {server.FRONT_ARM_ACTION_KEY: server.ArmAction.RAISE.name},
-    )
+     
 
-    assert command.routine_action is None
-    assert command.wheel_action is None
-    assert command.front_arm_action is server.ArmAction.RAISE
-    assert command.back_arm_action is None
-    assert command.front_drum_action is None
-    assert command.back_drum_action is None
-
-
-def test_create_command_with_back_arm_action_in_request():
-    """Should create a command that manipulates the back arm."""
-    command = server.create_command(
-        {server.BACK_ARM_ACTION_KEY: server.ArmAction.RAISE.name},
-    )
-
-    assert command.routine_action is None
-    assert command.wheel_action is None
-    assert command.front_arm_action is None
-    assert command.back_arm_action is server.ArmAction.RAISE
-    assert command.front_drum_action is None
-    assert command.back_drum_action is None
-
-
-def test_create_command_with_front_drum_action_in_request():
-    """Should create a command that manipulates the front drum."""
-    command = server.create_command(
-        {server.FRONT_DRUM_ACTION_KEY: server.DrumAction.DIG.name},
-    )
-
-    assert command.routine_action is None
-    assert command.wheel_action is None
-    assert command.front_arm_action is None
-    assert command.back_arm_action is None
-    assert command.front_drum_action is server.DrumAction.DIG
-    assert command.back_drum_action is None
-
-
-def test_create_command_with_back_drum_action_in_request():
-    """Should create a command that manipulates the back drum."""
-    command = server.create_command(
-        {server.BACK_DRUM_ACTION_KEY: server.DrumAction.DIG.name},
-    )
-
-    assert command.routine_action is None
-    assert command.wheel_action is None
-    assert command.front_arm_action is None
-    assert command.back_arm_action is None
-    assert command.front_drum_action is None
-    assert command.back_drum_action is server.DrumAction.DIG
-
-
-def test_create_command_with_serveral_actions_in_request():
-    """Should create a command that instructs the EZRASSOR to do many things.
-
-    This test ensures that complex requests are fully translated.
-    """
-    command = server.create_command(
-        {
-            server.ROUTINE_ACTION_KEY: server.RoutineAction.AUTO_DRIVE.name,
-            server.WHEEL_ACTION_KEY: {
-                server.LINEAR_X_KEY: 1.0,
-                server.ANGULAR_Z_KEY: 0.0,
-            },
-            server.FRONT_ARM_ACTION_KEY: server.ArmAction.RAISE.name,
-            server.BACK_ARM_ACTION_KEY: server.ArmAction.LOWER.name,
-            server.FRONT_DRUM_ACTION_KEY: server.DrumAction.DIG.name,
-            server.BACK_DRUM_ACTION_KEY: server.DrumAction.DUMP.name,
-        },
-    )
-
-    assert command.routine_action is server.RoutineAction.AUTO_DRIVE
-    assert command.wheel_action is not None
-    assert command.wheel_action.linear_x == 1.0
-    assert command.wheel_action.angular_z == 0.0
-    assert command.front_arm_action is server.ArmAction.RAISE
-    assert command.back_arm_action is server.ArmAction.LOWER
-    assert command.front_drum_action is server.DrumAction.DIG
-    assert command.back_drum_action is server.DrumAction.DUMP
+if __name__ == '__main__':
+    unittest.main()
