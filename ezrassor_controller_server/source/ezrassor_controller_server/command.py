@@ -180,9 +180,9 @@ class PartialAutonomy(enum.Enum, metaclass=MetaActionEnum):
 
     # Pickup_Test = [0.0, 0.0, 0.0, 0.0, 3.0]
     
-    Home = 1.0
-    Simple_Place_Prep = 2.0
-    Pickup_Test = 3.0
+    HOME = 1.0
+    PLACE = 2.0
+    PICKUP = 3.0
   
 
     # Simple_Place_Prep = (0.00, -0.8505, 1.6489, -1.3017, 0.00)
