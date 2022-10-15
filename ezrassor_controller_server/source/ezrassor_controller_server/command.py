@@ -176,16 +176,23 @@ class ClawAction(enum.Enum, metaclass=MetaActionEnum):
 
 class PartialAutonomy(enum.Enum, metaclass=MetaActionEnum):
     """This action describes autonomous movement for the EZRASSSOR ARM"""
-    Home = (0.0, 0.0, 0.0, 0.0, 0.0)
+    # Home = (0.0, 0.0, 0.0, 0.0, 0.0)
+
+    # Pickup_Test = [0.0, 0.0, 0.0, 0.0, 3.0]
+    
+    HOME = 1.0
+    PLACE = 2.0
+    PICKUP = 3.0
   
-    Simple_Place_Prep = (0.00, -0.8505, 1.6489, -1.3017, 0.00)
 
-    Simple_Place_Exec = (0.00, -0.3645, 1.6489, -1.3017, 0.00)
+    # Simple_Place_Prep = (0.00, -0.8505, 1.6489, -1.3017, 0.00)
 
-    Pickup_First_Paver_Prep = (2.5167, -1.3500, 1.1900, 0.1562, -0.1709)
+    # Simple_Place_Exec = (0.00, -0.3645, 1.6489, -1.3017, 0.00)
 
-    Pickup_First_Paver_Exec = (2.5861, -1.0800, 1.7050, -0.6300, -0.1709)
+    # Pickup_First_Paver_Prep = (2.5167, -1.3500, 1.1900, 0.1562, -0.1709)
 
-    Pickup_First_Paver_After = (2.5861, -0.9200, 0.9300, 0.0000, 0.0000)
+    # Pickup_First_Paver_Exec = (2.5861, -1.0800, 1.7050, -0.6300, -0.1709)
+
+    # Pickup_First_Paver_After = (2.5861, -0.9200, 0.9300, 0.0000, 0.0000)
 
     
