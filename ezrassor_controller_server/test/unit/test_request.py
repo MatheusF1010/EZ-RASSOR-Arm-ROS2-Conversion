@@ -17,26 +17,31 @@ class unitTest(unittest.TestCase):
                 server.JOINT_1_ACTION_KEY: server.AllJointAction.ROTATERIGHT.name,
                 server.JOINT_1_ACTION_KEY: server.AllJointAction.ROTATEUP.name,
                 server.JOINT_1_ACTION_KEY: server.AllJointAction.ROTATEDOWN.name,
-                
+                server.JOINT_1_ACTION_KEY: server.AllJointAction.STOP.name,
+
                 server.JOINT_2_ACTION_KEY: server.AllJointAction.ROTATELEFT.name,
                 server.JOINT_2_ACTION_KEY: server.AllJointAction.ROTATERIGHT.name,
                 server.JOINT_2_ACTION_KEY: server.AllJointAction.ROTATEUP.name,
                 server.JOINT_2_ACTION_KEY: server.AllJointAction.ROTATEDOWN.name,
+                server.JOINT_2_ACTION_KEY: server.AllJointAction.STOP.name,
 
                 server.JOINT_3_ACTION_KEY: server.AllJointAction.ROTATELEFT.name,
                 server.JOINT_3_ACTION_KEY: server.AllJointAction.ROTATERIGHT.name,
                 server.JOINT_3_ACTION_KEY: server.AllJointAction.ROTATEUP.name,
                 server.JOINT_3_ACTION_KEY: server.AllJointAction.ROTATEDOWN.name,
+                server.JOINT_3_ACTION_KEY: server.AllJointAction.STOP.name,
 
                 server.JOINT_4_ACTION_KEY: server.AllJointAction.ROTATELEFT.name,
                 server.JOINT_4_ACTION_KEY: server.AllJointAction.ROTATERIGHT.name,
                 server.JOINT_4_ACTION_KEY: server.AllJointAction.ROTATEUP.name,
                 server.JOINT_4_ACTION_KEY: server.AllJointAction.ROTATEDOWN.name,
+                server.JOINT_4_ACTION_KEY: server.AllJointAction.STOP.name,
 
                 server.JOINT_5_ACTION_KEY: server.AllJointAction.ROTATELEFT.name,
                 server.JOINT_5_ACTION_KEY: server.AllJointAction.ROTATERIGHT.name,
                 server.JOINT_5_ACTION_KEY: server.AllJointAction.ROTATEUP.name,
                 server.JOINT_5_ACTION_KEY: server.AllJointAction.ROTATEDOWN.name,
+                server.JOINT_5_ACTION_KEY: server.AllJointAction.STOP.name,
                 
                 server.CLAW_ACTION_KEY: server.ClawAction.OPEN.name,
                 server.CLAW_ACTION_KEY: server.ClawAction.CLOSE.name,
