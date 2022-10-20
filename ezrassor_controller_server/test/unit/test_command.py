@@ -147,6 +147,5 @@ class unitTest(unittest.TestCase):
         assert command.claw_action is server.ClawAction.CLOSE
         assert command.partial_autonomy is server.PartialAutonomy.PLACE
 
-
 if __name__ == '__main__':
     unittest.main()
