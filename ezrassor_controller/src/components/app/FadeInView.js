@@ -14,7 +14,7 @@ export default class FadeInView extends React.Component {
         toValue: 1,
         duration: 5000,
         useNativeDriver: true,
-      },
+      }
     ).start();
   }
 

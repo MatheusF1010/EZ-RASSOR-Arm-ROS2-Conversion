@@ -123,7 +123,7 @@ export default class ControllerScreen extends React.Component {
         <Modal
           style={ControllerStyle.modalViewContainer}
           isVisible={this.state.ipModal}
-          onSwipe={() => this.setIPModalVisible(false)}
+          onSwipeComplete={() => this.setIPModalVisible(false)}
           swipeDirection='down'
           onRequestClose={() => {this.setIPModalVisible(false)}}>
           <KeyboardAvoidingView

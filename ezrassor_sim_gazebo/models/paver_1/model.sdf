@@ -20,7 +20,7 @@
                 <pose>0 0 0 0 0 0</pose>
                 <geometry>
                     <mesh>
-                        <uri>model://paver/meshes/small_paver_thin.dae</uri>
+                        <uri>model://paver_1/meshes/small_paver_thin.dae</uri>
                     </mesh>
                 </geometry>
                 <surface>
@@ -48,7 +48,7 @@
             <visual name = "paver_visual">
                 <geometry>
                     <mesh>
-                        <uri>model://paver/meshes/small_paver_thin.dae</uri>
+                        <uri>model://paver_1/meshes/small_paver_thin.dae</uri>
                     </mesh>
                 </geometry>
             </visual>

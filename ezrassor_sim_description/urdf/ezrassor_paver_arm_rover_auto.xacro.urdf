@@ -17,6 +17,14 @@
 	<xacro:include filename="$(find ezrassor_sim_description)/urdf/imu.xacro" />
 
     <!-- CART PARTS -->
+
+    <!-- Fixes rover to world -->
+    <!-- <link name="world" />
+    <joint name="world_to_base_link=" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+    </joint> -->
+    
     <link name='base_link'>
 		<pose>0 0 0 0 0 0</pose>
 	</link>
@@ -24,7 +32,7 @@
 		<pose>0 0 0 0 0 0</pose>
 		<inertial>
             <!-- Original mass = 15 -->
-			<mass value="1500.0"/>
+			<mass value="15.0"/>
 			<origin xyz="0 0 0" rpy=" 0 0 0"/>
 			<inertia ixx="0.5" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="0.1" />
 		</inertial>
@@ -152,7 +160,7 @@
     <link name='link1'>
         <pose>0 0 0 0 0 0</pose>
         <inertial>
-            <mass value="1.0"/>
+            <mass value="0.001"/>
             <origin xyz="0 0 0" rpy=" 0 0 0"/>
             <inertia
                 ixx="0" ixy="0" ixz="0"
@@ -177,7 +185,7 @@
     <link name='link2'>
         <pose>0 0 0 0 0 0</pose>
         <inertial>
-            <mass value="1.0"/>
+            <mass value="0.001"/>
             <origin xyz="0 0 0" rpy=" 0 0 0"/>
             <inertia
                 ixx="0" ixy="0" ixz="0"
@@ -202,7 +210,7 @@
     <link name='link3'>
         <pose>0 0 0 0 0 0</pose>
         <inertial>
-            <mass value="1.0"/>
+            <mass value="0.001"/>
             <origin xyz="0 0 0" rpy=" 0 0 0"/>
             <inertia
                 ixx="0" ixy="0" ixz="0"
@@ -227,7 +235,7 @@
     <link name='link4'>
         <pose>0 0 0 0 0 0</pose>
         <inertial>
-            <mass value="1.0"/>
+            <mass value="0.001"/>
             <origin xyz="0 0 0" rpy=" 0 0 0"/>
             <inertia
                 ixx="0" ixy="0" ixz="0"
@@ -252,7 +260,7 @@
     <link name='link5'>
         <pose>0 0 0 0 0 0</pose>
         <inertial>
-            <mass value="1.0"/>
+            <mass value="0.001"/>
             <origin xyz="0 0 0" rpy=" 0 0 0"/>
             <inertia
                 ixx="0" ixy="0" ixz="0"
@@ -277,7 +285,7 @@
     <link name='link6'>
         <pose>0 0 0 0 0 0</pose>
         <inertial>
-            <mass value="1.0"/>
+            <mass value="0.001"/>
             <origin xyz="0 0 0" rpy=" 0 0 0"/>
             <inertia
                 ixx="0" ixy="0" ixz="0"
@@ -321,7 +329,7 @@
     <link name='grabber1'>
         <pose>0 0 0 0 0 0</pose>
         <inertial>
-            <mass value="0.1"/>
+            <mass value="0.01"/>
             <origin xyz="0 0 0" rpy=" 0 0 0"/>
             <inertia
                 ixx="0" ixy="0" ixz="0"
@@ -363,7 +371,7 @@
     <link name='grabber2'>
         <pose>0 0 0 0 0 0</pose>
         <inertial>
-            <mass value="0.1"/>
+            <mass value="0.01"/>
             <origin xyz="0 0 0" rpy=" 0 0 0"/>
             <inertia
                 ixx="0" ixy="0" ixz="0"
@@ -490,7 +498,7 @@
         <parent link="link6"/>
         <axis xyz="1 1 0" rpy="0 0 0"/>
         <dynamics damping="1.0" friction="0.5"/>
-        <limit lower="-0.02" upper="0.0224" effort="10" velocity="0.005"/>
+        <limit lower="-0.02" upper="0.0224" effort="10" velocity="0.055"/>
     </joint>
     <joint type="prismatic" name="grabber_joint2">
         <origin xyz="0.1 0.31 -0.24" rpy="0 0 0"/>
@@ -498,7 +506,7 @@
         <parent link="link6"/>
         <axis xyz="1 -1 0" rpy="0 0 0"/>
         <dynamics damping="1.0" friction="0.5"/>
-        <limit lower="-0.02" upper="0.0225" effort="10" velocity="0.005"/>
+        <limit lower="-0.02" upper="0.0225" effort="10" velocity="0.055"/>
     </joint>
 
     <!-- ROS2 Control Gazebo System -->
