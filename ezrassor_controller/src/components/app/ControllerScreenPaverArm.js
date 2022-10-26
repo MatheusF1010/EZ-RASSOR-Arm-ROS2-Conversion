@@ -141,27 +141,32 @@ export default class ControllerScreen extends React.Component {
           <TouchableHighlight style={{ justifyContent: 'center' }}>
             <View>
               <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 25}}>
-                <Text style={ControllerStyle.textLarge}>Mobile App Help</Text>
+                <Text style={ControllerStyle.textLarge}>RE-RASSOR Controller Help</Text>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
-                <View style={{ flex: 1.5}} >
+                <View style={{ flex: 1}} >
                   <FontAwesome style={{textAlign:'center'}} name="search" size={30} color='#fff'/>
                   <Text style={ControllerStyle.textSmallCenter}> 
-                    Modal to connect to the server.
-                    Insert the connection string as: {'\n'} 
-                    IP:SERVER_PORT
+                    Connects to the server with input string: {'\n'} 
+                    IP : PORT
                   </Text>
                 </View>   
                 <View style={{ flex: 1}} >
                   <FontAwesome style={{textAlign:'center'}} name="ban" size={30} color='#fff'/>
                     <Text style={ControllerStyle.textSmallCenter}> 
-                     Stops all manual movements in case of emergency
+                     Emergency stop for manual movements
                     </Text>
                   </View>
                   <View style={{ flex: 1}} >
                   <MaterialCommunityIcons style={{textAlign:'center'}} name="robot" size={32} color='#fff'/>
                     <Text style={ControllerStyle.textSmallCenter}> 
                       Opens autonomy functions
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1}} >
+                  <FontAwesome style={{textAlign:'center'}} name="bug" size={35} color='#fff'/>
+                    <Text style={ControllerStyle.textSmallCenter}> 
+                      Issue report and developers
                     </Text>
                   </View>
                 </View>
