@@ -269,18 +269,60 @@ const ControllerStyle = StyleSheet.create({
     color: '#fff'
   },
 
+  mainButtonTextUp: {
+    fontFamily: 'NASA', 
+    fontSize: 15, 
+    color: '#fff',
+    textAlign: 'center',
+    bottom: 5
+  },
+
+  mainButtonTextLeft: {
+    fontFamily: 'NASA', 
+    fontSize: 15, 
+    color: '#fff',
+    textAlign: 'center',
+    bottom: 20
+  },
+
+  mainButtonTextRight: {
+    fontFamily: 'NASA', 
+    fontSize: 15, 
+    color: '#fff',
+    textAlign: 'center',
+    bottom: 20
+  },
+
+  mainButtonTextDown: {
+    fontFamily: 'NASA', 
+    fontSize: 15, 
+    color: '#fff',
+    textAlign: 'center',
+    top: 27
+  },
+
+  clawButtonTextDown: {
+    fontFamily: 'NASA', 
+    fontSize: 15, 
+    color: '#fff',
+    textAlign: 'center',
+    top: 50
+  },
+
   buttonTextUp: {
     fontFamily: 'NASA', 
-    fontSize: 22, 
+    fontSize: 15, 
     color: '#fff',
-    bottom: 20,
+    bottom: 15,
+    textAlign: 'center'
   },
 
   buttonTextDown: {
     fontFamily: 'NASA', 
-    fontSize: 22, 
+    fontSize: 15, 
     color: '#fff',
-    top: 15,
+    top: 10,
+    textAlign: 'center'
   },
 
   buttonTextCenter: {
@@ -294,7 +336,6 @@ const ControllerStyle = StyleSheet.create({
     fontFamily: 'NASA', 
     fontSize: 10, 
     color: '#fff',
-    // top: 15,
   },
 
   buttonImage: {
@@ -303,13 +344,34 @@ const ControllerStyle = StyleSheet.create({
     textAlign: 'center'
   },
 
+  buttonImageMainDown: {
+    fontFamily: 'NASA', 
+    color: '#fff',
+    textAlign: 'center',
+    bottom: 20,
+  },
+
   textSmallCenter: {
     textAlign: 'center',
     fontFamily: 'NASA', 
     fontSize: 22, 
     color: '#fff'
   },
+
+  bugText: {
+    textAlign: 'center',
+    fontFamily: 'NASA', 
+    fontSize: 22, 
+    color: '#0E86D4'
+  },
   
+  devText: {
+    fontFamily: 'NASA', 
+    fontSize: 18, 
+    color: '#fff',
+    textAlign: 'center',
+  },
+
   textTiny: {
     fontFamily: 'NASA', 
     fontSize: 12, 

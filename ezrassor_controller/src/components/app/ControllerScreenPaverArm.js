@@ -15,6 +15,7 @@ export default class ControllerScreen extends React.Component {
     this.state = {
       autonomyModalVisible: false,
       infoModalVisible: false,
+      bugModalVisible: false,
       ipModal: false,
       xyModal: false,
       isLoading: true,
@@ -39,6 +40,10 @@ export default class ControllerScreen extends React.Component {
 
   setInfoModalVisible(visible) {
     this.setState({ infoModalVisible: visible });
+  }
+
+  setBugModalVisible(visible) {
+    this.setState({ bugModalVisible: visible });
   }
 
   setIPModalVisible(visible){
@@ -82,6 +87,49 @@ export default class ControllerScreen extends React.Component {
         <StatusBar hidden />
 
 
+        {/* Bug Popup Modal*/}
+        <Modal
+          style={ControllerStyle.modalViewContainer}
+          isVisible={this.state.bugModalVisible}
+          onSwipeComplete={() => this.setBugModalVisible(false)}
+          swipeDirection='down'
+          onRequestClose={() => this.setBugModalVisible(!this.state.bugModalVisible)}>
+    
+          <TouchableHighlight style={{ justifyContent: 'center' }}>
+            <View>
+              <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 25}}>
+                <Text style={ControllerStyle.textLarge}>Bug Report and Developers</Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
+                <View style={{ flex: 1.2}} >
+                  <FontAwesome style={{textAlign:'center'}} name="exclamation-triangle" size={30} color='#fff'/>
+                  <Text style={ControllerStyle.textSmallCenter}> 
+                    Report issues on the Florida Space Institute GitHub
+                  </Text>
+                  <Text style={ControllerStyle.bugText} onPress={() => {Linking.openURL('https://github.com/FlaSpaceInst/EZ-RASSOR/issues');}}>
+                    Click here to report
+                  </Text>
+                </View>   
+                <View style={{ flex: 1.5}} >
+                  <FontAwesome style={{textAlign:'center'}} name="laptop" size={30} color='#fff'/>
+                    <Text style={ControllerStyle.devText}> 
+                     RE-RASSOR Arm v1.0:
+                    </Text>
+                    <Text style={ControllerStyle.devText}> 
+                     Matheus Pavini Franco Ferreira {'\n'}
+                     Kartik Rana {'\n'}
+                     Jack Bailey {'\n'}
+                     Israel C. Booth {'\n'}
+                     Braden Steller {'\n'}
+                    </Text>
+                  </View>
+                  
+                </View>
+            </View>
+          </TouchableHighlight>
+        </Modal>
+
+
         {/* Info Popup Modal*/}
         <Modal
           style={ControllerStyle.modalViewContainer}
@@ -90,9 +138,35 @@ export default class ControllerScreen extends React.Component {
           swipeDirection='down'
           onRequestClose={() => this.setInfoModalVisible(!this.state.infoModalVisible)}>
     
+          <TouchableHighlight style={{ justifyContent: 'center' }}>
             <View>
-                <Text style={ControllerStyle.textLarge}>Activate Autonomous Arm Function(s)</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 25}}>
+                <Text style={ControllerStyle.textLarge}>Mobile App Help</Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
+                <View style={{ flex: 1.5}} >
+                  <FontAwesome style={{textAlign:'center'}} name="search" size={30} color='#fff'/>
+                  <Text style={ControllerStyle.textSmallCenter}> 
+                    Modal to connect to the server.
+                    Insert the connection string as: {'\n'} 
+                    IP:SERVER_PORT
+                  </Text>
+                </View>   
+                <View style={{ flex: 1}} >
+                  <FontAwesome style={{textAlign:'center'}} name="ban" size={30} color='#fff'/>
+                    <Text style={ControllerStyle.textSmallCenter}> 
+                     Stops all manual movements in case of emergency
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1}} >
+                  <MaterialCommunityIcons style={{textAlign:'center'}} name="robot" size={32} color='#fff'/>
+                    <Text style={ControllerStyle.textSmallCenter}> 
+                      Opens autonomy functions
+                    </Text>
+                  </View>
+                </View>
             </View>
+          </TouchableHighlight>
         </Modal>
         
 
@@ -131,8 +205,11 @@ export default class ControllerScreen extends React.Component {
           <TouchableOpacity style={{ flex: 1, padding: 3}} onPress={() => this.setInfoModalVisible(true)}>
             <FontAwesome name="info-circle" size={35} color='#fff'/>
           </TouchableOpacity>
+          <TouchableOpacity style={{ flex: 1, padding: 3}} onPress={() => this.setBugModalVisible(true)}>
+            <FontAwesome name="bug" size={35} color='#fff'/>
+          </TouchableOpacity>
 
-          <Text style={ControllerStyle.textSmall}>EZ-RASSOR Robotic Arm Controller</Text>
+          <Text style={ControllerStyle.textSmall}>RE-RASSOR Robotic Arm Controller</Text>
           
           <TouchableOpacity style={{ flex: 1, padding: 3}} onPress={() => {this.sendOperation(Robot.ALL, Operation.STOP)}}>
             <FontAwesome name="ban" style={{marginLeft: "auto"}} size={35} color='#fff'/>
@@ -152,7 +229,7 @@ export default class ControllerScreen extends React.Component {
           <KeyboardAvoidingView
             paddingLeft={34}
             paddingRight={34}>
-            <Text style={[ControllerStyle.textLarge, ControllerStyle.columnText]}>EZ-RASSOR Host to Control</Text>
+            <Text style={[ControllerStyle.textLarge, ControllerStyle.columnText]}>RE-RASSOR Host to Control</Text>
             <TextInput
               style={ControllerStyle.ipInputBox}
               onChangeText={(text) => this.changeIP(text)}
@@ -176,9 +253,10 @@ export default class ControllerScreen extends React.Component {
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT2, Operation.ROTATEUP)}} 
                  onPressOut={() => {this.sendOperation(Robot.JOINT2, Operation.STOP)}}
-                 hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+                 hitSlop={{top: 20, bottom: 20, left: 70, right: 70}}
                  >  
-               <FontAwesome tyle={ControllerStyle.buttonImage} name="chevron-up" size={50} color='#fff'/>
+                 <Text style={ControllerStyle.mainButtonTextUp}>Up</Text>
+               <FontAwesome tyle={ControllerStyle.buttonImage} name="chevron-up" size={25} color='#fff'/>
              </TouchableOpacity>
              </View>
              <View style={{flex: 2 , flexDirection: 'row'}}>
@@ -186,18 +264,20 @@ export default class ControllerScreen extends React.Component {
                  <TouchableOpacity
                      onPressIn={() => {this.sendOperation(Robot.JOINT1, Operation.ROTATELEFT)}}
                      onPressOut={() => {this.sendOperation(Robot.JOINT1, Operation.STOP)}}
-                     hitSlop={{top: 30, bottom: 30, left: 50, right: 50}}
+                     hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}
                      >
-                   <FontAwesome tyle={ControllerStyle.buttonImage} name="chevron-left" size={50} color='#fff'/>
+                      <Text style={ControllerStyle.mainButtonTextLeft}>Left</Text>
+                   <FontAwesome tyle={ControllerStyle.buttonImage} name="chevron-left" size={25} color='#fff'/>
                  </TouchableOpacity>
                </View>
                <View style={ControllerStyle.dPadRight}>
                  <TouchableOpacity
                      onPressIn={() => {this.sendOperation(Robot.JOINT1, Operation.ROTATERIGHT)}}
                      onPressOut={() => {this.sendOperation(Robot.JOINT1, Operation.STOP)}}
-                     hitSlop={{top: 30, bottom: 30, left: 50, right: 50}}
+                     hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}
                      >
-                   <FontAwesome tyle={ControllerStyle.buttonImage} name="chevron-right" size={50} color='#fff'/>
+                      <Text style={ControllerStyle.mainButtonTextRight}>Right</Text>
+                   <FontAwesome style={ControllerStyle.buttonImage} name="chevron-right" size={25} color='#fff'/>
                  </TouchableOpacity>
                </View> 
                </View>
@@ -205,9 +285,10 @@ export default class ControllerScreen extends React.Component {
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT2, Operation.ROTATEDOWN)}} 
                  onPressOut={() => {this.sendOperation(Robot.JOINT2, Operation.STOP)}}
-                 hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+                 hitSlop={{top: 20, bottom: 20, left: 70, right: 70}}
                  >  
-               <FontAwesome tyle={ControllerStyle.buttonImage} name="chevron-down" size={50} color='#fff'/>
+                 <Text style={ControllerStyle.mainButtonTextDown}>Down</Text>
+               <FontAwesome style={ControllerStyle.buttonImageMainDown} name="chevron-down" size={25} color='#fff'/>
              </TouchableOpacity>
              </View>
              </View>
@@ -260,7 +341,7 @@ export default class ControllerScreen extends React.Component {
                   onPressOut={() => {this.sendOperation(Robot.JOINT3, Operation.STOP)}}
                   hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
                   >  
-                  <Text style={ControllerStyle.buttonTextUp}>Move Up</Text>
+                  <Text style={ControllerStyle.buttonTextUp}>Up</Text>
                 <FontAwesome style={ControllerStyle.buttonImage} name="chevron-up" size={50} color='#fff'/>
               </TouchableOpacity>
              </View>
@@ -271,7 +352,7 @@ export default class ControllerScreen extends React.Component {
                  hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
                  >  
                <FontAwesome style={ControllerStyle.buttonImage} name="chevron-down" size={50} color='#fff'/>
-               <Text style={ControllerStyle.buttonTextDown}>Move Down</Text>
+               <Text style={ControllerStyle.buttonTextDown}>Down</Text>
              </TouchableOpacity>
              </View>
              </View>
@@ -285,7 +366,7 @@ export default class ControllerScreen extends React.Component {
                     onPressOut={() => {this.sendOperation(Robot.JOINT4, Operation.STOP)}}
                     hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
                     >
-                      <Text style={ControllerStyle.buttonTextUp}>Move Out</Text>
+                      <Text style={ControllerStyle.buttonTextUp}>Outward</Text>
                   <FontAwesome style={ControllerStyle.buttonImage} name="chevron-up" size={50} color='#fff'/>
               </TouchableOpacity>
              </View>
@@ -296,7 +377,7 @@ export default class ControllerScreen extends React.Component {
                     hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
                     >
                   <FontAwesome style={ControllerStyle.buttonImage} name="chevron-down" size={50} color='#fff'/>
-                  <Text style={ControllerStyle.buttonTextDown}>Move In</Text>
+                  <Text style={ControllerStyle.buttonTextDown}>Inward</Text>
                 </TouchableOpacity>
              </View>
              </View>
@@ -311,8 +392,9 @@ export default class ControllerScreen extends React.Component {
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT5, Operation.ROTATERIGHT)}} 
                  onPressOut={() => {this.sendOperation(Robot.JOINT5, Operation.STOP)}}
-                 hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+                 hitSlop={{top: 20, bottom: 20, left: 70, right: 70}}
                  >  
+                 <Text style={ControllerStyle.mainButtonTextUp}>Right</Text>
                <FontAwesome name="rotate-right" size={50} color='#fff'/>
              </TouchableOpacity>
              </View>
@@ -336,9 +418,10 @@ export default class ControllerScreen extends React.Component {
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT5, Operation.ROTATELEFT)}} 
                  onPressOut={() => {this.sendOperation(Robot.JOINT5, Operation.STOP)}}
-                 hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+                 hitSlop={{top: 20, bottom: 20, left: 70, right: 70}}
                  >  
-               <FontAwesome name="rotate-left" size={50} color='#fff'/>
+                 <Text style={ControllerStyle.clawButtonTextDown}>Left</Text>
+               <FontAwesome style={ControllerStyle.buttonImageMainDown} name="rotate-left" size={50} color='#fff'/>
              </TouchableOpacity>
              </View>
                </View>
