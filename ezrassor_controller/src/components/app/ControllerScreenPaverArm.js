@@ -4,7 +4,7 @@ import FadeInView from "ezrassor-app/src/components/app/FadeInView";
 import EZRASSOR from 'ezrassor-app/src/api/ezrassor-service-paver-arm' 
 import ControllerStyle from 'ezrassor-app/src/styles/controllerPaverArm';
 import {Robot, Operation} from 'ezrassor-app/src/enumerations/robot-commands-paver-arm';
-import { Linking, Text, View, TouchableHighlight, TouchableOpacity, Image, StatusBar, KeyboardAvoidingView, TextInput} from 'react-native';
+import { Linking, Text, View, TouchableHighlight, TouchableOpacity, Image, StatusBar, KeyboardAvoidingView, TextInput, Button} from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Font  from 'expo-font';
 
@@ -93,7 +93,8 @@ export default class ControllerScreen extends React.Component {
           isVisible={this.state.bugModalVisible}
           onSwipeComplete={() => this.setBugModalVisible(false)}
           swipeDirection='down'
-          onRequestClose={() => this.setBugModalVisible(!this.state.bugModalVisible)}>
+          onRequestClose={() => this.setBugModalVisible(!this.state.bugModalVisible)}
+          >
     
           <TouchableHighlight style={{ justifyContent: 'center' }}>
             <View>
@@ -123,10 +124,16 @@ export default class ControllerScreen extends React.Component {
                      Braden Steller {'\n'}
                     </Text>
                   </View>
-                  
                 </View>
             </View>
           </TouchableHighlight>
+          {/* <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
+            <TouchableOpacity 
+              onPress={() => this.setBugModalVisible(false)}
+              >  
+              <Text style={ControllerStyle.devText}>Go Back</Text>
+            </TouchableOpacity>
+          </View> */}
         </Modal>
 
 
@@ -220,7 +227,7 @@ export default class ControllerScreen extends React.Component {
             <FontAwesome name="ban" style={{marginLeft: "auto"}} size={35} color='#fff'/>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ flex: 1}}onPress={() => { this.setAutonomyModalVisible(true)} }> 
+          <TouchableOpacity style={{ flex: 1}} onPress={() => { this.setAutonomyModalVisible(true)}}> 
             <MaterialCommunityIcons style={{marginLeft: "auto"}} name="robot" size={32} color='#fff'/>
           </TouchableOpacity>
         </View>
@@ -246,7 +253,7 @@ export default class ControllerScreen extends React.Component {
         
 
         {/* Left D pad */}
-        <View style={ControllerStyle.buttonLayoutContainer}>
+        <FadeInView style={ControllerStyle.buttonLayoutContainer}>
         <View style={ControllerStyle.ArmContainer}> 
           <View style={{flex: 2 , flexDirection: 'column'}}>
             
@@ -434,7 +441,7 @@ export default class ControllerScreen extends React.Component {
              </View>
            </View>
            </View>
-        </View>
+        </FadeInView>
       </View>
     );
   }
