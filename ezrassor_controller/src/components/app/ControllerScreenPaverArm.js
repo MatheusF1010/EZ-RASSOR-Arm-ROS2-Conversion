@@ -80,6 +80,20 @@ export default class ControllerScreen extends React.Component {
     return ( 
       <View style={ControllerStyle.container}> 
         <StatusBar hidden />
+
+
+        {/* Info Popup Modal*/}
+        <Modal
+          style={ControllerStyle.modalViewContainer}
+          isVisible={this.state.infoModalVisible}
+          onSwipeComplete={() => this.setInfoModalVisible(false)}
+          swipeDirection='down'
+          onRequestClose={() => this.setInfoModalVisible(!this.state.infoModalVisible)}>
+    
+            <View>
+                <Text style={ControllerStyle.textLarge}>Activate Autonomous Arm Function(s)</Text>
+            </View>
+        </Modal>
         
 
         {/* Autonomy Popup Modal*/}
@@ -113,8 +127,17 @@ export default class ControllerScreen extends React.Component {
         <View style={ControllerStyle.headerContainer}>
         <TouchableOpacity style={{ flex: 1, padding: 1 }} onPress={() => this.setIPModalVisible(true)}>
             <FontAwesome name="search" size={30} color='#fff'/>
+          </TouchableOpacity> 
+          <TouchableOpacity style={{ flex: 1, padding: 3}} onPress={() => this.setInfoModalVisible(true)}>
+            <FontAwesome name="info-circle" size={35} color='#fff'/>
           </TouchableOpacity>
+
           <Text style={ControllerStyle.textSmall}>EZ-RASSOR Robotic Arm Controller</Text>
+          
+          <TouchableOpacity style={{ flex: 1, padding: 3}} onPress={() => {this.sendOperation(Robot.ALL, Operation.STOP)}}>
+            <FontAwesome name="ban" style={{marginLeft: "auto"}} size={35} color='#fff'/>
+          </TouchableOpacity>
+
           <TouchableOpacity style={{ flex: 1}}onPress={() => { this.setAutonomyModalVisible(true)} }> 
             <MaterialCommunityIcons style={{marginLeft: "auto"}} name="robot" size={32} color='#fff'/>
           </TouchableOpacity>
@@ -147,12 +170,15 @@ export default class ControllerScreen extends React.Component {
             
             <View style={{flex: 2 , flexDirection: 'row'}}>
             <View style={ControllerStyle.wheelFunctionContainer}>
+            <Text style={ControllerStyle.buttonTextCenter}>Base Joints</Text>
+
            <View style={ControllerStyle.upAndDownDPad} >
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT2, Operation.ROTATEUP)}} 
                  onPressOut={() => {this.sendOperation(Robot.JOINT2, Operation.STOP)}}
+                 hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
                  >  
-               <FontAwesome name="chevron-up" size={50} color='#fff'/>
+               <FontAwesome tyle={ControllerStyle.buttonImage} name="chevron-up" size={50} color='#fff'/>
              </TouchableOpacity>
              </View>
              <View style={{flex: 2 , flexDirection: 'row'}}>
@@ -160,16 +186,18 @@ export default class ControllerScreen extends React.Component {
                  <TouchableOpacity
                      onPressIn={() => {this.sendOperation(Robot.JOINT1, Operation.ROTATELEFT)}}
                      onPressOut={() => {this.sendOperation(Robot.JOINT1, Operation.STOP)}}
+                     hitSlop={{top: 30, bottom: 30, left: 50, right: 50}}
                      >
-                   <FontAwesome name="chevron-left" size={50} color='#fff'/>
+                   <FontAwesome tyle={ControllerStyle.buttonImage} name="chevron-left" size={50} color='#fff'/>
                  </TouchableOpacity>
                </View>
                <View style={ControllerStyle.dPadRight}>
                  <TouchableOpacity
                      onPressIn={() => {this.sendOperation(Robot.JOINT1, Operation.ROTATERIGHT)}}
                      onPressOut={() => {this.sendOperation(Robot.JOINT1, Operation.STOP)}}
+                     hitSlop={{top: 30, bottom: 30, left: 50, right: 50}}
                      >
-                   <FontAwesome name="chevron-right" size={50} color='#fff'/>
+                   <FontAwesome tyle={ControllerStyle.buttonImage} name="chevron-right" size={50} color='#fff'/>
                  </TouchableOpacity>
                </View> 
                </View>
@@ -177,13 +205,14 @@ export default class ControllerScreen extends React.Component {
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT2, Operation.ROTATEDOWN)}} 
                  onPressOut={() => {this.sendOperation(Robot.JOINT2, Operation.STOP)}}
+                 hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
                  >  
-               <FontAwesome name="chevron-down" size={50} color='#fff'/>
+               <FontAwesome tyle={ControllerStyle.buttonImage} name="chevron-down" size={50} color='#fff'/>
              </TouchableOpacity>
              </View>
              </View>
-            <View style={ControllerStyle.wheelFunctionContainer}>
-          {/* Right D pad */}
+            {/* Right D pad OLD WORKING*/}
+            {/* <View style={ControllerStyle.wheelFunctionContainer}>
            <View style={ControllerStyle.upAndDownDPad} >
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT3, Operation.ROTATEUP)}} 
@@ -218,13 +247,71 @@ export default class ControllerScreen extends React.Component {
                <FontAwesome name="chevron-down" size={50} color='#fff'/>
              </TouchableOpacity>
              </View>
+             </View> */}
+        
+
+
+            {/* NEW LAYOUT */}
+            <View style={ControllerStyle.wheelFunctionContainer}>
+            <Text style={ControllerStyle.buttonTextCenter}>Middle Joint</Text>
+           <View style={ControllerStyle.upAndDownDPad} >
+              <TouchableOpacity 
+                  onPressIn={() => {this.sendOperation(Robot.JOINT3, Operation.ROTATEUP)}} 
+                  onPressOut={() => {this.sendOperation(Robot.JOINT3, Operation.STOP)}}
+                  hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+                  >  
+                  <Text style={ControllerStyle.buttonTextUp}>Move Up</Text>
+                <FontAwesome style={ControllerStyle.buttonImage} name="chevron-up" size={50} color='#fff'/>
+              </TouchableOpacity>
              </View>
+             <View style={ControllerStyle.upAndDownDPad} >
+             <TouchableOpacity 
+                 onPressIn={() => {this.sendOperation(Robot.JOINT3, Operation.ROTATEDOWN)}} 
+                 onPressOut={() => {this.sendOperation(Robot.JOINT3, Operation.STOP)}}
+                 hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+                 >  
+               <FontAwesome style={ControllerStyle.buttonImage} name="chevron-down" size={50} color='#fff'/>
+               <Text style={ControllerStyle.buttonTextDown}>Move Down</Text>
+             </TouchableOpacity>
+             </View>
+             </View>
+
+            <View style={ControllerStyle.wheelFunctionContainer}>
+            <Text style={ControllerStyle.buttonTextCenter}>Upper Joint</Text>
+
+            <View style={ControllerStyle.upAndDownDPad} >
+              <TouchableOpacity
+                    onPressIn={() => {this.sendOperation(Robot.JOINT4, Operation.ROTATERIGHT)}}
+                    onPressOut={() => {this.sendOperation(Robot.JOINT4, Operation.STOP)}}
+                    hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+                    >
+                      <Text style={ControllerStyle.buttonTextUp}>Move Out</Text>
+                  <FontAwesome style={ControllerStyle.buttonImage} name="chevron-up" size={50} color='#fff'/>
+              </TouchableOpacity>
+             </View>
+             <View style={ControllerStyle.upAndDownDPad} >
+                <TouchableOpacity
+                    onPressIn={() => {this.sendOperation(Robot.JOINT4, Operation.ROTATELEFT)}}
+                    onPressOut={() => {this.sendOperation(Robot.JOINT4, Operation.STOP)}}
+                    hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+                    >
+                  <FontAwesome style={ControllerStyle.buttonImage} name="chevron-down" size={50} color='#fff'/>
+                  <Text style={ControllerStyle.buttonTextDown}>Move In</Text>
+                </TouchableOpacity>
+             </View>
+             </View>
+
+
+
             <View style={ControllerStyle.wheelFunctionContainer}>
              <View style={{flex: 2 , flexDirection: 'column'}}>
+             <Text style={ControllerStyle.buttonTextCenter}>Claw Joints</Text>
+
              <View style={ControllerStyle.upAndDownDPad} >
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT5, Operation.ROTATERIGHT)}} 
                  onPressOut={() => {this.sendOperation(Robot.JOINT5, Operation.STOP)}}
+                 hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
                  >  
                <FontAwesome name="rotate-right" size={50} color='#fff'/>
              </TouchableOpacity>
@@ -239,14 +326,17 @@ export default class ControllerScreen extends React.Component {
                         this.sendOperation(Robot.CLAW, Operation.GRABBEROPEN);
                         this.grabber_flag = 0;
                       }
-                      }}>
-                   <Text style={ControllerStyle.textSmallCenter}>Open/ Close Grabber</Text>
+                      }}
+                      hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+                      >
+                   <Text style={ControllerStyle.textSmallCenter}>Open / Close Grabber</Text>
                  </TouchableOpacity>
                </View>
                <View style={ControllerStyle.upAndDownDPad} >
              <TouchableOpacity 
                  onPressIn={() => {this.sendOperation(Robot.JOINT5, Operation.ROTATELEFT)}} 
                  onPressOut={() => {this.sendOperation(Robot.JOINT5, Operation.STOP)}}
+                 hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
                  >  
                <FontAwesome name="rotate-left" size={50} color='#fff'/>
              </TouchableOpacity>

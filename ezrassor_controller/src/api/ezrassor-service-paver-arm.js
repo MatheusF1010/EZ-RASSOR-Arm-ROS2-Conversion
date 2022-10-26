@@ -91,8 +91,9 @@ export default class EZRASSOR {
             joint_3_action: "STOP",
             joint_4_action: "STOP",
             joint_5_action: "STOP",
-            paver_claw_action: "STOP",
-            autonomous_toggles:0
+            // claw_action: "STOP",
+            // autonomous_toggles:0
+            // partial_autonomy: "HOME"
         }
 
         HTTP.doPost(this.apiPath, this.twistMsg);

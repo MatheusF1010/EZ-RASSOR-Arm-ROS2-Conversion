@@ -50,7 +50,7 @@ const ControllerStyle = StyleSheet.create({
     marginLeft: 10,
     borderRadius: 10,
     elevation: 3,
-    backgroundColor: '#2e3030' 
+    backgroundColor: '#2e3030',
   },
 
   headerContainer: {
@@ -267,6 +267,40 @@ const ControllerStyle = StyleSheet.create({
     fontFamily: 'NASA', 
     fontSize: 22, 
     color: '#fff'
+  },
+
+  buttonTextUp: {
+    fontFamily: 'NASA', 
+    fontSize: 22, 
+    color: '#fff',
+    bottom: 20,
+  },
+
+  buttonTextDown: {
+    fontFamily: 'NASA', 
+    fontSize: 22, 
+    color: '#fff',
+    top: 15,
+  },
+
+  buttonTextCenter: {
+    fontFamily: 'NASA', 
+    fontSize: 22, 
+    color: '#fff',
+    textAlign: 'center'
+  },
+
+  buttonTextDownTiny: {
+    fontFamily: 'NASA', 
+    fontSize: 10, 
+    color: '#fff',
+    // top: 15,
+  },
+
+  buttonImage: {
+    fontFamily: 'NASA', 
+    color: '#fff',
+    textAlign: 'center'
   },
 
   textSmallCenter: {
