@@ -18,7 +18,9 @@ from std_msgs.msg import (
     Float64MultiArray,
     MultiArrayDimension,
 )
-from trajectory_msgs.msg import JointTrajectoryPoint
+from trajectory_msgs.msg import JointTrajectory
+from sensor_msgs.msg import JointState
+
 
 import serial
 import time
@@ -32,6 +34,7 @@ FOURTH_JOINT_EXTERNAL_TOPIC = "joint_4_action"
 FIFTH_JOINT_EXTERNAL_TOPIC = "joint_5_action"
 CLAW_EXTERNAL_TOPIC = "claw_action"
 PARTIAL_AUTONOMY_EXTERNAL_TOPIC = "partial_autonomy"
+PLANNED_PATH_EXTERNAL_TOPIC = "display_planned_path"
 
 QUEUE_SIZE = 10
 # Dictionary values set after publishers get created in main()
@@ -54,8 +57,10 @@ def handle_first_joint_movements(data):
 
         if data.data > 0:
             arduino.write(b"M 0 0 0 0 1 \n")
-        else:
+        elif data.data < 0:
             arduino.write(b"M 0 0 0 0 -1 \n")
+        elif data.data == 0:
+            arduino.write(b"B \n")
 
         buttonPressed = True
 
@@ -79,8 +84,10 @@ def handle_second_joint_movements(data):
 
         if data.data > 0:
             arduino.write(b"M 0 0 1 0 0 \n")
-        else:
+        elif data.data < 0:
             arduino.write(b"M 0 0 -1 0 0 \n")
+        elif data.data == 0:
+            arduino.write(b"B \n")
 
         buttonPressed = True
 
@@ -104,8 +111,10 @@ def handle_third_joint_movements(data):
 
         if data.data > 0:
             arduino.write(b"M 0 1 0 0 0 \n")
-        else:
+        elif data.data < 0:
             arduino.write(b"M 0 -1 0 0 0 \n")
+        elif data.data == 0:
+            arduino.write(b"B \n")
 
         buttonPressed = True
 
@@ -129,8 +138,10 @@ def handle_fourth_joint_movements(data):
 
         if data.data > 0:
             arduino.write(b"M 1 0 0 0 0 \n")
-        else:
+        elif data.data < 0:
             arduino.write(b"M -1 0 0 0 0 \n")
+        elif data.data == 0:
+            arduino.write(b"B \n")
 
         buttonPressed = True
 
@@ -154,8 +165,10 @@ def handle_fifth_joint_movements(data):
 
         if data.data > 0:
             arduino.write(b"M 0 0 0 -1 0 \n")
-        else:
+        elif data.data < 0:
             arduino.write(b"M 0 0 0 1 0 \n")
+        elif data.data == 0:
+            arduino.write(b"B \n")
 
         buttonPressed = True
 
@@ -178,6 +191,22 @@ def handle_autonomy_functions(data):
         arduino.write(b"place \n")
     elif data_check == 3:
         arduino.write(b"pickup \n")
+
+def handle_joint_state(data):
+
+    print("Depressed", file=sys.stderr)
+    print(data, file=sys.stderr)
+    arduino.write(data)
+
+def joint_states_callback(message):
+    # filter out joint0 position:
+    print("Depressed", file=sys.stderr)
+
+    for i,name in enumerate(message.name):
+        if name == "joint12":
+            pos = message.position[i]
+            print(pos)
+    return
 
 
 def handle_claw_movements(data):
@@ -244,6 +273,12 @@ def main(passed_args=None):
             Float64,
             PARTIAL_AUTONOMY_EXTERNAL_TOPIC,
             handle_autonomy_functions,
+            QUEUE_SIZE,
+        )
+        node.create_subscription(
+            JointState,
+            PLANNED_PATH_EXTERNAL_TOPIC,
+            joint_states_callback,
             QUEUE_SIZE,
         )
 

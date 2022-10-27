@@ -5,6 +5,7 @@ Example of moving to a pose goal.
 """
 
 from ast import List
+import sys
 from threading import Thread
 from turtle import position
 import rclpy
@@ -17,6 +18,8 @@ from std_msgs.msg import (
     Float64MultiArray,
     MultiArrayDimension,
 )
+from moveit_msgs.msg import DisplayTrajectory
+
 
 def home_pose():
     return [0.0000, 0.0000, 0.0000, 0.0000, 0.0000]
@@ -46,14 +49,27 @@ pickup_after_joints = pickup_after_pose()
 
 NODE = "paver_arm_auto_function_listener"
 PARTIAL_AUTONOMY_EXTERNAL_TOPIC = "/ezrassor/partial_autonomy"
+PLANNED_PATH_EXTERNAL_TOPIC = "display_planned_path"
 
 QUEUE_SIZE = 10
 
 # Dictionary values set after publishers get created in main()
 publishers = {}
 
-def handle_autonomy_functions(data):
+# def joint_states_callback(message):
     
+#     # message = DisplayTrajectory()
+#     # for points in enumerate(message.trajectory[0].joint_trajectory.points):
+#     #     for i,positions in enumerate(message.trajectory[0].joint_trajectory.points[points].positions):
+#     #         print(positions)
+
+#     for i,points in enumerate(message.trajectory[0].joint_trajectory.points):
+#         print(points.positions)
+#     print("DIFFERENT ACTION")
+
+
+def handle_autonomy_functions(data):
+   
     data_check = Float64()
 
     data_check = data.data
@@ -273,8 +289,14 @@ def main(args=None):
             handle_autonomy_functions,
             QUEUE_SIZE,
         )
+        # node.create_subscription(
+        #     DisplayTrajectory,
+        #     PLANNED_PATH_EXTERNAL_TOPIC,
+        #     joint_states_callback,
+        #     QUEUE_SIZE,
+        # )
 
-        node.get_logger().info("paver_arm_driver node created successfully")
+        node.get_logger().info("paver_arm_auto_driver node created successfully")
         
         rclpy.spin(node)
 
