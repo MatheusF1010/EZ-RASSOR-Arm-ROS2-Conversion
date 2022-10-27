@@ -223,7 +223,7 @@ export default class ControllerScreen extends React.Component {
 
           <Text style={ControllerStyle.textSmall}>RE-RASSOR Robotic Arm Controller</Text>
           
-          <TouchableOpacity style={{ flex: 1, padding: 3}} onPress={() => {this.sendOperation(Robot.ALL, Operation.STOP)}}>
+          <TouchableOpacity style={{ flex: 1, padding: 3}} onPressIn={() => {this.sendOperation(Robot.ALL, Operation.STOP)}} onPressOut={() => {this.sendOperation(Robot.ALL, Operation.STOP)}}>
             <FontAwesome name="ban" style={{marginLeft: "auto"}} size={35} color='#fff'/>
           </TouchableOpacity>
 
