@@ -239,8 +239,8 @@ export default class ControllerScreen extends React.Component {
           swipeDirection='down'
           onRequestClose={() => {this.setIPModalVisible(false)}}>
           <KeyboardAvoidingView
-            paddingLeft={34}
-            paddingRight={34}>
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={ControllerStyle.ArmContainer}>
             <Text style={[ControllerStyle.textLarge, ControllerStyle.columnText]}>RE-RASSOR Host to Control</Text>
             <TextInput
               style={ControllerStyle.ipInputBox}
@@ -248,6 +248,20 @@ export default class ControllerScreen extends React.Component {
               value={this.state.ip}
               marginVertical={20} />
           </KeyboardAvoidingView>
+            <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
+                <View style={{ flex: 1}} >
+                <FontAwesome style={{textAlign:'center'}} name="question-circle" size={30} color='#fff'/>
+                  <Text style={ControllerStyle.textSmallCenter}> 
+                    Find the IP by running 'ifconfig' on your linux machine terminal window
+                  </Text>
+                </View>   
+                <View style={{ flex: 1}} >
+                <FontAwesome style={{textAlign:'center'}} name="question-circle" size={30} color='#fff'/>
+                  <Text style={ControllerStyle.textSmallCenter}> 
+                    Find the server port by running the ezrassor_controller_server node 
+                  </Text>
+                </View>
+              </View>
         </Modal>
 
         
